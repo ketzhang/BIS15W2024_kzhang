@@ -1,6 +1,6 @@
 ---
 title: "Lab 1 Homework"
-author: "Please Add Your Name Here"
+author: "Joel Ledford"
 date: "2024-01-11"
 output:
   html_document: 
@@ -33,14 +33,14 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 
 ```r
-8 - 2 * 2 
+8 / 2 * 2 
 ```
 
 ```
-## [1] 4
+## [1] 8
 ```
 
-**5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 12.**    
+**5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 8.**    
 
 
 
