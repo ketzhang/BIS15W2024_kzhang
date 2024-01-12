@@ -1,6 +1,6 @@
 ---
 title: "Lab 1 Homework"
-author: "Joel Ledford"
+author: "Ketong Zhang"
 date: "2024-01-11"
 output:
   html_document: 
@@ -14,8 +14,10 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!  
 
 **1. Please complete the [class survey](https://forms.gle/AHHXd3aobaAdkkFg9) if you have not already done so.**
+Finished
 
 **2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**  
+R is a programming language where RStudio is a GUI that needs to work with R in order to function.
 
 
 
@@ -33,11 +35,11 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 
 ```r
-8 / 2 * 2 
+(8 / 2 * 2 )*2
 ```
 
 ```
-## [1] 8
+## [1] 16
 ```
 
 **5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 8.**    
