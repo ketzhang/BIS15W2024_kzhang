@@ -18,7 +18,7 @@ Finished
 
 **2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**  
 R is a programming language where RStudio is a GUI that needs to work with R in order to function.
-
+Github is a powerful file and storage management site and it is useful to programmers because they could upload their codes to the site and make it public, therefore more people could see and learn from it.  On the other hand, when programmer themselves encounter trouble, they could look at others' codes and get insights from it.  
 
 
 **3. Navigate to my [BIS15L](https://github.com/jmledford3115/BIS15W2024_jledford) repository on GitHub. Notice that near the bottom there is a nice, clean description of the repository. You want this on your repository! It is built by making edits to the `README.md` file using the RMarkdown conventions. Edit your repository's `README.md` file so that you have a clean informative description, including your email address. Be creative! You don't need to just copy mine. There are lots of examples online.**  
@@ -55,16 +55,16 @@ Finished
 
 
 ```r
-8 
+16
 ```
 
 ```
-## [1] 8
+## [1] 16
 ```
 
-**5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 16.**    
+**5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 8.**    
 
-Yes, 
+Yes
 
 
 ```r
@@ -77,11 +77,11 @@ Yes,
 
 
 ```r
-(8/2)*(2*2)
+8/2+2*2
 ```
 
 ```
-## [1] 16
+## [1] 8
 ```
 
 **6. `Objects` in R are a way in which we can store data or operations. We will talk more about objects next week. For now, make a new object `pi` as 3.14159265359 by running the following code chunk. You should now see the object `pi` in the environment window in the top right.**  
