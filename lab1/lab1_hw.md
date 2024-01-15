@@ -54,8 +54,17 @@ Finished
 ```
 
 
+```r
+8
+```
+
+```
+## [1] 8
+```
 
 **5. Did any of the results in #4 surprise you? Write two programs that calculate each expression such that the result for the first example is 4 and the second example is 16.**    
+
+Yes, 
 
 
 ```r
