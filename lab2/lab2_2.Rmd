@@ -138,7 +138,7 @@ global <- rowSums(harry_potter_matrix)
 global
 ```
 
-And even add a new column to reflect this calculation. `cbind()` adds columns.
+And even add a new column to reflect this calculation. `cbind()` adds columns. c bind is binding columns
 ```{r}
 all_harry_potter_matrix <- cbind(harry_potter_matrix, global)
 all_harry_potter_matrix
@@ -147,8 +147,17 @@ all_harry_potter_matrix
 ## Practice
 1. What are the total earnings for the US and non-US regions?  
 
+```{r}
+total_earnings <-colSums(all_harry_potter_matrix)
+total_earnings
+```
+
 
 2. Add this information to the data matrix. Hint: you are adding a row, not a column.  
+
+```{r}
+rbind(all_harry_potter_matrix, total_earnings)
+```
 
 
 ## A few Extras
