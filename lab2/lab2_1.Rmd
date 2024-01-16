@@ -170,11 +170,14 @@ new_vector <- c(7, 6.2, 5, 9, NA, 4, 9.8, 7, 3, 2)
 mean(new_vector)
 ```
 
+the above means even you have 100000 values but have 1 NA, the result will be NA
+
 3. How do you interpret this result? What does this mean about NAs?  
 It is saying NA is the mean for the following number, it mean it actually disrupt the calculation process and made it the new mean.
+
 4. Recalculate the mean using the following code chunk. Why is the useful?  
 ```{r}
-mean(new_vector, na.rm=T) #na.rm removes the NA values in the vector
+mean(new_vector, na.rm=T) #na.rm removes the NA values in the vector, and then calculate the mean rm is remove, T is true
 ```
 
 ## That's it! Let's take a break and then move on to part 2!
