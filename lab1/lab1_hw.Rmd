@@ -18,6 +18,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 Finished
 
 **2. What is the difference between R and RStudio? What is GitHub and why is it useful to programmers?**  
+
 R is a programming language where RStudio is a GUI that needs to work with R in order to function.
 Github is a powerful file and storage management site and it is useful to programmers because they could upload their codes to the site and make it public, therefore more people could see and learn from it.  On the other hand, when programmer themselves encounter trouble, they could look at others' codes and get insights from it.  
 
