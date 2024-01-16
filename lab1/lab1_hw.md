@@ -5,7 +5,7 @@ date: "2024-01-16"
 output:
   html_document: 
     theme: spacelab
-    keep_md: yes
+    keep_md: true
 ---
 
 ## Instructions
