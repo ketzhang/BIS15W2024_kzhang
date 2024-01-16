@@ -22,7 +22,9 @@ library("jpeg")
 ## Review from last time
 ### *With a partner, discuss the following questions*
 1. What is the association between `R` and `R Studio`?  
+R is a programming language and R Studio intereact with R, R Studio is graphical user interact.
 2. What is `R Markdown`? What are the advantages of this format?  
+R Markdown is a way to annotate your code and share with people that perhaps are not programmer.
 
 ## Homework
 1. Please open `homework 1`.  

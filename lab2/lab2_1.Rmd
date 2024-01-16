@@ -22,7 +22,7 @@ output:
 ## Objects
 In order to access the potential of R we need to assign values or other types of data to `objects`. There is a specific format that I want you to follow, so please pay close attention.  
 
-Assign a value to object 'x'. The '<-' symbol is read as 'gets'. In this case, x gets 42. Make sure that you are in the environment panel and you should see the value associated with 'x'. On a mac, you can push `option` and `-` to automatically generate the gets symbol.  
+Assign a value to object 'x'. The '<-' symbol is read as 'gets'. In this case, x gets 42. Make sure that you are in the environment panel and you should see the value associated with 'x'. On a mac, you can push `option` and `-` to automatically generate the gets symbol.  The object x gets the value 42
 ```{r}
 x <- 42
 ```
@@ -32,17 +32,51 @@ To print the object to the screen, just type x.
 x
 ```
 
-Once an object has been created, you can do things with them.  
+```{r}
+y <-30
+```
+
+```{r}
+z = 30 #do not use equal sign
+q <-42
+```
+
+Once an object has been created, you can do things with them.  is like creating a variable on python
 ```{r}
 treatment <- 36
 control <- 38
 ```
 
-Here we make a new object `my_experiment` that is the sum of the treatment and control. Notice that I use `_` and not spaces.  
+Here we make a new object `my_experiment` that is the sum of the treatment and control. Notice that I use `_` and not spaces. Using TAB to type in the rest of the varible name, prevent spelling error, the TAB key 
 ```{r}
 my_experiment <- sum(treatment, control)
 my_experiment
 ```
+
+```{r}
+treatment+control
+```
+
+notes: try to give object specific name that avoid it havin the same name as other function
+
+```{r}
+2+8+2
+```
+
+this is the arithmetic mean
+```{r}
+(2+8+2)/3
+```
+
+the problem is:
+```{r}
+mean(2+8+2)
+```
+
+
+
+
+
 
 ## Nomenclature
 We need to be careful about nomenclature when we write code. R allows us to give almost any name we want to an object, but there are exceptions. For example, we don't want to give a name to an object that is the same as a function in R.  
@@ -55,17 +89,21 @@ We get an error here because `else` is a function in R. You also don't want to g
 ## Practice
 1. Create three new objects, `venom_GT`, `chiron`, and `veyron`. These are the fastest cars in the world. Assign each car to its top speed. The venom_GT can go 270, chiron is 261, and veyron is 268.  
 ```{r}
-
+venom_GT <-270
+chiron <-261
+veyron <-268
 ```
 
 2. Use arithmetic to calculate the mean top speed for the cars.
 ```{r}
-
+(270+261+268)/3
 ```
 
-3. Use the function `mean()` to calculate the mean top speed for the cars.
+3. Use the function `mean()` to calculate the mean top speed for the cars. c is concatenated, so concatenated when there are more than 2 objects??
 ```{r}
-
+mean(c(venom_GT, chiron, veyron))
+cars <- c(venom_GT, chiron, veyron)
+mean(cars)
 ```
 
 ```{r}
