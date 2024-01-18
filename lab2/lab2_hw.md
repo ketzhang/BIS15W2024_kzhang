@@ -1,7 +1,7 @@
 ---
 title: "Lab 2 Homework"
 author: "Ketong Zhang"
-date: "2024-01-17"
+date: "2024-01-18"
 output:
   html_document: 
     theme: spacelab
@@ -57,8 +57,6 @@ season_matrix
 5. The names of the springs are 1.Bluebell Spring, 2.Opal Spring, 3.Riverside Spring, 4.Too Hot Spring, 5.Mystery Spring, 6.Emerald Spring, 7.Black Spring, 8.Pearl Spring. Name the rows and columns in the data matrix. Start by making two new vectors with the names, then use `colnames()` and `rownames()` to name the columns and rows.
 
 ```r
-season <-c(spring_1,spring_2,spring_3,spring_4,spring_5,spring_6,spring_7,spring_8)
-season_matrix <-matrix(season, nrow=8, byrow = T)
 sci_name <- c("Jill", "Steve", "Susan")
 season_row <- c("Bluebell Spring","Opal Spring","Riverside Spring","Too Hot Spring","Mystery Spring","Emerald Spring","Black Spring","Pearl Spring")
 colnames(season_matrix) <-sci_name
