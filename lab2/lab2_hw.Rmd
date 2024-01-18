@@ -67,14 +67,24 @@ real_mean
 
 8. Show Susan's value for Opal Spring only.
 ```{r}
-
+season_matrix[2,3]
 ```
 
 
 9. Calculate the mean for Jill's column only.  
+```{r}
+jill_mean <- season_matrix[,1]
+mean(jill_mean)
+
+```
 
 
-10. Use the data matrix to perform one calculation or operation of your interest.
+10. Use the data matrix to perform one calculation or operation of your interest.  (calculate column's total)
+```{r}
+total_spring <-colSums(season_matrix)
+total_spring
+```
+
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.  

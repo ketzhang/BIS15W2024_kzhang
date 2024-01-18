@@ -476,11 +476,24 @@ real_mean</code></pre>
 ## Black Spring     32.90 32.50 32.80  32.73333
 ## Pearl Spring     36.80 36.45 33.15  35.46667</code></pre>
 <ol start="8" style="list-style-type: decimal">
-<li><p>Show Susan’s value for Opal Spring only.</p></li>
-<li><p>Calculate the mean for Jill’s column only.</p></li>
-<li><p>Use the data matrix to perform one calculation or operation of
-your interest.</p></li>
+<li>Show Susan’s value for Opal Spring only.</li>
 </ol>
+<pre class="r"><code>season_matrix[2,3]</code></pre>
+<pre><code>## [1] 33.35</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Calculate the mean for Jill’s column only.</li>
+</ol>
+<pre class="r"><code>jill_mean &lt;- season_matrix[,1]
+mean(jill_mean)</code></pre>
+<pre><code>## [1] 34.19375</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Use the data matrix to perform one calculation or operation of your
+interest. (calculate column’s total)</li>
+</ol>
+<pre class="r"><code>total_spring &lt;-colSums(season_matrix)
+total_spring</code></pre>
+<pre><code>##   Jill  Steve  Susan 
+## 273.55 271.45 261.50</code></pre>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
 <h2>Push your final code to GitHub!</h2>
