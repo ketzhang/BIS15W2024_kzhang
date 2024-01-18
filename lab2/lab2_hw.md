@@ -79,8 +79,8 @@ season_matrix
 6. Calculate the mean temperature of all eight springs.
 
 ```r
-find_mean <- rowMeans(season_matrix)
-find_mean
+spring_mean <- rowMeans(season_matrix)
+spring_mean
 ```
 
 ```
@@ -94,26 +94,26 @@ find_mean
 7. Add this as a new column in the data matrix.  
 
 ```r
-real_mean <- cbind(season_matrix, find_mean)
+real_mean <- cbind(season_matrix, spring_mean)
 real_mean
 ```
 
 ```
-##                   Jill Steve Susan find_mean
-## Bluebell Spring  36.25 35.40 35.30  35.65000
-## Opal Spring      35.15 35.35 33.35  34.61667
-## Riverside Spring 30.70 29.65 29.20  29.85000
-## Too Hot Spring   39.70 40.05 38.65  39.46667
-## Mystery Spring   31.85 31.40 29.30  30.85000
-## Emerald Spring   30.20 30.65 29.75  30.20000
-## Black Spring     32.90 32.50 32.80  32.73333
-## Pearl Spring     36.80 36.45 33.15  35.46667
+##                   Jill Steve Susan spring_mean
+## Bluebell Spring  36.25 35.40 35.30    35.65000
+## Opal Spring      35.15 35.35 33.35    34.61667
+## Riverside Spring 30.70 29.65 29.20    29.85000
+## Too Hot Spring   39.70 40.05 38.65    39.46667
+## Mystery Spring   31.85 31.40 29.30    30.85000
+## Emerald Spring   30.20 30.65 29.75    30.20000
+## Black Spring     32.90 32.50 32.80    32.73333
+## Pearl Spring     36.80 36.45 33.15    35.46667
 ```
 
 8. Show Susan's value for Opal Spring only.
 
 ```r
-season_matrix[2,3]
+real_mean[2,3]
 ```
 
 ```
@@ -124,7 +124,7 @@ season_matrix[2,3]
 9. Calculate the mean for Jill's column only.  
 
 ```r
-jill_mean <- season_matrix[,1]
+jill_mean <- real_mean[,1]
 mean(jill_mean)
 ```
 
