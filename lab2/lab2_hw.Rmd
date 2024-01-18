@@ -14,10 +14,11 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!  
 
 1. What is a vector in R?  
-
+A vector is a list of either numeric values or characters #i.e. names 
+It could simplify long list of values into a short expression that reduce the redundancy of codes. 
 
 2. What is a data matrix in R?  
-
+A data matrix in R is a series of stacked vectors like a data table and you could arrange them into column and row, you could also give column and row corresponding name.
 
 3. Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of eight hot springs. Run this code chunk to create the vectors.  
 ```{r}
@@ -30,6 +31,7 @@ spring_6 <- c(30.20, 30.65, 29.75)
 spring_7 <- c(32.90, 32.50, 32.80)
 spring_8 <- c(36.80, 36.45, 33.15)
 ```
+
 
 4. Build a data matrix that has the springs as rows and the columns as scientists.  
 
