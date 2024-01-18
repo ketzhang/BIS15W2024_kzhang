@@ -1,6 +1,6 @@
 ---
 title: "Lab 2 Homework"
-author: "Ketong Zhang"
+author: "Ketong Zhang (Amy)"
 date: "`r Sys.Date()`"
 output:
   html_document: 
