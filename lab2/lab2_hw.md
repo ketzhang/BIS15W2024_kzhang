@@ -1,6 +1,6 @@
 ---
 title: "Lab 2 Homework"
-author: "Ketong Zhang (Amy)"
+author: "Ketong Zhang"
 date: "2024-01-18"
 output:
   html_document: 
