@@ -53,12 +53,22 @@ season_matrix
 ```
 
 6. Calculate the mean temperature of all eight springs.
+```{r}
+find_mean <- rowMeans(season_matrix)
+find_mean
+```
 
 
 7. Add this as a new column in the data matrix.  
-
+```{r}
+real_mean <- cbind(season_matrix, find_mean)
+real_mean
+```
 
 8. Show Susan's value for Opal Spring only.
+```{r}
+
+```
 
 
 9. Calculate the mean for Jill's column only.  
