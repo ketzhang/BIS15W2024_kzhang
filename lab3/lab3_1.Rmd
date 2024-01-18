@@ -50,21 +50,21 @@ Notice that not only are the data neat and clean looking, there is also informat
 
 What are the column names of our data frame? Notice that R defaulted to using the names of our vectors, but we could name them something else when creating the data frame, or rename them later.
 ```{r}
-
+names(hbirds)
 ```
 
-What are the dimensions of the `hbirds` data frame? The `dim()` and `str()` commands provide this information.   
+What are the dimensions of the `hbirds` data frame? The `dim()` and `str()` commands provide this information.   3 3 means 3 observation and 3 variable
 ```{r}
-
+dim(hbirds)
 ```
 
 ```{r}
-
+str(hbirds)
 ```
 
 Let's use lowercase names when we create the data frame. We just changed to lowercase here, but we could use any names we wish.  
 ```{r}
-
+data.frame(sex=Sex, length=Length, weight_g = Weight)
 ```
 
 ```{r}
@@ -86,7 +86,7 @@ hbirds[ ,3]
 
 We can also select values in an entire column using the `$` sign. This can be useful for calculations. Here we calculate the mean of all of the birds weights. 
 ```{r}
-
+w <- hbirds$weight_g
 ```
 
 ## Adding Rows
