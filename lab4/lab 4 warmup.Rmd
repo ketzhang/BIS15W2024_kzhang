@@ -1,6 +1,8 @@
 ---
 title: "lab 4 warmup"
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 date: "2024-01-23"
 ---
 
@@ -24,11 +26,23 @@ dim(penguins)
 3. What are the names of the variables in the `penguins` dataset?
 ```{r}
 names(penguins)
+glimpse(penguins)
 ```
 
 4. How many individuals were sampled on each island in the `penguins` dataset?
 ```{r}
 summary(penguins)
+#use the below
+penguins <- penguins
+```
+
+```{r}
+summary(penguins$island) #this is fine too
+```
+
+```{r}
+#use this is also ok
+table(penguins$island)
 ```
 
 5. What is the mean body mass for all individuals in the `penguins` dataset?
