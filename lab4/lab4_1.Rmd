@@ -25,13 +25,14 @@ library("tidyverse")
 ## Load the data
 These data are from: Gaeta J., G. Sass, S. Carpenter. 2012. Biocomplexity at North Temperate Lakes LTER: Coordinated Field Studies: Large Mouth Bass Growth 2006. Environmental Data Initiative.  [link](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-ntl&identifier=267)  
 ```{r}
-fish <- readr::read_csv("data/Gaeta_etal_CLC_data.csv")
+fish <- readr::read_csv("data/Gaeta_etal_CLC_data.csv") #readr:: means explict about the package we are using
 ```
 
 ## Data Structure
 Once data have been uploaded, let's get an idea of its structure, contents, and dimensions.  
 ```{r}
-
+glimpse(fish)
+summary(fish)
 ```
 
 ## Tidyverse
@@ -39,7 +40,7 @@ The [tidyverse](www.tidyverse.org) is an "opinionated" collection of packages th
 ![*Data Science Workflow in the Tidyverse.*](tidy-1.png)  
 
 ## dplyr
-The first package that we will use that is part of the tidyverse is `dplyr`. `dplyr` is used to transform data frames by extracting, rearranging, and summarizing data such that they are focused on a question of interest. This is very helpful,  especially when wrangling large data, and makes dplyr one of most frequently used packages in the tidyverse. The two functions we will use most are `select()` and `filter()`.  
+The first package that we will use that is part of the tidyverse is `dplyr`. `dplyr` is used to transform data frames by extracting, rearranging, and summarizing data such that they are focused on a question of interest. This is very helpful,  especially when wrangling large data, and makes dplyr one of most frequently used packages in the tidyverse. The two functions we will use most are `select()` and `filter()`.  this chop data frame into fragment and make it tidy
 
 ## `select()`
 Select allows you to pull out columns of interest from a dataframe. To do this, just add the names of the columns to the `select()` command. The order in which you add them, will determine the order in which they appear in the output.
@@ -49,7 +50,20 @@ names(fish)
 
 We are only interested in lakeid and scalelength.
 ```{r}
-select(fish, "lakeid", "scalelength")
+select(fish, "lakeid", "scalelength") #select pull out interested column, fish is the name of the data frame, and identify the variable of interest, fish is an object in the environment panel so no quotes, lakeid and scalelength have quote because they are variables
+```
+
+```{r}
+names(fish)
+```
+
+```{r}
+select(fish, "fish_id", "length") #if you reverse the place of the variable, the result is just gonna be reversed
+```
+
+make it into a new data set
+```{r}
+fish_subset <- select(fish, "fish_id", "length")
 ```
 
 To add a range of columns use `start_col:end_col`.
@@ -59,7 +73,7 @@ select(fish, fish_id:length)
 
 The - operator is useful in select. It allows us to select everything except the specified variables.
 ```{r}
-select(fish, -fish_id, -annnumber, -length, -radii_length_mm)
+select(fish, -"fish_id", -"annnumber", -"length", -"radii_length_mm")
 ```
 
 For very large data frames with lots of variables, `select()` utilizes lots of different operators to make things easier. Let's say we are only interested in the variables that deal with length.
@@ -68,11 +82,12 @@ For very large data frames with lots of variables, `select()` utilizes lots of d
 names(fish)
 ```
 
+this pull out data that contain length
 ```{r}
 select(fish, contains("length"))
 ```
 
-When columns are sequentially named, `starts_with()` makes selecting columns easier.
+When columns are sequentially named, `starts_with()` makes selecting columns easier.  this pull out variable that has the name radii
 ```{r}
 select(fish, starts_with("radii"))
 ```
@@ -97,7 +112,7 @@ select(fish, contains("fish"))
 
 We won't cover regular expressions [regex](https://en.wikipedia.org/wiki/Regular_expression) in this class, but the following code is helpful when you know that a column contains a letter (in this case "a") followed by a subsequent string (in this case "er").  
 ```{r}
-select(fish, matches("a.+er"))
+select(fish, matches("a.+er")) #handy bit of code for the project, look at variable of interest , this means start with letter a and end with er
 ```
 
 You can also select columns based on the class of data.  
@@ -111,7 +126,7 @@ select_if(fish, is.numeric)
 
 To select all columns that are *not* a class of data, you need to add a `~`.
 ```{r}
-select_if(fish, ~!is.numeric(.))
+select_if(fish, ~!is.numeric(.)) #this means dont select numeric, ! means not 
 ```
 
 ## Practice  
