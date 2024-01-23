@@ -23,7 +23,7 @@ library(tidyverse)
 ```
 
 ## Data
-For the homework, we will use data about vertebrate home range sizes. The data are in the class folder, but the reference is below.  
+For the homework, we will use data about vertebrate home range sizes. The data are in the class folder, but the reference is below.  **Do 1-6** 
 
 **Database of vertebrate home range sizes.**  
 Reference: Tamburello N, Cote IM, Dulvy NK (2015) Energy and the scaling of animal space use. The American Naturalist 186(2):196-211. http://dx.doi.org/10.1086/682070.  

@@ -27,39 +27,43 @@ library("tidyverse")
 For these exercises we will use the data from lab 4_1.  
 ```{r}
 fish <- read_csv("data/Gaeta_etal_CLC_data.csv")
+fish
 ```
 
 ```{r}
 mammals <- read_csv("data/mammal_lifehistories_v2.csv")
+mammals
 ```
 
 To keep things tidy, I am going to rename the variables in the mammals data.  
 ```{r}
-mammals <- rename(mammals, genus=Genus, wean_mass="wean mass", max_life="max. life", litter_size="litter size", litters_per_year="litters/year")
+mammals <- rename(mammals, genus="Genus", wean_mass="wean mass", max_life="max. life", litter_size="litter size", litters_per_year="litters/year")
 ```
 
 ## `filter()`
-Unlike `select()`, `filter()` allows us to extract data that meet specific criteria within a variable. Let's say that we are interested only in the fish that occur in lake "AL". We can use `filter()` to extract these observations.  
+Unlike `select()`, `filter()` allows us to extract data that meet specific criteria within a variable. Let's say that we are interested only in the fish that occur in lake "AL". We can use `filter()` to extract these observations.  look in the fish data and pull data that belong to AL
 ```{r}
 filter(fish, lakeid == "AL")
 ```
 
 Similarly, if we are only interested in fish with a length greater than or equal to 350 we can use `filter()` to extract these observations.  
 ```{r}
-filter(fish, length >= 350)
+filter(fish, length >= 350) #number dont need quote, filter search horizontally through the data set
 ```
 
 + `filter()` allows all of the expected operators; i.e. >, >=, <, <=, != (not equal), and == (equal).  
 
 Using the `!` operator allows for the exclusion of specific observations.
 ```{r}
-filter(fish, lakeid != "AL")
+filter(fish, lakeid != "AL") #not from AL
+#you can name it like this
+not_AL <- filter(fish, lakeid != "AL") #not from AL
 ```
 
 ## Using `filter()` with multiple observations  
 Filtering multiple values within the same variable requires the `%in%` [operator](https://www.tutorialspoint.com/r/r_operators.htm).    
 ```{r}
-filter(fish, length %in% c(167, 175))
+filter(fish, length %in% c(167, 175)) #this means filter 2 values from the variable, filter fish within the variable length all fish that have 167-175 length
 ```
 
 Alternatively, you can use `between` if you are looking for a range of specific values.  
@@ -69,7 +73,7 @@ filter(fish, between(scalelength, 2.5, 2.55))
 
 You can also extract observations "near" a certain value but you need to specify a tolerance.  
 ```{r}
-filter(fish, near(radii_length_mm, 2, tol = 0.2))
+filter(fish, near(radii_length_mm, 2, tol = 0.2)) #near 2 and end with 0.2 tolerance
 ```
 
 ## Practice

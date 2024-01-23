@@ -189,7 +189,10 @@ select(mammals_new, contains("mass"))
 
 8. Select all of the columns that are of class `character`.  
 ```{r}
-select_if(mammals_new, ~is.character(.))
+select_if(mammals_new, ~is.character(.)) #or use is.character
+```
+```{r}
+select_if(mammals_new, is.character)
 ```
 
 ## Other
@@ -197,7 +200,15 @@ Here are two examples of code that are super helpful to have in your bag of tric
 
 Imported data frames often have a mix of lower and uppercase column names. Use `toupper()` or `tolower()` to fix this issue. I always try to use lowercase to keep things consistent.  
 ```{r}
+select_all(mammals, tolower)
+```
+```{r}
+library(janitor) #change all the wrpng spelling names of variables
+names(mammals)
+```
 
+```{r}
+clean_names(mammals) 
 ```
 
 When naming columns, blank spaces are often added (don't do this, please). Here is a trick to remove these.  
