@@ -35,9 +35,9 @@ dim(sleep)
 ```
 
 4. Are there any NAs in the data? How did you determine this? Please show your code.  
-**Yes there are NAs in the data, and we determine it by using the anyNA function, when return TRUE, it means there are NAs.**
+**Yes there are NAs in the data, we determine this by using the summary function that shows NAs in each categories**
 ```{r}
-anyNA(sleep)
+summary(sleep)
 ```
 
 5. Show a list of the column names is this data frame.
@@ -90,7 +90,7 @@ max(sleep$sleep_total) #find the maximum value from sleep_total
 ```
 
 ```{r}
-filter(sleep, sleep_total>=max(sleep$sleep_total) )
+filter(sleep, sleep_total == 19.9 )
 ```
 
 
