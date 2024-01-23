@@ -179,17 +179,17 @@ new_mammals
 
 6. What if we only wanted to exclude `order` and `family`? Use the `-` operator to make the code efficient.
 ```{r}
-select(mammals, -"order", -"family")
+select(mammals_new, -"order", -"family")
 ```
 
 7. Select the columns that include "mass" as part of the name.  
 ```{r}
-select(mammals, contains("mass"))
+select(mammals_new, contains("mass"))
 ```
 
 8. Select all of the columns that are of class `character`.  
 ```{r}
-select(mammals, contains
+select_if(mammals_new, ~is.character(.))
 ```
 
 ## Other
