@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2024-01-18" />
+<meta name="date" content="2024-01-23" />
 
 <title>Importing Data Frames</title>
 
@@ -1503,7 +1503,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">Importing Data Frames</h1>
-<h4 class="date">2024-01-18</h4>
+<h4 class="date">2024-01-23</h4>
 
 </div>
 
@@ -1558,7 +1558,7 @@ them.</p>
 working directory. If you are not in the correct directory, R will not
 “see” the file.</p>
 <pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/kzhang09/Desktop/BIS15W2024_kzhang/lab3&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/zhangketong/Desktop/BIS15W2024_kzhang/lab3&quot;</code></pre>
 </div>
 <div id="load-the-data" class="section level2">
 <h2>Load the data</h2>
@@ -1785,10 +1785,15 @@ into a new object called <code>mammals</code>.</li>
 <pre class="r"><code>dim(mammals)</code></pre>
 <pre><code>## [1] 1440   13</code></pre>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Check the column names in the data frame.</p></li>
-<li><p>Use <code>str()</code> to show the structure of the data frame
-and its individual columns; compare this to
-<code>glimpse()</code>.</p></li>
+<li>Check the column names in the data frame.</li>
+</ol>
+<pre class="r"><code>names(mammals)</code></pre>
+<pre><code>##  [1] &quot;order&quot;        &quot;family&quot;       &quot;Genus&quot;        &quot;species&quot;      &quot;mass&quot;        
+##  [6] &quot;gestation&quot;    &quot;newborn&quot;      &quot;weaning&quot;      &quot;wean mass&quot;    &quot;AFR&quot;         
+## [11] &quot;max. life&quot;    &quot;litter size&quot;  &quot;litters/year&quot;</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Use <code>str()</code> to show the structure of the data frame and
+its individual columns; compare this to <code>glimpse()</code>.</li>
 </ol>
 <pre class="r"><code>str(mammals)</code></pre>
 <pre><code>## spc_tbl_ [1,440 × 13] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
@@ -1842,6 +1847,16 @@ and its individual columns; compare this to
 <li>. Try the <code>table()</code> command to produce counts of mammal
 order, family, and genus.</li>
 </ol>
+<pre class="r"><code>table(mammals$order)</code></pre>
+<pre><code>## 
+##   Artiodactyla      Carnivora        Cetacea     Dermoptera     Hyracoidea 
+##            161            197             55              2              4 
+##    Insectivora     Lagomorpha  Macroscelidea Perissodactyla      Pholidota 
+##             91             42             10             15              7 
+##       Primates    Proboscidea       Rodentia     Scandentia        Sirenia 
+##            156              2            665              7              5 
+##  Tubulidentata      Xenarthra 
+##              1             20</code></pre>
 </div>
 <div id="wrap-up" class="section level2">
 <h2>Wrap-up</h2>

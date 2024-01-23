@@ -1,6 +1,6 @@
 ---
 title: "Importing Data Frames"
-date: "2024-01-18"
+date: "2024-01-23"
 output:
   html_document: 
     theme: spacelab
@@ -41,7 +41,7 @@ getwd()
 ```
 
 ```
-## [1] "/Users/kzhang09/Desktop/BIS15W2024_kzhang/lab3"
+## [1] "/Users/zhangketong/Desktop/BIS15W2024_kzhang/lab3"
 ```
 
 ## Load the data
@@ -381,6 +381,15 @@ dim(mammals)
 
 3. Check the column names in the data frame. 
 
+```r
+names(mammals)
+```
+
+```
+##  [1] "order"        "family"       "Genus"        "species"      "mass"        
+##  [6] "gestation"    "newborn"      "weaning"      "wean mass"    "AFR"         
+## [11] "max. life"    "litter size"  "litters/year"
+```
 
 4. Use `str()` to show the structure of the data frame and its individual columns; compare this to `glimpse()`. 
 
@@ -447,6 +456,21 @@ glimpse(mammals)
 
 5. . Try the `table()` command to produce counts of mammal order, family, and genus.  
 
+```r
+table(mammals$order)
+```
+
+```
+## 
+##   Artiodactyla      Carnivora        Cetacea     Dermoptera     Hyracoidea 
+##            161            197             55              2              4 
+##    Insectivora     Lagomorpha  Macroscelidea Perissodactyla      Pholidota 
+##             91             42             10             15              7 
+##       Primates    Proboscidea       Rodentia     Scandentia        Sirenia 
+##            156              2            665              7              5 
+##  Tubulidentata      Xenarthra 
+##              1             20
+```
 
 
 
