@@ -133,23 +133,24 @@ select_if(fish, ~!is.numeric(.)) #this means dont select numeric, ! means not
 For this exercise we will use life history data `mammal_lifehistories_v2.csv` for mammals. The [data](http://esapubs.org/archive/ecol/E084/093/) are from:  
 **S. K. Morgan Ernest. 2003. Life history characteristics of placental non-volant mammals. Ecology 84:3402.**  
 
-Load the data.  
+Load the data.  whenever you import a data, it is already a data frame, do not use data frame
 ```{r}
-
+mammals <- read.csv("data/mammal_lifehistories_v2.csv")
 ```
 
 1. Use one or more of your favorite functions to assess the structure of the data.  
 ```{r}
-
+str(mammals)
 ```
 
 2. Are there any NAs? Are you sure? Try taking an average of `max. life` as a test.  
 ```{r}
-
+summary(mammals)
+anyNA(mammals) #no NA is suspicious this time cause aint no way -999 is the weight
 ```
-
+but there are issues in the mass because the min is -999
 ```{r}
-
+mean(mammals$max..life)
 ```
 
 ```{r}
@@ -158,36 +159,37 @@ Load the data.
 
 3. What are the names of the columns in the `mammals` data?
 ```{r}
-
+names(mammals)
 ```
 
 4. Rename any columns that have capitol letters or punctuation issues.  
 ```{r}
-
+mammals_new <- rename(mammals, genus = "Genus", wean_mass = "wean.mass", max_life = "max..life", litter_size = "litter.size", litter_year = "litters.year")
 ```
 
 5. We are only interested in the variables `genus`, `species`, and `mass`. Use `select()` to build a new dataframe `mass` focused on these variables.
 ```{r}
-
+names(mammals_new)
 ```
 
 ```{r}
-
+new_mammals <- select(mammals_new,"genus", "species", "mass")
+new_mammals
 ```
 
 6. What if we only wanted to exclude `order` and `family`? Use the `-` operator to make the code efficient.
 ```{r}
-
+select(mammals, -"order", -"family")
 ```
 
 7. Select the columns that include "mass" as part of the name.  
 ```{r}
-
+select(mammals, contains("mass"))
 ```
 
 8. Select all of the columns that are of class `character`.  
 ```{r}
-
+select(mammals, contains
 ```
 
 ## Other
