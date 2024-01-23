@@ -9,12 +9,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 1. In a new R Markdown document, load the tidyverse and a package called `palmerpenguins`. 
+load the library, no quotation needed?
 ```{r}
 library("tidyverse")
 library("palmerpenguins")
 ```
 
 2. What are the dimensions of the dataset `penguins`?
+data is call penguins
 ```{r}
 dim(penguins)
 ```
