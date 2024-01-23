@@ -277,7 +277,7 @@ large_mammals
 8. What is the mean weight for both the small and large mammals?
 
 ```r
-mean(large_mammals$bodywt, na.rm = T)
+mean(large_mammals$bodywt, na.rm = T) #for this one, I think not using na.rm=T is fine because there is no NAs in the "bodywt" category, but I used it just in case.
 ```
 
 ```
@@ -286,7 +286,7 @@ mean(large_mammals$bodywt, na.rm = T)
 
 
 ```r
-mean(small_mammals$bodywt, na.rm = T)
+mean(small_mammals$bodywt, na.rm = T) #for this one, I think not using na.rm=T is fine because there is no NAs in the "bodywt" category, but I used it just in case.
 ```
 
 ```
@@ -297,7 +297,7 @@ mean(small_mammals$bodywt, na.rm = T)
 **Small animals sleep longer on average.**
 
 ```r
-mean(large_mammals$sleep_total, na.rm = T)
+mean(large_mammals$sleep_total, na.rm = T) #for this one, I think not using na.rm=T is fine because there is no NAs in the "sleep_total" category, but I used it just in case.
 ```
 
 ```
@@ -306,7 +306,7 @@ mean(large_mammals$sleep_total, na.rm = T)
 
 
 ```r
-mean(small_mammals$sleep_total, na.rm = T)
+mean(small_mammals$sleep_total, na.rm = T) #for this one, I think not using na.rm=T is fine because there is no NAs in the "sleep_total" category, but I used it just in case.
 ```
 
 ```
@@ -328,7 +328,7 @@ max(sleep$sleep_total) #find the maximum value from sleep_total
 
 
 ```r
-filter(sleep, sleep_total == 19.9 )
+filter(sleep, sleep_total == 19.9 ) #set the filter to find the animal that have total sleep_total = 19
 ```
 
 ```
