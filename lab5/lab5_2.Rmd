@@ -56,9 +56,9 @@ filter(fish, lakeid == "AL")
 ```
 
 ```{r}
-fish %>%
-  select(lakeid, scalelength) %>%
-  filter(lakeid == "AL")
+fish %>% #shortcut shift command M, this is the pipe, now you can nest the command
+  select(lakeid, scalelength) %>% #use the output of the selected function, to filter out the observation of interest
+  filter(lakeid == "AL") #this is the observation of interest
 ```
 
 Here we select family, genus, and species then filter for gestation greater than 15 months.
@@ -71,7 +71,15 @@ mammals %>%
 ## Practice
 1. We are interested in the fish from the lakes "AL" and "AR" with a radii length between 2 and 4. Extract this information from the `fish` data. Use pipes!  
 ```{r}
+names(fish)
+```
 
+```{r}
+fish %>% #work with the fish data
+  select(lakeid, radii_length_mm) %>% #pull out variables of int
+  filter(lakeid == "AL" | lakeid == "AR") %>% #only these lakes
+  filter(between(radii_length_mm,2,4)) %>% #between 2 and 4
+  arrange(desc(radii_length_mm))
 ```
 
 ## `arrange()`
