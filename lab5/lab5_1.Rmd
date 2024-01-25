@@ -18,6 +18,7 @@ output:
 ## Load the tidyverse
 ```{r message=FALSE, warning=FALSE}
 library("tidyverse")
+library("janitor")
 ```
 
 ## Load the data
@@ -31,6 +32,7 @@ fish <- read_csv("data/Gaeta_etal_CLC_data.csv")
 2. S. K. Morgan Ernest. 2003. Life history characteristics of placental non-volant mammals. Ecology 84:3402.   [link](http://esapubs.org/archive/ecol/E084/093/)  
 ```{r}
 mammals <- read_csv("data/mammal_lifehistories_v2.csv")
+mammals
 ```
 
 Let's rename some of the `mammals` variables.  
@@ -40,7 +42,7 @@ mammals <- rename(mammals, genus="Genus", wean_mass="wean mass", max_life= "max.
 
 Do you remember the easier way?
 ```{r}
-
+mammals <- clean_names(mammals)
 ```
 
 ## Review
@@ -50,6 +52,7 @@ glimpse(fish)
 ```
 
 Let's convert `lakeid` to a factor and have a look at which states are represented in the data.  
+
 ```{r}
 fish$lakeid <- as.factor(fish$lakeid)
 levels(fish$lakeid)
@@ -57,7 +60,7 @@ levels(fish$lakeid)
 
 Now we can pull out any state of interest.  
 ```{r}
-
+filter(fish, lakeid=="LJ") #pull out all observation for lake LJ
 ```
 
 ## Using `filter()` on multiple conditions
@@ -68,7 +71,8 @@ filter(fish, lakeid == "AL" & length > 350)
 
 Notice that the `|` operator generates a different result.
 ```{r}
-filter(fish, lakeid == "AL" | length > 350)
+filter(fish, lakeid == "AL" | length > 350) #the vertical line means OR
+#this one have multiple lake id
 ```
 
 Rules:  
@@ -79,18 +83,27 @@ Rules:
 
 In this case, we filter out the fish with a length over 400 and a scale length over 11 or a radii length over 8.
 ```{r}
-filter(fish, length > 400, (scalelength > 11 | radii_length_mm > 8))
+filter(fish, length > 400, (scalelength > 11 | radii_length_mm > 8)) 
 ```
 
 ## Practice  
 1.  From the `mammals` data, filter all members of the family Bovidae with a mass greater than 450000.
 ```{r}
+names(mammals) #reminder of the names
+```
 
+```{r}
+bovidae <- filter(mammals, family == "Bovidae" | mass >450000)
+bovidae
 ```
 
 2. From the `mammals` data, build a data frame that compares `mass`, `gestation`, and `newborn` among the primate genera `Lophocebus`, `Erythrocebus`, and `Macaca`. Among these genera, which species has the smallest `newborn` mass?
 ```{r}
-
+mammals2 <- select(mammals, "order", "genus", "mass", "gestation", "newborn") 
+#now you need the primate genera
+mammals3 <- filter(mammals2, order =="Primates")
+mammals4 <- filter(mammals3, genus %in% c("Lophocebus", "Erythrocebus", "Macaca"))
+mammals4
 ```
 
 ```{r}
