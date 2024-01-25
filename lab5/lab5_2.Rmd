@@ -108,7 +108,10 @@ fish %>%
 ## Practice
 1. We are interested in the radii length and scalelength of fish with the id `300`. Extract this information from the `fish` data. Please sort the data by radii length.
 ```{r}
-
+fish %>% 
+  select(fish_id, radii_length_mm, scalelength) %>% 
+  filter(fish_id==300) %>% 
+  arrange(radii_length_mm)
 ```
 
 ## `mutate()`  
