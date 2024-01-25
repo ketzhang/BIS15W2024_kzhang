@@ -47,7 +47,7 @@ You will need the tidyverse to complete the warm-up- be sure to load the library
 
 
 ```{r}
-library(tidyverse)
+library("tidyverse")
 fish <- read.csv("data/Gaeta_etal_CLC_data.csv")
 fish
 ```
