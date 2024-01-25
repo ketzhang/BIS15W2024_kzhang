@@ -3,9 +3,9 @@ title: "Lab 4 Homework"
 author: "Ketong Zhang"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}
@@ -55,7 +55,13 @@ summary(homerange)
 **3. Change the class of the variables `taxon` and `order` to factors and display their levels.**  
 ```{r}
 homerange$taxon <- as.factor(homerange$taxon)
+levels(homerange$taxon)
+```
+
+
+```{r}
 homerange$order <- as.factor(homerange$order)
+levels(homerange$order)
 ```
 
 **4. What taxa are represented in the `homerange` data frame? Make a new data frame `taxa` that is restricted to taxon, common name, class, order, family, genus, species.**  
