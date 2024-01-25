@@ -44,6 +44,8 @@ The warm-up will use the fish data from lab 4. These data are from: Gaeta J., G.
 You will need the tidyverse to complete the warm-up- be sure to load the library.  
 
 1. Load the fish data. 
+
+
 ```{r}
 library(tidyverse)
 fish <- read.csv("data/Gaeta_etal_CLC_data.csv")
@@ -61,11 +63,16 @@ fishlength
 3. Filter the `fish` data to include the samples from lake "BO".  
 ```{r}
 filter(fish, lakeid == "BO")
+#or you can do this
+#glimpse(fish), check the class of variables first
 ```
 
 4. Calculate the mean length of fish from lake "BO".  
 ```{r}
 new_fish <- filter(fish, lakeid == "BO")
 mean(new_fish$length, na.rm = T)
+#you can do this too, same as above
+#fish_bo <-filter(fish, lakeid == "BO")
+#mean(fish_bo$length, na.rm=T)
 ```
 
