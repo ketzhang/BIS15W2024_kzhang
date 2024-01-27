@@ -19,7 +19,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 ## Load the tidyverse
 ```{r message=FALSE, warning=FALSE}
-library(tidyverse)
+library("tidyverse")
 ```
 
 ## Data
@@ -107,6 +107,9 @@ filter(owls, mean.mass.g == 61.32)
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
 ```{r}
+select(homerange, "taxon", "mean.mass.g","log10.mass","family","genus","species") %>% 
+  filter(taxon == "birds") %>% 
+  arrange(desc(mean.mass.g))
 ```
 
 ## Push your final code to GitHub!

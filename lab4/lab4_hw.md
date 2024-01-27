@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Ketong Zhang"
-date: "2024-01-24"
+date: "2024-01-26"
 output:
   html_document: 
     theme: spacelab
@@ -18,7 +18,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 ## Load the tidyverse
 
 ```r
-library(tidyverse)
+library("tidyverse")
 ```
 
 ## Data
@@ -43,32 +43,6 @@ homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-```
-
-```r
-homerange
-```
-
-```
-## # A tibble: 569 × 24
-##    taxon        common.name class order family genus species primarymethod N    
-##    <chr>        <chr>       <chr> <chr> <chr>  <chr> <chr>   <chr>         <chr>
-##  1 lake fishes  american e… acti… angu… angui… angu… rostra… telemetry     16   
-##  2 river fishes blacktail … acti… cypr… catos… moxo… poecil… mark-recaptu… <NA> 
-##  3 river fishes central st… acti… cypr… cypri… camp… anomal… mark-recaptu… 20   
-##  4 river fishes rosyside d… acti… cypr… cypri… clin… fundul… mark-recaptu… 26   
-##  5 river fishes longnose d… acti… cypr… cypri… rhin… catara… mark-recaptu… 17   
-##  6 river fishes muskellunge acti… esoc… esoci… esox  masqui… telemetry     5    
-##  7 marine fish… pollack     acti… gadi… gadid… poll… pollac… telemetry     2    
-##  8 marine fish… saithe      acti… gadi… gadid… poll… virens  telemetry     2    
-##  9 marine fish… lined surg… acti… perc… acant… acan… lineat… direct obser… <NA> 
-## 10 marine fish… orangespin… acti… perc… acant… naso  litura… telemetry     8    
-## # ℹ 559 more rows
-## # ℹ 15 more variables: mean.mass.g <dbl>, log10.mass <dbl>,
-## #   alternative.mass.reference <chr>, mean.hra.m2 <dbl>, log10.hra <dbl>,
-## #   hra.reference <chr>, realm <chr>, thermoregulation <chr>, locomotion <chr>,
-## #   trophic.guild <chr>, dimension <dbl>, preymass <dbl>, log10.preymass <dbl>,
-## #   PPMR <dbl>, prey.size.reference <chr>
 ```
 
 **2. Explore the data. Show the dimensions, column names, classes for each variable, and a statistical summary. Keep these as separate code chunks.**  
@@ -213,7 +187,6 @@ levels(homerange$taxon)
 ```
 
 
-
 ```r
 homerange$order <- as.factor(homerange$order)
 levels(homerange$order)
@@ -243,24 +216,6 @@ levels(homerange$order)
 
 ```r
 taxa <- select(homerange, "taxon", "common.name", "class", "order", "family", "genus", "species")
-taxa
-```
-
-```
-## # A tibble: 569 × 7
-##    taxon         common.name             class        order family genus species
-##    <fct>         <chr>                   <chr>        <fct> <chr>  <chr> <chr>  
-##  1 lake fishes   american eel            actinoptery… angu… angui… angu… rostra…
-##  2 river fishes  blacktail redhorse      actinoptery… cypr… catos… moxo… poecil…
-##  3 river fishes  central stoneroller     actinoptery… cypr… cypri… camp… anomal…
-##  4 river fishes  rosyside dace           actinoptery… cypr… cypri… clin… fundul…
-##  5 river fishes  longnose dace           actinoptery… cypr… cypri… rhin… catara…
-##  6 river fishes  muskellunge             actinoptery… esoc… esoci… esox  masqui…
-##  7 marine fishes pollack                 actinoptery… gadi… gadid… poll… pollac…
-##  8 marine fishes saithe                  actinoptery… gadi… gadid… poll… virens 
-##  9 marine fishes lined surgeonfish       actinoptery… perc… acant… acan… lineat…
-## 10 marine fishes orangespine unicornfish actinoptery… perc… acant… naso  litura…
-## # ℹ 559 more rows
 ```
 
 **5. The variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.**  
@@ -291,17 +246,103 @@ table(homerange$trophic.guild)
 
 **7. Make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.**  
 
+```r
+carn <- filter(homerange, trophic.guild == "carnivore")
+herb <- filter(homerange, trophic.guild == "herbivore")
+```
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
 
+```r
+mean(herb$mean.hra.m2, na.rm = T)
+```
 
+```
+## [1] 34137012
+```
+
+
+```r
+mean(carn$mean.hra.m2, na.rm = T)
+```
+
+```
+## [1] 13039918
+```
+
+
+```r
+names(homerange)
+```
+
+```
+##  [1] "taxon"                      "common.name"               
+##  [3] "class"                      "order"                     
+##  [5] "family"                     "genus"                     
+##  [7] "species"                    "primarymethod"             
+##  [9] "N"                          "mean.mass.g"               
+## [11] "log10.mass"                 "alternative.mass.reference"
+## [13] "mean.hra.m2"                "log10.hra"                 
+## [15] "hra.reference"              "realm"                     
+## [17] "thermoregulation"           "locomotion"                
+## [19] "trophic.guild"              "dimension"                 
+## [21] "preymass"                   "log10.preymass"            
+## [23] "PPMR"                       "prey.size.reference"
+```
 
 
 **9. Make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below** 
 
+```r
+owls <- filter(homerange, order =="strigiformes" )
+owls2 <-select(owls, "order", "mean.mass.g","log10.mass","family","genus","species")
+min(owls2$mean.mass.g)
+```
+
+```
+## [1] 61.32
+```
+
+```r
+filter(owls, mean.mass.g == 61.32)
+```
+
+```
+## # A tibble: 1 × 24
+##   taxon common.name        class order  family genus species primarymethod N    
+##   <fct> <chr>              <chr> <fct>  <chr>  <chr> <chr>   <chr>         <chr>
+## 1 birds Eurasian pygmy owl aves  strig… strig… glau… passer… telemetry*    <NA> 
+## # ℹ 15 more variables: mean.mass.g <dbl>, log10.mass <dbl>,
+## #   alternative.mass.reference <chr>, mean.hra.m2 <dbl>, log10.hra <dbl>,
+## #   hra.reference <chr>, realm <chr>, thermoregulation <chr>, locomotion <chr>,
+## #   trophic.guild <chr>, dimension <dbl>, preymass <dbl>, log10.preymass <dbl>,
+## #   PPMR <dbl>, prey.size.reference <chr>
+```
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
 
+```r
+select(homerange, "taxon", "mean.mass.g","log10.mass","family","genus","species") %>% 
+  filter(taxon == "birds") %>% 
+  arrange(desc(mean.mass.g))
+```
+
+```
+## # A tibble: 140 × 6
+##    taxon mean.mass.g log10.mass family        genus      species     
+##    <fct>       <dbl>      <dbl> <chr>         <chr>      <chr>       
+##  1 birds       88250       4.95 struthionidae struthio   camelus     
+##  2 birds       25000       4.40 rheidae       rhea       americana   
+##  3 birds       15000       4.18 rheidae       rhea       pennata     
+##  4 birds        3000       3.48 accipitridae  aquila     chrysaetos  
+##  5 birds        2936       3.47 phasianidae   tetrao     urogallus   
+##  6 birds        2320       3.37 apterygidae   apteryx    australis   
+##  7 birds        2203       3.34 accipitridae  neophron   percnopterus
+##  8 birds        2191       3.34 strigidae     bubo       bubo        
+##  9 birds        2049       3.31 accipitridae  hieraaetus fasciatus   
+## 10 birds        1941       3.29 strigopidae   strigops   habroptilus 
+## # ℹ 130 more rows
+```
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
