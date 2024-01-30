@@ -1,0 +1,15 @@
+---
+title: "lab 6 warmup continue"
+output: html_document
+date: "2024-01-30"
+---
+Q5
+```{r}
+males <- bison_new %>%  #first pull out males
+  filter(animal yob >=1980 & animal yb<=1990) %>% 
+  filter(animal_sex=="M") %>% 
+  males
+```
+
+Q7
+
