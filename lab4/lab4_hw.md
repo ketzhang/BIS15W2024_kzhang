@@ -1,7 +1,7 @@
 ---
 title: "Lab 4 Homework"
 author: "Ketong Zhang"
-date: "2024-01-26"
+date: "2024-01-29"
 output:
   html_document: 
     theme: spacelab
@@ -57,7 +57,7 @@ dim(homerange)
 
 
 ```r
-names(homerange)
+colnames(homerange)
 ```
 
 ```
@@ -252,6 +252,7 @@ herb <- filter(homerange, trophic.guild == "herbivore")
 ```
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
+Herbivores has a larger "mean.hra.m2" value compare to carnivores.
 
 ```r
 mean(herb$mean.hra.m2, na.rm = T)
@@ -270,6 +271,7 @@ mean(carn$mean.hra.m2, na.rm = T)
 ## [1] 13039918
 ```
 
+#the following is just a reminder on the name of variables
 
 ```r
 names(homerange)
@@ -320,27 +322,29 @@ filter(owls, mean.mass.g == 61.32)
 ```
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
+Caracara, it is a genus in the family Falconidae and the subfamily Polyborina, it looks like hawk but it is acturally a type of falcon.
 
 ```r
-select(homerange, "taxon", "mean.mass.g","log10.mass","family","genus","species") %>% 
-  filter(taxon == "birds") %>% 
-  arrange(desc(mean.mass.g))
+homerange %>% 
+  select(taxon,common.name,mean.hra.m2) %>% 
+  filter(taxon=="birds") %>% 
+  arrange(desc(mean.hra.m2))
 ```
 
 ```
-## # A tibble: 140 × 6
-##    taxon mean.mass.g log10.mass family        genus      species     
-##    <fct>       <dbl>      <dbl> <chr>         <chr>      <chr>       
-##  1 birds       88250       4.95 struthionidae struthio   camelus     
-##  2 birds       25000       4.40 rheidae       rhea       americana   
-##  3 birds       15000       4.18 rheidae       rhea       pennata     
-##  4 birds        3000       3.48 accipitridae  aquila     chrysaetos  
-##  5 birds        2936       3.47 phasianidae   tetrao     urogallus   
-##  6 birds        2320       3.37 apterygidae   apteryx    australis   
-##  7 birds        2203       3.34 accipitridae  neophron   percnopterus
-##  8 birds        2191       3.34 strigidae     bubo       bubo        
-##  9 birds        2049       3.31 accipitridae  hieraaetus fasciatus   
-## 10 birds        1941       3.29 strigopidae   strigops   habroptilus 
+## # A tibble: 140 × 3
+##    taxon common.name            mean.hra.m2
+##    <fct> <chr>                        <dbl>
+##  1 birds caracara                 241000000
+##  2 birds Montagu's harrier        200980000
+##  3 birds peregrine falcon         153860000
+##  4 birds booted eagle             117300000
+##  5 birds ostrich                   84300000
+##  6 birds short-toed snake eagle    78500000
+##  7 birds European turtle dove      63585000
+##  8 birds Egyptian vulture          63570000
+##  9 birds common buzzard            50240000
+## 10 birds lanner falcon             50000000
 ## # ℹ 130 more rows
 ```
 

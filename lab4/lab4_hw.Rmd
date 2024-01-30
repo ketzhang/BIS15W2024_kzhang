@@ -40,7 +40,7 @@ dim(homerange)
 ```
 
 ```{r}
-names(homerange)
+colnames(homerange)
 ```
 
 ```{r}
@@ -84,6 +84,7 @@ herb <- filter(homerange, trophic.guild == "herbivore")
 ```
 
 **8. Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.**  
+Herbivores has a larger "mean.hra.m2" value compare to carnivores.
 ```{r}
 mean(herb$mean.hra.m2, na.rm = T)
 ```
@@ -92,6 +93,7 @@ mean(herb$mean.hra.m2, na.rm = T)
 mean(carn$mean.hra.m2, na.rm = T)
 ```
 
+#the following is just a reminder on the name of variables
 ```{r}
 names(homerange)
 ```
@@ -106,10 +108,12 @@ filter(owls, mean.mass.g == 61.32)
 ```
 
 **10. As measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
+Caracara, it is a genus in the family Falconidae and the subfamily Polyborina, it looks like hawk but it is acturally a type of falcon.
 ```{r}
-select(homerange, "taxon", "mean.mass.g","log10.mass","family","genus","species") %>% 
-  filter(taxon == "birds") %>% 
-  arrange(desc(mean.mass.g))
+homerange %>% 
+  select(taxon,common.name,mean.hra.m2) %>% 
+  filter(taxon=="birds") %>% 
+  arrange(desc(mean.hra.m2))
 ```
 
 ## Push your final code to GitHub!

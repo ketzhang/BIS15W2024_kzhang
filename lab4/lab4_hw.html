@@ -11,7 +11,7 @@
 
 <meta name="author" content="Ketong Zhang" />
 
-<meta name="date" content="2024-01-26" />
+<meta name="date" content="2024-01-29" />
 
 <title>Lab 4 Homework</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Lab 4 Homework</h1>
 <h4 class="author">Ketong Zhang</h4>
-<h4 class="date">2024-01-26</h4>
+<h4 class="date">2024-01-29</h4>
 
 </div>
 
@@ -421,7 +421,7 @@ classes for each variable, and a statistical summary. Keep these as
 separate code chunks.</strong></p>
 <pre class="r"><code>dim(homerange)</code></pre>
 <pre><code>## [1] 569  24</code></pre>
-<pre class="r"><code>names(homerange)</code></pre>
+<pre class="r"><code>colnames(homerange)</code></pre>
 <pre><code>##  [1] &quot;taxon&quot;                      &quot;common.name&quot;               
 ##  [3] &quot;class&quot;                      &quot;order&quot;                     
 ##  [5] &quot;family&quot;                     &quot;genus&quot;                     
@@ -571,11 +571,13 @@ carnivores and another that is restricted to herbivores.</strong></p>
 <pre class="r"><code>carn &lt;- filter(homerange, trophic.guild == &quot;carnivore&quot;)
 herb &lt;- filter(homerange, trophic.guild == &quot;herbivore&quot;)</code></pre>
 <p><strong>8. Do herbivores or carnivores have, on average, a larger
-<code>mean.hra.m2</code>? Remove any NAs from the data.</strong></p>
+<code>mean.hra.m2</code>? Remove any NAs from the data.</strong><br />
+Herbivores has a larger “mean.hra.m2” value compare to carnivores.</p>
 <pre class="r"><code>mean(herb$mean.hra.m2, na.rm = T)</code></pre>
 <pre><code>## [1] 34137012</code></pre>
 <pre class="r"><code>mean(carn$mean.hra.m2, na.rm = T)</code></pre>
 <pre><code>## [1] 13039918</code></pre>
+<p>#the following is just a reminder on the name of variables</p>
 <pre class="r"><code>names(homerange)</code></pre>
 <pre><code>##  [1] &quot;taxon&quot;                      &quot;common.name&quot;               
 ##  [3] &quot;class&quot;                      &quot;order&quot;                     
@@ -610,23 +612,26 @@ min(owls2$mean.mass.g)</code></pre>
 ## #   PPMR &lt;dbl&gt;, prey.size.reference &lt;chr&gt;</code></pre>
 <p><strong>10. As measured by the data, which bird species has the
 largest homerange? Show all of your work, please. Look this species up
-online and tell me about it!</strong>.</p>
-<pre class="r"><code>select(homerange, &quot;taxon&quot;, &quot;mean.mass.g&quot;,&quot;log10.mass&quot;,&quot;family&quot;,&quot;genus&quot;,&quot;species&quot;) %&gt;% 
-  filter(taxon == &quot;birds&quot;) %&gt;% 
-  arrange(desc(mean.mass.g))</code></pre>
-<pre><code>## # A tibble: 140 × 6
-##    taxon mean.mass.g log10.mass family        genus      species     
-##    &lt;fct&gt;       &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt;       
-##  1 birds       88250       4.95 struthionidae struthio   camelus     
-##  2 birds       25000       4.40 rheidae       rhea       americana   
-##  3 birds       15000       4.18 rheidae       rhea       pennata     
-##  4 birds        3000       3.48 accipitridae  aquila     chrysaetos  
-##  5 birds        2936       3.47 phasianidae   tetrao     urogallus   
-##  6 birds        2320       3.37 apterygidae   apteryx    australis   
-##  7 birds        2203       3.34 accipitridae  neophron   percnopterus
-##  8 birds        2191       3.34 strigidae     bubo       bubo        
-##  9 birds        2049       3.31 accipitridae  hieraaetus fasciatus   
-## 10 birds        1941       3.29 strigopidae   strigops   habroptilus 
+online and tell me about it!</strong>.<br />
+Caracara, it is a genus in the family Falconidae and the subfamily
+Polyborina, it looks like hawk but it is acturally a type of falcon.</p>
+<pre class="r"><code>homerange %&gt;% 
+  select(taxon,common.name,mean.hra.m2) %&gt;% 
+  filter(taxon==&quot;birds&quot;) %&gt;% 
+  arrange(desc(mean.hra.m2))</code></pre>
+<pre><code>## # A tibble: 140 × 3
+##    taxon common.name            mean.hra.m2
+##    &lt;fct&gt; &lt;chr&gt;                        &lt;dbl&gt;
+##  1 birds caracara                 241000000
+##  2 birds Montagu&#39;s harrier        200980000
+##  3 birds peregrine falcon         153860000
+##  4 birds booted eagle             117300000
+##  5 birds ostrich                   84300000
+##  6 birds short-toed snake eagle    78500000
+##  7 birds European turtle dove      63585000
+##  8 birds Egyptian vulture          63570000
+##  9 birds common buzzard            50240000
+## 10 birds lanner falcon             50000000
 ## # ℹ 130 more rows</code></pre>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
