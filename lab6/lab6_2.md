@@ -335,7 +335,8 @@ bad_guy %>%
 
 
 9. Are there more good guys or bad guys with green hair? 
-**More good guys have green hair**
+**More good guys have green hair than bad guys**
+
 
 ```r
 good_guy %>% 
@@ -370,6 +371,32 @@ bad_guy %>%
 ## # ℹ 1 more variable: weight <dbl>
 ```
 
+
+**Alternative ways to do this, when it should TRUE, this indicate the corresponding hero has green hair.  Good guys have 7 true and bad guys only 1 true**
+
+```r
+tabyl(good_guy$hair_color == "Green")
+```
+
+```
+##  good_guy$hair_color == "Green"   n   percent valid_percent
+##                           FALSE 375 0.7560484    0.98167539
+##                            TRUE   7 0.0141129    0.01832461
+##                              NA 114 0.2298387            NA
+```
+
+
+```r
+tabyl(bad_guy$hair_color == "Green")
+```
+
+```
+##  bad_guy$hair_color == "Green"   n     percent valid_percent
+##                          FALSE 153 0.739130435   0.993506494
+##                           TRUE   1 0.004830918   0.006493506
+##                             NA  53 0.256038647            NA
+```
+
 10. Let's explore who the really small superheros are. In the `superhero_info` data, which have a weight less than 50? Be sure to sort your results by weight lowest to highest.  
 
 
@@ -378,6 +405,32 @@ short_hero <- superhero_info %>%
   select(name, weight) %>% 
   filter(weight < 50) %>% 
   arrange(weight)
+short_hero
+```
+
+```
+## # A tibble: 19 × 2
+##    name              weight
+##    <chr>              <dbl>
+##  1 Iron Monger            2
+##  2 Groot                  4
+##  3 Jack-Jack             14
+##  4 Galactus              16
+##  5 Yoda                  17
+##  6 Fin Fang Foom         18
+##  7 Howard the Duck       18
+##  8 Krypto                18
+##  9 Rocket Raccoon        25
+## 10 Dash                  27
+## 11 Longshot              36
+## 12 Robin V               38
+## 13 Wiz Kid               39
+## 14 Violet Parr           41
+## 15 Franklin Richards     45
+## 16 Swarm                 47
+## 17 Hope Summers          48
+## 18 Jolt                  49
+## 19 Snowbird              49
 ```
 
 
@@ -409,13 +462,12 @@ superhero_info %>%
 
 
 12. Who has the highest height to weight ratio?  
-**Groot**
 
 ```r
 superhero_info %>% 
   select(name, height, weight) %>% 
   mutate(height_weight_ratio = height / weight) %>% 
-  arrange(desc(height_weight_ratio))
+  arrange(desc(height_weight_ratio)) #highest to lowest
 ```
 
 ```
@@ -711,7 +763,6 @@ colnames(superhero_powers)
 
 
 13. How many superheros have a combination of agility, stealth, super_strength, stamina?
-
 
 ```r
 superhero_powers %>% 

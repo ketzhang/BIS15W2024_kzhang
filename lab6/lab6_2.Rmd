@@ -153,12 +153,11 @@ superhero_info %>%
 
 
 12. Who has the highest height to weight ratio?  
-**Groot**
 ```{r}
 superhero_info %>% 
   select(name, height, weight) %>% 
   mutate(height_weight_ratio = height / weight) %>% 
-  arrange(desc(height_weight_ratio))
+  arrange(desc(height_weight_ratio)) #highest to lowest
 ```
 
 
@@ -173,12 +172,10 @@ colnames(superhero_powers)
 
 
 13. How many superheros have a combination of agility, stealth, super_strength, stamina?
-
 ```{r}
 superhero_powers %>% 
   select(hero_names, Agility, Stealth, `Super Strength`, Stamina) %>% 
   filter(Agility == "TRUE" & Stealth == "TRUE", `Super Strength`=="TRUE", Stamina =="TRUE")
-
 ```
 
 
