@@ -110,7 +110,8 @@ bad_guy %>%
 
 
 9. Are there more good guys or bad guys with green hair? 
-**More good guys have green hair**
+**More good guys have green hair than bad guys**
+
 ```{r}
 good_guy %>% 
   filter(hair_color == "Green")
@@ -121,6 +122,16 @@ bad_guy %>%
   filter(`hair_color`=="Green")
 ```
 
+
+**Alternative ways to do this, when it should TRUE, this indicate the corresponding hero has green hair.  Good guys have 7 true and bad guys only 1 true**
+```{r}
+tabyl(good_guy$hair_color == "Green")
+```
+
+```{r}
+tabyl(bad_guy$hair_color == "Green")
+```
+
 10. Let's explore who the really small superheros are. In the `superhero_info` data, which have a weight less than 50? Be sure to sort your results by weight lowest to highest.  
 
 ```{r}
@@ -128,6 +139,7 @@ short_hero <- superhero_info %>%
   select(name, weight) %>% 
   filter(weight < 50) %>% 
   arrange(weight)
+short_hero
 ```
 
 
