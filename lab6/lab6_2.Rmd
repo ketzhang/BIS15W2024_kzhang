@@ -33,26 +33,30 @@ superhero_powers <- read_csv("data/super_hero_powers.csv", na = c("", "-99", "-"
 ```
 
 ## Data tidy
-1. Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`.    
+1. Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`. 
+```{r}
+superhero_info <- clean_names(superhero_info)
+```
+
 
 ## `tabyl`
 The `janitor` package has many awesome functions that we will explore. Here is its version of `table` which not only produces counts but also percentages. Very handy! Let's use it to explore the proportion of good guys and bad guys in the `superhero_info` data.  
 ```{r}
-tabyl(superhero_info, Alignment)
+tabyl(superhero_info, alignment)
 ```
 
 1. Who are the publishers of the superheros? Show the proportion of superheros from each publisher. Which publisher has the highest number of superheros?  
 **Marvel Comics has the highest number of superheros**
 ```{r}
-tabyl(superhero_info,Publisher)
+tabyl(superhero_info,publisher)
 ```
 
 
 2. Notice that we have some neutral superheros! Who are they? List their names below.  
 ```{r}
 superhero_info %>% 
-  select(name, Alignment) %>% 
-  filter(Alignment =="neutral")
+  select(name, alignment) %>% 
+  filter(alignment =="neutral")
 
 ```
 
@@ -61,7 +65,7 @@ superhero_info %>%
 3. Let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
 ```{r}
 superhero_info %>% 
-  select(name, Alignment, Race)
+  select(name, alignment, race)
 ```
 
 
@@ -69,7 +73,7 @@ superhero_info %>%
 4. List all of the superheros that are not human.
 ```{r}
 superhero_info %>% 
-  filter(Race!="Human")
+  filter(race!="Human")
 ```
 
 
@@ -77,31 +81,31 @@ superhero_info %>%
 5. Let's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".
 ```{r}
 bad_guy <- superhero_info %>% 
-  filter(Alignment == "bad")
+  filter(alignment == "bad")
 ```
 
 ```{r}
 good_guy <- superhero_info %>% 
-  filter(Alignment == "good")
+  filter(alignment == "good")
 ```
 
 
 6. For the good guys, use the `tabyl` function to summarize their "race".
 ```{r}
-tabyl(good_guy, Race)
+tabyl(good_guy, race)
 ```
 
 
 7. Among the good guys, Who are the Vampires?
 ```{r}
 good_guy %>% 
-  filter(Race == "Vampire")
+  filter(race == "Vampire")
 ```
 
 8. Among the bad guys, who are the male humans over 200 inches in height?
 ```{r}
 bad_guy %>% 
-  filter(Height > 200)
+  filter(height > 200)
 ```
 
 
@@ -109,21 +113,21 @@ bad_guy %>%
 **More good guys have green hair**
 ```{r}
 good_guy %>% 
-  filter(`Hair color`=="Green")
+  filter(hair_color == "Green")
 ```
 
 ```{r}
 bad_guy %>% 
-  filter(`Hair color`=="Green")
+  filter(`hair_color`=="Green")
 ```
 
 10. Let's explore who the really small superheros are. In the `superhero_info` data, which have a weight less than 50? Be sure to sort your results by weight lowest to highest.  
 
 ```{r}
 short_hero <- superhero_info %>% 
-  select(name, Weight) %>% 
-  filter(Weight < 50) %>% 
-  arrange(desc(Weight))
+  select(name, weight) %>% 
+  filter(weight < 50) %>% 
+  arrange(desc(weight))
 short_hero
 ```
 
@@ -131,8 +135,8 @@ short_hero
 11. Let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.    
 ```{r}
 superhero_info %>% 
-  select(name, Height, Weight) %>% 
-  mutate(height_weight_ratio = Height / Weight) %>% 
+  select(name, height, weight) %>% 
+  mutate(height_weight_ratio = height / weight) %>% 
   arrange(height_weight_ratio)
 ```
 
@@ -141,8 +145,8 @@ superhero_info %>%
 **Groot**
 ```{r}
 superhero_info %>% 
-  select(name, Height, Weight) %>% 
-  mutate(height_weight_ratio = Height / Weight) %>% 
+  select(name, height, weight) %>% 
+  mutate(height_weight_ratio = height / weight) %>% 
   arrange(desc(height_weight_ratio))
 ```
 

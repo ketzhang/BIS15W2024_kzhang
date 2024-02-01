@@ -85,17 +85,22 @@ superhero_powers <- read_csv("data/super_hero_powers.csv", na = c("", "-99", "-"
 ```
 
 ## Data tidy
-1. Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`.    
+1. Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`. 
+
+```r
+superhero_info <- clean_names(superhero_info)
+```
+
 
 ## `tabyl`
 The `janitor` package has many awesome functions that we will explore. Here is its version of `table` which not only produces counts but also percentages. Very handy! Let's use it to explore the proportion of good guys and bad guys in the `superhero_info` data.  
 
 ```r
-tabyl(superhero_info, Alignment)
+tabyl(superhero_info, alignment)
 ```
 
 ```
-##  Alignment   n     percent valid_percent
+##  alignment   n     percent valid_percent
 ##        bad 207 0.282016349    0.28473177
 ##       good 496 0.675749319    0.68225585
 ##    neutral  24 0.032697548    0.03301238
@@ -106,11 +111,11 @@ tabyl(superhero_info, Alignment)
 **Marvel Comics has the highest number of superheros**
 
 ```r
-tabyl(superhero_info,Publisher)
+tabyl(superhero_info,publisher)
 ```
 
 ```
-##          Publisher   n     percent valid_percent
+##          publisher   n     percent valid_percent
 ##        ABC Studios   4 0.005449591   0.005563282
 ##          DC Comics 215 0.292915531   0.299026426
 ##  Dark Horse Comics  18 0.024523161   0.025034771
@@ -143,13 +148,13 @@ tabyl(superhero_info,Publisher)
 
 ```r
 superhero_info %>% 
-  select(name, Alignment) %>% 
-  filter(Alignment =="neutral")
+  select(name, alignment) %>% 
+  filter(alignment =="neutral")
 ```
 
 ```
 ## # A tibble: 24 × 2
-##    name         Alignment
+##    name         alignment
 ##    <chr>        <chr>    
 ##  1 Bizarro      neutral  
 ##  2 Black Flash  neutral  
@@ -170,12 +175,12 @@ superhero_info %>%
 
 ```r
 superhero_info %>% 
-  select(name, Alignment, Race)
+  select(name, alignment, race)
 ```
 
 ```
 ## # A tibble: 734 × 3
-##    name          Alignment Race             
+##    name          alignment race             
 ##    <chr>         <chr>     <chr>            
 ##  1 A-Bomb        good      Human            
 ##  2 Abe Sapien    good      Icthyo Sapien    
@@ -196,25 +201,25 @@ superhero_info %>%
 
 ```r
 superhero_info %>% 
-  filter(Race!="Human")
+  filter(race!="Human")
 ```
 
 ```
 ## # A tibble: 222 × 10
-##    name      Gender `Eye color` Race  `Hair color` Height Publisher `Skin color`
-##    <chr>     <chr>  <chr>       <chr> <chr>         <dbl> <chr>     <chr>       
-##  1 Abe Sapi… Male   blue        Icth… No Hair         191 Dark Hor… blue        
-##  2 Abin Sur  Male   blue        Unga… No Hair         185 DC Comics red         
-##  3 Abominat… Male   green       Huma… No Hair         203 Marvel C… <NA>        
-##  4 Abraxas   Male   blue        Cosm… Black            NA Marvel C… <NA>        
-##  5 Ajax      Male   brown       Cybo… Black           193 Marvel C… <NA>        
-##  6 Alien     Male   <NA>        Xeno… No Hair         244 Dark Hor… black       
-##  7 Amazo     Male   red         Andr… <NA>            257 DC Comics <NA>        
-##  8 Angel     Male   <NA>        Vamp… <NA>             NA Dark Hor… <NA>        
-##  9 Angel Du… Female yellow      Muta… Black           165 Marvel C… <NA>        
-## 10 Anti-Mon… Male   yellow      God … No Hair          61 DC Comics <NA>        
+##    name  gender eye_color race  hair_color height publisher skin_color alignment
+##    <chr> <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+##  1 Abe … Male   blue      Icth… No Hair       191 Dark Hor… blue       good     
+##  2 Abin… Male   blue      Unga… No Hair       185 DC Comics red        good     
+##  3 Abom… Male   green     Huma… No Hair       203 Marvel C… <NA>       bad      
+##  4 Abra… Male   blue      Cosm… Black          NA Marvel C… <NA>       bad      
+##  5 Ajax  Male   brown     Cybo… Black         193 Marvel C… <NA>       bad      
+##  6 Alien Male   <NA>      Xeno… No Hair       244 Dark Hor… black      bad      
+##  7 Amazo Male   red       Andr… <NA>          257 DC Comics <NA>       bad      
+##  8 Angel Male   <NA>      Vamp… <NA>           NA Dark Hor… <NA>       good     
+##  9 Ange… Female yellow    Muta… Black         165 Marvel C… <NA>       good     
+## 10 Anti… Male   yellow    God … No Hair        61 DC Comics <NA>       bad      
 ## # ℹ 212 more rows
-## # ℹ 2 more variables: Alignment <chr>, Weight <dbl>
+## # ℹ 1 more variable: weight <dbl>
 ```
 
 
@@ -223,24 +228,24 @@ superhero_info %>%
 
 ```r
 bad_guy <- superhero_info %>% 
-  filter(Alignment == "bad")
+  filter(alignment == "bad")
 ```
 
 
 ```r
 good_guy <- superhero_info %>% 
-  filter(Alignment == "good")
+  filter(alignment == "good")
 ```
 
 
 6. For the good guys, use the `tabyl` function to summarize their "race".
 
 ```r
-tabyl(good_guy, Race)
+tabyl(good_guy, race)
 ```
 
 ```
-##               Race   n     percent valid_percent
+##               race   n     percent valid_percent
 ##              Alien   3 0.006048387   0.010752688
 ##              Alpha   5 0.010080645   0.017921147
 ##             Amazon   2 0.004032258   0.007168459
@@ -291,41 +296,41 @@ tabyl(good_guy, Race)
 
 ```r
 good_guy %>% 
-  filter(Race == "Vampire")
+  filter(race == "Vampire")
 ```
 
 ```
 ## # A tibble: 2 × 10
-##   name  Gender `Eye color` Race    `Hair color` Height Publisher    `Skin color`
-##   <chr> <chr>  <chr>       <chr>   <chr>         <dbl> <chr>        <chr>       
-## 1 Angel Male   <NA>        Vampire <NA>             NA Dark Horse … <NA>        
-## 2 Blade Male   brown       Vampire Black           188 Marvel Comi… <NA>        
-## # ℹ 2 more variables: Alignment <chr>, Weight <dbl>
+##   name  gender eye_color race   hair_color height publisher skin_color alignment
+##   <chr> <chr>  <chr>     <chr>  <chr>       <dbl> <chr>     <chr>      <chr>    
+## 1 Angel Male   <NA>      Vampi… <NA>           NA Dark Hor… <NA>       good     
+## 2 Blade Male   brown     Vampi… Black         188 Marvel C… <NA>       good     
+## # ℹ 1 more variable: weight <dbl>
 ```
 
 8. Among the bad guys, who are the male humans over 200 inches in height?
 
 ```r
 bad_guy %>% 
-  filter(Height > 200)
+  filter(height > 200)
 ```
 
 ```
 ## # A tibble: 25 × 10
-##    name      Gender `Eye color` Race  `Hair color` Height Publisher `Skin color`
-##    <chr>     <chr>  <chr>       <chr> <chr>         <dbl> <chr>     <chr>       
-##  1 Abominat… Male   green       Huma… No Hair         203 Marvel C… <NA>        
-##  2 Alien     Male   <NA>        Xeno… No Hair         244 Dark Hor… black       
-##  3 Amazo     Male   red         Andr… <NA>            257 DC Comics <NA>        
-##  4 Apocalyp… Male   red         Muta… Black           213 Marvel C… grey        
-##  5 Bane      Male   <NA>        Human <NA>            203 DC Comics <NA>        
-##  6 Bloodaxe  Female blue        Human Brown           218 Marvel C… <NA>        
-##  7 Darkseid  Male   red         New … No Hair         267 DC Comics grey        
-##  8 Doctor D… Male   brown       Human Brown           201 Marvel C… <NA>        
-##  9 Doctor D… Male   brown       <NA>  Brown           201 Marvel C… <NA>        
-## 10 Doomsday  Male   red         Alien White           244 DC Comics <NA>        
+##    name  gender eye_color race  hair_color height publisher skin_color alignment
+##    <chr> <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+##  1 Abom… Male   green     Huma… No Hair       203 Marvel C… <NA>       bad      
+##  2 Alien Male   <NA>      Xeno… No Hair       244 Dark Hor… black      bad      
+##  3 Amazo Male   red       Andr… <NA>          257 DC Comics <NA>       bad      
+##  4 Apoc… Male   red       Muta… Black         213 Marvel C… grey       bad      
+##  5 Bane  Male   <NA>      Human <NA>          203 DC Comics <NA>       bad      
+##  6 Bloo… Female blue      Human Brown         218 Marvel C… <NA>       bad      
+##  7 Dark… Male   red       New … No Hair       267 DC Comics grey       bad      
+##  8 Doct… Male   brown     Human Brown         201 Marvel C… <NA>       bad      
+##  9 Doct… Male   brown     <NA>  Brown         201 Marvel C… <NA>       bad      
+## 10 Doom… Male   red       Alien White         244 DC Comics <NA>       bad      
 ## # ℹ 15 more rows
-## # ℹ 2 more variables: Alignment <chr>, Weight <dbl>
+## # ℹ 1 more variable: weight <dbl>
 ```
 
 
@@ -334,35 +339,35 @@ bad_guy %>%
 
 ```r
 good_guy %>% 
-  filter(`Hair color`=="Green")
+  filter(hair_color == "Green")
 ```
 
 ```
 ## # A tibble: 7 × 10
-##   name       Gender `Eye color` Race  `Hair color` Height Publisher `Skin color`
-##   <chr>      <chr>  <chr>       <chr> <chr>         <dbl> <chr>     <chr>       
-## 1 Beast Boy  Male   green       Human Green           173 DC Comics green       
-## 2 Captain P… Male   red         God … Green            NA Marvel C… <NA>        
-## 3 Doc Samson Male   blue        Huma… Green           198 Marvel C… <NA>        
-## 4 Hulk       Male   green       Huma… Green           244 Marvel C… green       
-## 5 Lyja       Female green       <NA>  Green            NA Marvel C… <NA>        
-## 6 Polaris    Female green       Muta… Green           170 Marvel C… <NA>        
-## 7 She-Hulk   Female green       Human Green           201 Marvel C… <NA>        
-## # ℹ 2 more variables: Alignment <chr>, Weight <dbl>
+##   name   gender eye_color race  hair_color height publisher skin_color alignment
+##   <chr>  <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+## 1 Beast… Male   green     Human Green         173 DC Comics green      good     
+## 2 Capta… Male   red       God … Green          NA Marvel C… <NA>       good     
+## 3 Doc S… Male   blue      Huma… Green         198 Marvel C… <NA>       good     
+## 4 Hulk   Male   green     Huma… Green         244 Marvel C… green      good     
+## 5 Lyja   Female green     <NA>  Green          NA Marvel C… <NA>       good     
+## 6 Polar… Female green     Muta… Green         170 Marvel C… <NA>       good     
+## 7 She-H… Female green     Human Green         201 Marvel C… <NA>       good     
+## # ℹ 1 more variable: weight <dbl>
 ```
 
 
 ```r
 bad_guy %>% 
-  filter(`Hair color`=="Green")
+  filter(`hair_color`=="Green")
 ```
 
 ```
 ## # A tibble: 1 × 10
-##   name  Gender `Eye color` Race  `Hair color` Height Publisher `Skin color`
-##   <chr> <chr>  <chr>       <chr> <chr>         <dbl> <chr>     <chr>       
-## 1 Joker Male   green       Human Green           196 DC Comics white       
-## # ℹ 2 more variables: Alignment <chr>, Weight <dbl>
+##   name  gender eye_color race  hair_color height publisher skin_color alignment
+##   <chr> <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+## 1 Joker Male   green     Human Green         196 DC Comics white      bad      
+## # ℹ 1 more variable: weight <dbl>
 ```
 
 10. Let's explore who the really small superheros are. In the `superhero_info` data, which have a weight less than 50? Be sure to sort your results by weight lowest to highest.  
@@ -370,15 +375,15 @@ bad_guy %>%
 
 ```r
 short_hero <- superhero_info %>% 
-  select(name, Weight) %>% 
-  filter(Weight < 50) %>% 
-  arrange(desc(Weight))
+  select(name, weight) %>% 
+  filter(weight < 50) %>% 
+  arrange(desc(weight))
 short_hero
 ```
 
 ```
 ## # A tibble: 19 × 2
-##    name              Weight
+##    name              weight
 ##    <chr>              <dbl>
 ##  1 Jolt                  49
 ##  2 Snowbird              49
@@ -406,14 +411,14 @@ short_hero
 
 ```r
 superhero_info %>% 
-  select(name, Height, Weight) %>% 
-  mutate(height_weight_ratio = Height / Weight) %>% 
+  select(name, height, weight) %>% 
+  mutate(height_weight_ratio = height / weight) %>% 
   arrange(height_weight_ratio)
 ```
 
 ```
 ## # A tibble: 734 × 4
-##    name        Height Weight height_weight_ratio
+##    name        height weight height_weight_ratio
 ##    <chr>        <dbl>  <dbl>               <dbl>
 ##  1 Giganta       62.5    630              0.0992
 ##  2 Utgard-Loki   15.2     58              0.262 
@@ -434,14 +439,14 @@ superhero_info %>%
 
 ```r
 superhero_info %>% 
-  select(name, Height, Weight) %>% 
-  mutate(height_weight_ratio = Height / Weight) %>% 
+  select(name, height, weight) %>% 
+  mutate(height_weight_ratio = height / weight) %>% 
   arrange(desc(height_weight_ratio))
 ```
 
 ```
 ## # A tibble: 734 × 4
-##    name            Height Weight height_weight_ratio
+##    name            height weight height_weight_ratio
 ##    <chr>            <dbl>  <dbl>               <dbl>
 ##  1 Groot              701      4              175.  
 ##  2 Galactus           876     16               54.8 
@@ -790,10 +795,10 @@ superhero_info %>%
 
 ```
 ## # A tibble: 1 × 10
-##   name     Gender `Eye color` Race  `Hair color` Height Publisher `Skin color`
-##   <chr>    <chr>  <chr>       <chr> <chr>         <dbl> <chr>     <chr>       
-## 1 Catwoman Female green       Human Black           175 DC Comics <NA>        
-## # ℹ 2 more variables: Alignment <chr>, Weight <dbl>
+##   name   gender eye_color race  hair_color height publisher skin_color alignment
+##   <chr>  <chr>  <chr>     <chr> <chr>       <dbl> <chr>     <chr>      <chr>    
+## 1 Catwo… Female green     Human Black         175 DC Comics <NA>       good     
+## # ℹ 1 more variable: weight <dbl>
 ```
 
 
