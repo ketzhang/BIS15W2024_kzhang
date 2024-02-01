@@ -135,7 +135,7 @@ penguins %>%
 
 ```{r}
 penguins %>%
-  summarize(across(contains("mm"), \(x) mean(x, na.rm = TRUE)))
+  summarize(across(contains("mm"), \(x) mean(x, na.rm = TRUE))) #use this to correct the error
 ```
 
 `group_by` also works.
