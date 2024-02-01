@@ -23,3 +23,5 @@ library("jpeg")
 1. When is midterm 1?  
 2. How can we best support you on the exam?  
 3. How will you prepare?  
+
+on the test if your thing dont knit, comment it
