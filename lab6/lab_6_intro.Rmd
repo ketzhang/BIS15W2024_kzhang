@@ -1,7 +1,9 @@
 ---
 title: "Lab 6 Intro"
 date: "`r Sys.Date()`"
-output: ioslides_presentation
+output: 
+  ioslides_presentation: 
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}

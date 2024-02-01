@@ -1,6 +1,8 @@
 ---
 title: "lab 6 warmup continue"
-output: html_document
+output: 
+  html_document: 
+    keep_md: true
 date: "2024-01-30"
 ---
 Q5
