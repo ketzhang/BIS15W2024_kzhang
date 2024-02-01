@@ -1,6 +1,6 @@
 ---
 title: "dplyr Superhero"
-date: "2024-01-31"
+date: "2024-02-01"
 output:
   html_document: 
     theme: spacelab
@@ -377,33 +377,7 @@ bad_guy %>%
 short_hero <- superhero_info %>% 
   select(name, weight) %>% 
   filter(weight < 50) %>% 
-  arrange(desc(weight))
-short_hero
-```
-
-```
-## # A tibble: 19 × 2
-##    name              weight
-##    <chr>              <dbl>
-##  1 Jolt                  49
-##  2 Snowbird              49
-##  3 Hope Summers          48
-##  4 Swarm                 47
-##  5 Franklin Richards     45
-##  6 Violet Parr           41
-##  7 Wiz Kid               39
-##  8 Robin V               38
-##  9 Longshot              36
-## 10 Dash                  27
-## 11 Rocket Raccoon        25
-## 12 Fin Fang Foom         18
-## 13 Howard the Duck       18
-## 14 Krypto                18
-## 15 Yoda                  17
-## 16 Galactus              16
-## 17 Jack-Jack             14
-## 18 Groot                  4
-## 19 Iron Monger            2
+  arrange(weight)
 ```
 
 

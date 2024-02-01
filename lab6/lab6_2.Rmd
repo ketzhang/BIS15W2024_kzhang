@@ -127,8 +127,7 @@ bad_guy %>%
 short_hero <- superhero_info %>% 
   select(name, weight) %>% 
   filter(weight < 50) %>% 
-  arrange(desc(weight))
-short_hero
+  arrange(weight)
 ```
 
 
