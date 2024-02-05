@@ -1,0 +1,261 @@
+---
+title: "EXAM 1 combined notes"
+author: "Ketong Zhang"
+date: "2024-02-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Lab 1**
+
+What is a vector
+Vectors are a common way of organizing data in R.  We create vectors using the `c` command. The `c` stands for concatenate. 
+
+To make a vector or string of values which we will store as an object x
+
+```{r}
+x <- c(4, 6, 8, 5, 6, 7, 7, 7)
+```
+
+**Lab 2**
+
+To make a combination of multiple variables into ONE object using the function sum()
+```{r}
+my_experiment <- sum(treatment, control) #2 variables: control and treatment
+```
+
+Type of data
+```{r}
+my_numeric <- 42
+my_integer <- 2L #adding an L automatically denotes an integer
+my_character <- "universe"
+my_logical <- FALSE
+my_complex <- 2+4i
+```
+
+Use the `class()` function to find out the class of your data
+```{r}
+class(my_numeric)
+class(my_integer)
+```
+
+You can use the `is()` and `as()` functions to clarify or specify a type of data. If it return true -> your assumption is correct.
+```{r}
+is.integer(my_numeric) #is my_numeric an integer?
+```
+
+NA means missing data
+```{r}
+my_missing <- NA
+```
+
+```{r}
+is.na(my_missing)
+```
+
+```{r}
+anyNA(my_missing)
+```
+
+Examples
+Numeric vector
+```{r}
+new_vector <- c(7, 6.2, 5, 9, NA, 4, 9.8, 7, 3, 2)
+```
+
+A character / string vector
+```{r}
+days_of_the_week <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+```
+
+Generating a sequence of number
+```{r}
+my_vector_sequence <- c(1:100)
+```
+
+Use `[]` to pull out elements in a vector. We just need to specify their position in the vector; i.e. day 3 is Wednesday.
+```{r}
+days_of_the_week[3]
+```
+
+Use operators such as <, >, ==, <==, etc. 
+```{r}
+my_vector_sequence <=10
+my_vector_sequence >=10
+my_vector_sequence <10
+my_vector_sequence >10
+```
+
+3. If you use `[]` then you only get the values, not the logical evaluation of the entire vector. Experiment with this by adjusting the chunk below.    
+
+```{r}
+my_vector_sequence[my_vector_sequence<=10]
+my_vector_sequence[my_vector_sequence>=10]
+my_vector_sequence[my_vector_sequence<10]
+my_vector_sequence[my_vector_sequence>10]
+```
+
+Data matrices 
+a series of stacked vectors, similar to a data table.
+
+Box office earnings for Harry Potter movies (in millions!). Notice that these are separate vectors.  
+```{r}
+Philosophers_Stone <- c(317.5, 657.1)
+Chamber_of_Secrets <- c(261.9, 616.9)
+Prisoner_of_Azkaban <- c(249.5, 547.1)
+Goblet_of_Fire <- c(290.0, 606.8)
+Order_of_the_Phoenix <- c(292.0, 647.8)
+Half_Blood_Prince <- c(301.9, 632.4)
+Deathly_Hallows_1 <- c(295.9, 664.3)
+Deathly_Hallows_2 <- c(381.0, 960.5)
+```
+
+Create a new object called `box_office`. Here we are using the `c` command to combine the vectors into one.
+```{r}
+box_office <- c(Philosophers_Stone, Chamber_of_Secrets, Prisoner_of_Azkaban, Goblet_of_Fire, Order_of_the_Phoenix, Half_Blood_Prince, Deathly_Hallows_1, Deathly_Hallows_2)
+```
+
+Organize the data matrices using nrow and byrow commands
+```{r}
+harry_potter_matrix <- matrix(box_office, nrow = 8, byrow = T)
+```
+
+Vectors `region` and `titles`, used for naming.
+```{r}
+region <- c("US", "non-US")
+region
+```
+
+```{r}
+titles <- c("Philosophers_Stone", "Chamber_of_Secrets", "Prisoner_of_Azkaban", "Goblet_of_Fire", "Order_of_the_Phoenix", "Half_Blood_Prince", "Deathly_Hallows_1", "Deathly_Hallows_2")
+titles
+```
+
+Name the columns using `colnames()` with the vector region.
+```{r}
+colnames(harry_potter_matrix) <- region
+```
+
+Name the rows using `rownames()` with the vector titles.
+```{r}
+rownames(harry_potter_matrix) <- titles
+```
+
+Print `harry_potter_matrix`.
+```{r}
+harry_potter_matrix
+```
+
+## Using a data matrix
+Once you have a data matrix, you can perform lots of different analyses. For example, you can calculate the total earnings of each movie.
+```{r}
+global <- rowSums(harry_potter_matrix)
+global
+```
+
+And even add a new column to reflect this calculation. `cbind()` adds columns. c bind is binding columns
+```{r}
+all_harry_potter_matrix <- cbind(harry_potter_matrix, global)
+all_harry_potter_matrix
+```
+
+## Practice
+1. What are the total earnings for the US and non-US regions?  
+
+```{r}
+total_earnings <-colSums(all_harry_potter_matrix)
+total_earnings
+```
+
+
+2. Add this information to the data matrix. Hint: you are adding a row, not a column.  
+
+```{r}
+rbind(all_harry_potter_matrix, total_earnings)
+```
+
+
+## A few Extras
+The same methods of selecting elements in a vector apply to data matrices. We use `[]`. The following selects the value in the first column, second row.
+```{r}
+harry_potter_matrix[2,1]
+```
+
+Adding a colon `:` selects the specified elements in a column.  
+```{r}
+harry_potter_matrix[1:4]
+```
+
+We can also select values in an entire row or column. This can be useful for calculations. Here we calculate the mean of the entire second column. 
+```{r}
+non_us_earnings <- all_harry_potter_matrix[ ,2]
+mean(non_us_earnings)
+```
+
+
+2. What is a data matrix in R?  
+A data matrix in R is a series of stacked vectors like a data table and you could arrange them into column and row, you could also give column and row corresponding name.
+
+3. Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of eight hot springs. Run this code chunk to create the vectors.  
+```{r}
+spring_1 <- c(36.25, 35.40, 35.30)
+spring_2 <- c(35.15, 35.35, 33.35)
+spring_3 <- c(30.70, 29.65, 29.20)
+spring_4 <- c(39.70, 40.05, 38.65)
+spring_5 <- c(31.85, 31.40, 29.30)
+spring_6 <- c(30.20, 30.65, 29.75)
+spring_7 <- c(32.90, 32.50, 32.80)
+spring_8 <- c(36.80, 36.45, 33.15)
+```
+
+
+4. Build a data matrix that has the springs as rows and the columns as scientists. 
+```{r}
+season <-c(spring_1,spring_2,spring_3,spring_4,spring_5,spring_6,spring_7,spring_8)
+season_matrix <-matrix(season, nrow=8, byrow = T)
+season_matrix
+
+```
+
+5. The names of the springs are 1.Bluebell Spring, 2.Opal Spring, 3.Riverside Spring, 4.Too Hot Spring, 5.Mystery Spring, 6.Emerald Spring, 7.Black Spring, 8.Pearl Spring. Name the rows and columns in the data matrix. Start by making two new vectors with the names, then use `colnames()` and `rownames()` to name the columns and rows.
+```{r}
+sci_name <- c("Jill", "Steve", "Susan")
+season_row <- c("Bluebell Spring","Opal Spring","Riverside Spring","Too Hot Spring","Mystery Spring","Emerald Spring","Black Spring","Pearl Spring")
+colnames(season_matrix) <-sci_name
+row.names(season_matrix) <-season_row
+season_matrix
+```
+
+6. Calculate the mean temperature of all eight springs.
+```{r}
+spring_mean <- rowMeans(season_matrix)
+spring_mean
+```
+
+
+7. Add this as a new column in the data matrix.  
+```{r}
+real_mean <- cbind(season_matrix, spring_mean)
+real_mean
+```
+
+8. Show Susan's value for Opal Spring only.
+```{r}
+real_mean[2,3]
+```
+
+
+9. Calculate the mean for Jill's column only.  
+```{r}
+jill_mean <- real_mean[,1]
+mean(jill_mean)
+
+```
+
+10. Use the data matrix to perform one calculation or operation of your interest.  (calculate column's total)
+```{r}
+total_spring <-colSums(season_matrix)
+total_spring
