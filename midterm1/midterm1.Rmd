@@ -3,7 +3,8 @@ title: "Midterm 1 W24"
 author: "Ketong Zhang"
 date: "`r Sys.Date()`"
 output:
-  html_document: default
+  html_document: 
+    keep_md: yes
   pdf_document: default
 ---
 
@@ -35,12 +36,14 @@ wolves <- read.csv("data/NPS_wolfmortalitydata.csv", na = c("NULL")) %>% clean_n
 
 ## Questions
 Problem 1. (1 point) Let's start with some data exploration. What are the variable (column) names?  
+
+**The column names are: park,biolyr,pack,packcode,packsize_aug,mort_yn,mort_all,mort_lead,mort_nonlead,reprody1,persisty1**  
 ```{r}
 colnames(wolves)
 ```
 
-
 Problem 2. (1 point) Use the function of your choice to summarize the data and get an idea of its structure.  
+
 **I chose the summary() and the str() functions**
 ```{r}
 summary(wolves)
@@ -52,6 +55,7 @@ str(wolves)
 
 
 Problem 3. (3 points) Which parks/ reserves are represented in the data? Don't just use the abstract, pull this information from the data.  
+
 **DENA, GNTP, VNP, YNP, YUCH are the park that were represented in the data.**
 ```{r}
 tabyl(wolves$park)
@@ -64,18 +68,18 @@ wolves %>%
 ```
 
 Problem 4. (4 points) Which park has the largest number of wolf packs?
-**First determine whether there is NA in the pack data or not, it returned false -> no NA in "pack"**
+
+**First determine whether there is NA in the pack data or not**
 ```{r}
 anyNA(wolves$packsize_aug)
 ```
 
-**Find the maximum pack: druid**
+**YNP has the largest number of wolf packs**
 ```{r}
 wolves %>% 
-  group_by(pack) %>% 
-  summarize(max_pack = max(packsize_aug, na.rm = T)) %>% 
+  group_by(park) %>% 
+  summarize(max_pack = max(packsize_aug, na.rm = T)) %>% #there are NA's so need to use na.rm = T to remove them
   arrange(desc(max_pack))
-
 ```
 
 
@@ -84,7 +88,7 @@ Problem 5. (4 points) Which park has the highest total number of human-caused mo
 ```{r}
 wolves %>% 
   group_by(park) %>% 
-  summarize(high_human = max(mort_all)) %>% 
+  summarize(high_human = max(mort_all, na.rm = T)) %>% 
   arrange(desc(high_human))
 ```
 
@@ -101,8 +105,8 @@ ynp
 
 Problem 7. (3 points) Among the Yellowstone wolf packs, the [Druid Peak Pack](https://www.pbs.org/wnet/nature/in-the-valley-of-the-wolves-the-druid-wolf-pack-story/209/) is one of most famous. What was the average pack size of this pack for the years represented in the data?
 
-**The average pack size of this pack is (year / average pack size)**
-
+**The average pack size of this pack is**
+year / average pack size
 1996	5			
 1997	5			
 1998	8			
@@ -130,7 +134,7 @@ ynp %>%
   arrange(desc(largest))
 ```
 
-**I think in 2010, the pack size is because the wolve pack might have migrated, there are zero mortalities recorded and reproduction is also zero.  There are also possibility that the wolves are all dead due to fights and aggressive interactions with other wolves packs.**
+**I think in 2010, the pack size is 0 because the wolf pack might have migrated, there are zero mortalities recorded and reproduction data is also zero.  There are also possibility that the wolves are all dead due to fights and aggressive interactions with other wolves packs.**
 ```{r}
 ynp %>% 
   filter(pack == "druid") %>% 

@@ -400,13 +400,15 @@ missing values. I am correcting this for you below and using
 <h2>Questions</h2>
 <p>Problem 1. (1 point) Let’s start with some data exploration. What are
 the variable (column) names?</p>
+<p><strong>The column names are:
+park,biolyr,pack,packcode,packsize_aug,mort_yn,mort_all,mort_lead,mort_nonlead,reprody1,persisty1</strong></p>
 <pre class="r"><code>colnames(wolves)</code></pre>
 <pre><code>##  [1] &quot;park&quot;         &quot;biolyr&quot;       &quot;pack&quot;         &quot;packcode&quot;     &quot;packsize_aug&quot;
 ##  [6] &quot;mort_yn&quot;      &quot;mort_all&quot;     &quot;mort_lead&quot;    &quot;mort_nonlead&quot; &quot;reprody1&quot;    
 ## [11] &quot;persisty1&quot;</code></pre>
 <p>Problem 2. (1 point) Use the function of your choice to summarize the
-data and get an idea of its structure.<br />
-<strong>I chose the summary() and the str() functions</strong></p>
+data and get an idea of its structure.</p>
+<p><strong>I chose the summary() and the str() functions</strong></p>
 <pre class="r"><code>summary(wolves)</code></pre>
 <pre><code>##      park               biolyr         pack              packcode     
 ##  Length:864         Min.   :1986   Length:864         Min.   :  2.00  
@@ -447,9 +449,9 @@ data and get an idea of its structure.<br />
 ##  $ persisty1   : int  0 0 1 1 1 1 0 1 0 1 ...</code></pre>
 <p>Problem 3. (3 points) Which parks/ reserves are represented in the
 data? Don’t just use the abstract, pull this information from the
-data.<br />
-<strong>DENA, GNTP, VNP, YNP, YUCH are the park that were represented in
-the data.</strong></p>
+data.</p>
+<p><strong>DENA, GNTP, VNP, YNP, YUCH are the park that were represented
+in the data.</strong></p>
 <pre class="r"><code>tabyl(wolves$park)</code></pre>
 <pre><code>##  wolves$park   n    percent
 ##         DENA 340 0.39351852
@@ -470,42 +472,30 @@ the data.</strong></p>
 ## 4 YNP     248
 ## 5 YUCH    151</code></pre>
 <p>Problem 4. (4 points) Which park has the largest number of wolf
-packs? <strong>First determine whether there is NA in the pack data or
-not, it returned false -&gt; no NA in “pack”</strong></p>
+packs?</p>
+<p><strong>First determine whether there is NA in the pack data or
+not</strong></p>
 <pre class="r"><code>anyNA(wolves$packsize_aug)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p><strong>Find the maximum pack: druid</strong></p>
+<p><strong>YNP has the largest number of wolf packs</strong></p>
 <pre class="r"><code>wolves %&gt;% 
-  group_by(pack) %&gt;% 
-  summarize(max_pack = max(packsize_aug, na.rm = T)) %&gt;% 
+  group_by(park) %&gt;% 
+  summarize(max_pack = max(packsize_aug, na.rm = T)) %&gt;% #there are NA&#39;s so need to use na.rm = T to remove them
   arrange(desc(max_pack))</code></pre>
-<pre><code>## Warning: There were 18 warnings in `summarize()`.
-## The first warning was:
-## ℹ In argument: `max_pack = max(packsize_aug, na.rm = T)`.
-## ℹ In group 13: `pack = &quot;Ash River&quot;`.
-## Caused by warning in `max()`:
-## ! no non-missing arguments to max; returning -Inf
-## ℹ Run `dplyr::last_dplyr_warnings()` to see the 17 remaining warnings.</code></pre>
-<pre><code>## # A tibble: 184 × 2
-##    pack        max_pack
-##    &lt;chr&gt;          &lt;dbl&gt;
-##  1 druid           37  
-##  2 junction        35  
-##  3 East Fork       33  
-##  4 leopold         28  
-##  5 8mile           27  
-##  6 Buffalo         26.4
-##  7 gibbon/mary     26  
-##  8 70 Mile         24  
-##  9 oxbow           24  
-## 10 100 Mile        23  
-## # ℹ 174 more rows</code></pre>
+<pre><code>## # A tibble: 5 × 2
+##   park  max_pack
+##   &lt;chr&gt;    &lt;dbl&gt;
+## 1 YNP       37  
+## 2 DENA      33  
+## 3 GNTP      26.4
+## 4 YUCH      24  
+## 5 VNP        7</code></pre>
 <p>Problem 5. (4 points) Which park has the highest total number of
 human-caused mortalities <code>mort_all</code>? <strong>YUCH has the
 highest total number of human-caused mortalities</strong></p>
 <pre class="r"><code>wolves %&gt;% 
   group_by(park) %&gt;% 
-  summarize(high_human = max(mort_all)) %&gt;% 
+  summarize(high_human = max(mort_all, na.rm = T)) %&gt;% 
   arrange(desc(high_human))</code></pre>
 <pre><code>## # A tibble: 5 × 2
 ##   park  high_human
@@ -1024,9 +1014,8 @@ ynp</code></pre>
 <p>Problem 7. (3 points) Among the Yellowstone wolf packs, the <a href="https://www.pbs.org/wnet/nature/in-the-valley-of-the-wolves-the-druid-wolf-pack-story/209/">Druid
 Peak Pack</a> is one of most famous. What was the average pack size of
 this pack for the years represented in the data?</p>
-<p><strong>The average pack size of this pack is (year / average pack
-size)</strong></p>
-<p>1996 5<br />
+<p><strong>The average pack size of this pack is</strong> year / average
+pack size 1996 5<br />
 1997 5<br />
 1998 8<br />
 1999 9<br />
@@ -1086,11 +1075,11 @@ years</strong></p>
 ## 13   1997       5
 ## 14   2005       5
 ## 15   2010       0</code></pre>
-<p><strong>I think in 2010, the pack size is because the wolve pack
+<p><strong>I think in 2010, the pack size is 0 because the wolf pack
 might have migrated, there are zero mortalities recorded and
-reproduction is also zero. There are also possibility that the wolves
-are all dead due to fights and aggressive interactions with other wolves
-packs.</strong></p>
+reproduction data is also zero. There are also possibility that the
+wolves are all dead due to fights and aggressive interactions with other
+wolves packs.</strong></p>
 <pre class="r"><code>ynp %&gt;% 
   filter(pack == &quot;druid&quot;) %&gt;% 
   filter(biolyr == 2010) %&gt;% 
