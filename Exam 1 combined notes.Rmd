@@ -126,136 +126,812 @@ harry_potter_matrix <- matrix(box_office, nrow = 8, byrow = T)
 Vectors `region` and `titles`, used for naming.
 ```{r}
 region <- c("US", "non-US")
-region
 ```
 
 ```{r}
 titles <- c("Philosophers_Stone", "Chamber_of_Secrets", "Prisoner_of_Azkaban", "Goblet_of_Fire", "Order_of_the_Phoenix", "Half_Blood_Prince", "Deathly_Hallows_1", "Deathly_Hallows_2")
-titles
 ```
 
-Name the columns using `colnames()` with the vector region.
+Name the columns using `colnames()`
 ```{r}
 colnames(harry_potter_matrix) <- region
 ```
 
-Name the rows using `rownames()` with the vector titles.
+Name the rows using `rownames()`
 ```{r}
 rownames(harry_potter_matrix) <- titles
 ```
 
-Print `harry_potter_matrix`.
-```{r}
-harry_potter_matrix
-```
-
-## Using a data matrix
-Once you have a data matrix, you can perform lots of different analyses. For example, you can calculate the total earnings of each movie.
+example: calculate the total earnings of each movie.
 ```{r}
 global <- rowSums(harry_potter_matrix)
-global
 ```
 
-And even add a new column to reflect this calculation. `cbind()` adds columns. c bind is binding columns
+add a new column for this calculated answers using `cbind()` adds columns. c bind is binding columns
 ```{r}
 all_harry_potter_matrix <- cbind(harry_potter_matrix, global)
-all_harry_potter_matrix
 ```
 
-## Practice
-1. What are the total earnings for the US and non-US regions?  
-
+Example
+total earnings for the US and non-US regions? 
 ```{r}
 total_earnings <-colSums(all_harry_potter_matrix)
-total_earnings
 ```
 
-
-2. Add this information to the data matrix. Hint: you are adding a row, not a column.  
-
+add this information to the data matrix / adding a new row
 ```{r}
 rbind(all_harry_potter_matrix, total_earnings)
 ```
 
-
-## A few Extras
-The same methods of selecting elements in a vector apply to data matrices. We use `[]`. The following selects the value in the first column, second row.
+use `[]` to selects the value in the first column, second row.
 ```{r}
 harry_potter_matrix[2,1]
 ```
 
-Adding a colon `:` selects the specified elements in a column.  
+adding a colon `:` selects the specified elements in a column.  
 ```{r}
 harry_potter_matrix[1:4]
 ```
 
-We can also select values in an entire row or column. This can be useful for calculations. Here we calculate the mean of the entire second column. 
+select values in an entire row or column. 
+ex. calculating the mean of the entire 2nd row
 ```{r}
 non_us_earnings <- all_harry_potter_matrix[ ,2]
 mean(non_us_earnings)
 ```
 
+**Lab 3**
 
-2. What is a data matrix in R?  
-A data matrix in R is a series of stacked vectors like a data table and you could arrange them into column and row, you could also give column and row corresponding name.
-
-3. Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of eight hot springs. Run this code chunk to create the vectors.  
+check the column names 
 ```{r}
-spring_1 <- c(36.25, 35.40, 35.30)
-spring_2 <- c(35.15, 35.35, 33.35)
-spring_3 <- c(30.70, 29.65, 29.20)
-spring_4 <- c(39.70, 40.05, 38.65)
-spring_5 <- c(31.85, 31.40, 29.30)
-spring_6 <- c(30.20, 30.65, 29.75)
-spring_7 <- c(32.90, 32.50, 32.80)
-spring_8 <- c(36.80, 36.45, 33.15)
+names(hbirds)
+```
+
+check the dimension 
+```{r}
+dim(hbirds)
+```
+
+check the structure
+```{r}
+str(hbirds)
+```
+
+change the name of variables 
+```{r}
+data.frame(sex=Sex, length=Length, weight_g = Weight)
+```
+
+later we using the function
+```{r}
+library("janitor")
 ```
 
 
-4. Build a data matrix that has the springs as rows and the columns as scientists. 
-```{r}
-season <-c(spring_1,spring_2,spring_3,spring_4,spring_5,spring_6,spring_7,spring_8)
-season_matrix <-matrix(season, nrow=8, byrow = T)
-season_matrix
+accessing the column and row of data frame
+using `[]`. 
+first position before comma apply to the rows
+second to the columns 
 
+example
+The first row.  
+```{r}
+hbirds[1,]
 ```
 
-5. The names of the springs are 1.Bluebell Spring, 2.Opal Spring, 3.Riverside Spring, 4.Too Hot Spring, 5.Mystery Spring, 6.Emerald Spring, 7.Black Spring, 8.Pearl Spring. Name the rows and columns in the data matrix. Start by making two new vectors with the names, then use `colnames()` and `rownames()` to name the columns and rows.
+The third column.  
 ```{r}
-sci_name <- c("Jill", "Steve", "Susan")
-season_row <- c("Bluebell Spring","Opal Spring","Riverside Spring","Too Hot Spring","Mystery Spring","Emerald Spring","Black Spring","Pearl Spring")
-colnames(season_matrix) <-sci_name
-row.names(season_matrix) <-season_row
-season_matrix
+hbirds[ ,3]
 ```
 
-6. Calculate the mean temperature of all eight springs.
+select value from entire column using the `$` 
 ```{r}
-spring_mean <- rowMeans(season_matrix)
-spring_mean
+w <- hbirds$weight_g
+```
+
+adding rows
+using `rbind()` function
+known as row bind
+bind our new vector to our data frame row-wise
+```{r}
+new_bird <- c("female", 3.6, 3.9)
+```
+
+```{r}
+hbirds<- rbind(hbirds, new_bird)
+```
+
+adding columns
+also use the `$` operator
+```{r}
+hbirds$neighborhood <- c("lakewood", "brentwood", "lakewood", "scenic Heights")
+```
+
+writing Data to File
+write our data frame to a csv file, using `row.names = FALSE` to avoid row numbers from printing out. 
+```{r}
+write.csv(hbirds, "hbirds_data.csv", row.names = FALSE)
+```
+
+example
+Below are data collected by three scientists (Jill, Steve, Susan in order) measuring temperatures of three hot springs near Mono Lake.
+```{r}
+temp <- c(36.25, 35.40, 35.30, 35.15, 35.35, 33.35, 30.70, 29.65, 29.20)
+name <- c("Jill", "Susan", "Steve", "Jill", "Susan", "Steve", "Jill", "Susan", "Steve")
+spring <- c("Buckeye", "Buckeye", "Buckeye", "Benton", "Benton", "Benton", "Travertine", "Travertine", "Travertine")
+```
+
+build a data frame called `hsprings` with the above data. Name the temperature column `temp_C`. Print out the data frame.  
+```{r}
+hsprings <- data.frame(temp,name,spring)
+```
+
+change the column titled `name` to `scientist`, leave the other column names the same. Print out the data frame names.  basically rebuilding the data frame
+```{r}
+hsprings <- data_frame(temp,scientist = name, spring)
+```
+
+our scientists forgot to record the depth data for each spring. Here it is as a vector, add it as a new column called depth_ft: `c(4.15, 4.13, 4.12, 3.21, 3.23, 3.20, 5.67, 5.65, 5.66)`. Print out the data frame.   overwrite the hspring again by adding a new column
+```{r}
+depth_ft <- c(4.15, 4.13, 4.12, 3.21, 3.23, 3.20, 5.67, 5.65, 5.66)
+hsprings <- cbind(hsprings,depth_ft) #adding a new column
+```
+
+calculate the mean temperature of all of the temperature measurements.
+```{r}
+temp <- hsprings[,1]#same command as data matrix
+mean(temp)
+```
+
+an alternative way to find the mean
+```{r}
+mean(hsprings$temp)
+```
+
+save your hot springs data as a `.csv` file
+```{r}
+write.csv(hsprings, "hsprings.csv", row.names = FALSE)
+```
+
+replace scientst in hot spring database but make it into a factor, factor is a repeat set of type
+```{r}
+hot_springs$scientist <- as.factor(hot_springs$scientist)
+hot_springs$spring <- as.factor(hot_springs$spring)
+```
+
+we use factor because we are measuring different springs
+```{r}
+levels(hot_springs$scientist)
+```
+
+other useful function
+```{r}
+nrow() #gives the numbers of rows
+```
+
+```{r}
+ncol() #gives the numbers of columns
+```
+
+```{r}
+head() #prints the first n rows of the data frame.
+```
+
+```{r}
+tail() # print the last n rows of the data frame. give you the bottom observation of the fish
+```
+
+```{r}
+table() #is useful when you have a limited number of categorical variables. It produces fast counts of the number of observations in a variable. We will come back to this later...  just fish is too big, you need to adjust it, the following is a table of the states and number of observation
+```
+
+filtering data
+Filter is a way of pulling out observations that meet specific criteria in a variable
+
+example
+```{r}
+little_fish <- filter(fish, length <=100)
+```
+
+example: showing the number of animals (using the table function)
+```{r}
+table(sleep$vore)
+```
+
+maximum and minimum
+
+```{r}
+max(sleep$sleep_total) #find the maximum value from sleep_total
+min(sleep$sleep_total) #find the minimum value from sleep_total
+```
+
+**Lab 4**
+
+to load the tidyverse
+```{r}
+library("tidyverse")
+```
+
+to load the data
+```{r}
+fish <- read.csv("data/Gaeta_etal_CLC_data.csv")
+```
+
+dplyr (required if you want to use select and filter)
+The first package that we will use that is part of the tidyverse is `dplyr`. `dplyr` is used to transform data frames by extracting, rearranging, and summarizing data such that they are focused on a question of interest. This is very helpful,  especially when wrangling large data, and makes dplyr one of most frequently used packages in the tidyverse. The two functions we will use most are `select()` and `filter()`.  this chop data frame into fragment and make it tidy
+
+select()
+select allows you to pull out columns of interest from a dataframe. To do this, just add the names of the columns to the `select()` command. The order in which you add them, will determine the order in which they appear in the output.
+
+example
+we are only interested in lakeid and scalelength.
+```{r}
+select(fish, "lakeid", "scalelength") #select pull out interested column, fish is the name of the data frame, and identify the variable of interest, fish is an object in the environment panel so no quotes, lakeid and scalelength have quote because they are variables
+```
+
+```{r}
+select(fish, "fish_id", "length") #if you reverse the place of the variable, the result is just gonna be reversed
+```
+
+make it into a new data set
+```{r}
+fish_subset <- select(fish, "fish_id", "length")
+```
+
+to add a range of columns use `start_col:end_col`.
+```{r}
+select(fish, fish_id:length)
+```
+
+The - operator is useful in select. It allows us to select everything except the specified variables.
+```{r}
+select(fish, -"fish_id", -"annnumber", -"length", -"radii_length_mm")
+```
+
+For very large data frames with lots of variables, `select()` utilizes lots of different operators to make things easier. Let's say we are only interested in the variables that deal with length.
+this pull out data that contain length
+```{r}
+select(fish, contains("length"))
+```
+
+When columns are sequentially named, `starts_with()` makes selecting columns easier.  this pull out variable that has the name radii
+```{r}
+select(fish, starts_with("radii"))
+```
+
+Options to select columns based on a specific criteria include:  
+1. ends_with() = Select columns that end with a character string  
+2. contains() = Select columns that contain a character string  
+3. matches() = Select columns that match a regular expression  
+4. one_of() = Select columns names that are from a group of names  
+
+```{r}
+select(fish, ends_with("id"))
+```
+
+```{r}
+select(fish, contains("fish"))
+```
+
+You can also select columns based on the class of data.  
+```{r}
+glimpse(fish) #first glimpse the overall structure
+```
+
+```{r}
+select_if(fish, is.numeric)
+```
+
+to select all columns that are *not* a class of data, you need to add a `~`.
+```{r}
+select_if(fish, ~!is.numeric(.)) #this means dont select numeric, ! means not 
+```
+
+check for any NAs
+```{r}
+summary(mammals)
+anyNA(mammals) #no NA is suspicious this time cause aint no way -999 is the weight
+```
+
+but there are issues in the mass because the min is -999
+```{r}
+mean(mammals$max..life)
+```
+
+rename any columns that have capitol letters or punctuation issues.  
+```{r}
+mammals_new <- rename(mammals, genus = "Genus", wean_mass = "wean.mass", max_life = "max..life", litter_size = "litter.size", litter_year = "litters.year")
+```
+
+select the columns that include "mass" as part of the name.  
+```{r}
+select(mammals_new, contains("mass"))
+```
+
+select all of the columns that are of class `character`.  
+```{r}
+select_if(mammals_new, ~is.character(.)) #or use is.character
+```
+
+```{r}
+select_if(mammals_new, is.character)
+```
+
+imported data frames often have a mix of lower and uppercase column names. Use `toupper()` or `tolower()` to fix this issue
+```{r}
+select_all(mammals, tolower)
+```
+
+clean the name / aka the rename but easier
+```{r}
+clean_names(mammals) 
+```
+
+when naming columns, remove the weird punctuation 
+```{r}
+select_all(mammals, ~str_replace(., " ", "_"))
+```
+
+filter()
+`filter()` allows us to extract data that meet specific criteria within a variable
+```{r}
+filter(fish, lakeid == "AL")
+```
+
+similarly, if we are only interested in fish with a length greater than or equal to 350 we can use `filter()` to extract these observations.  
+```{r}
+filter(fish, length >= 350) #number dont need quote, filter search horizontally through the data set
+```
+
+`filter()` allows all of the expected operators; i.e. >, >=, <, <=, != (not equal), and == (equal)
+
+using the `!` operator allows for the exclusion of specific observations.
+```{r}
+filter(fish, lakeid != "AL") #not from AL
+#you can name it like this
+not_AL <- filter(fish, lakeid != "AL") #not from AL
+```
+
+using `filter()` with multiple observations  
+Filtering multiple values within the same variable requires the `%in%`    
+```{r}
+filter(fish, length %in% c(167, 175)) #this means filter 2 values from the variable, filter fish within the variable length all fish that have 167-175 length
+```
+
+alternatively, you can use `between` if you are looking for a range of specific values.  
+```{r}
+filter(fish, between(scalelength, 2.5, 2.55))
+```
+
+you can also extract observations "near" a certain value but you need to specify a tolerance.  
+```{r}
+filter(fish, near(radii_length_mm, 2, tol = 0.2)) #near 2 and end with 0.2 tolerance
+```
+
+using `filter()` on multiple conditions
+You can also use `filter()` to extract data based on multiple conditions
+below we extract only the fish that have lakeid "AL" and length >350.
+this is AND
+```{r}
+filter(fish, lakeid == "AL" & length > 350)
+```
+
+notice that the `|` operator generates a different result.
+this is OR
+```{r}
+filter(fish, lakeid == "AL" | length > 350)
+```
+
+Rules:  
+`filter(condition1, condition2)` will return rows where both conditions are met.  
+`filter(condition1, !condition2)` will return all rows where condition one is true but condition 2 is not.  
+`filter(condition1 | condition2)` will return rows where condition 1 or condition 2 is met.  
+`filter(xor(condition1, condition2)` will return all rows where only one of the conditions is met, and not when both conditions are met.  
+
+In this case, we filter out the fish with a length over 400 and a scale length over 11 or a radii length over 8.
+```{r}
+filter(fish, length > 400, (scalelength > 11 | radii_length_mm > 8))
+```
+
+example
+change the class of the variables `taxon` and `order` to factors and display their levels.
+```{r}
+homerange$taxon <- as.factor(homerange$taxon)
+levels(homerange$taxon)
+```
+
+```{r}
+homerange$order <- as.factor(homerange$order)
+levels(homerange$order)
+```
+
+what taxa are represented in the `homerange` data frame? Make a new data frame `taxa` that is restricted to taxon, common name, class, order, family, genus, species.
+```{r}
+taxa <- select(homerange, "taxon", "common.name", "class", "order", "family", "genus", "species")
+```
+
+the variable `taxon` identifies the common name groups of the species represented in `homerange`. Make a table the shows the counts for each of these `taxon`.
+```{r}
+table(homerange$taxon)
+```
+
+the species in `homerange` are also classified into trophic guilds. How many species are represented in each trophic guild.
+```{r}
+table(homerange$trophic.guild)
+```
+
+**Lab 5**
+
+clean name
+```{r}
+mammals <- clean_names(mammals)
+```
+
+using `filter()` on multiple conditions
+You can also use `filter()` to extract data based on multiple conditions. Below we extract only the fish that have lakeid "AL" and length >350.
+```{r}
+filter(fish, lakeid == "AL" & length > 350)
+```
+
+notice that the `|` operator generates a different result.
+```{r}
+filter(fish, lakeid == "AL" | length > 350) #the vertical line means OR
+#this one have multiple lake id
+```
+
+Rules:  
++ `filter(condition1, condition2)` will return rows where both conditions are met.  
++ `filter(condition1, !condition2)` will return all rows where condition one is true but condition 2 is not.  
++ `filter(condition1 | condition2)` will return rows where condition 1 or condition 2 is met.  
++ `filter(xor(condition1, condition2)` will return all rows where only one of the conditions is met, and not when both conditions are met.  
+
+In this case, we filter out the fish with a length over 400 and a scale length over 11 or a radii length over 8.
+```{r}
+filter(fish, length > 400, (scalelength > 11 | radii_length_mm > 8)) 
+```
+
+example
+from the `mammals` data, build a data frame that compares `mass`, `gestation`, and `newborn` among the primate genera `Lophocebus`, `Erythrocebus`, and `Macaca`. Among these genera, which species has the smallest `newborn` mass?
+```{r}
+mammals2 <- select(mammals, "order", "genus", "mass", "gestation", "newborn") 
+#now you need the primate genera
+mammals3 <- filter(mammals2, order =="Primates")
+mammals4 <- filter(mammals3, genus %in% c("Lophocebus", "Erythrocebus", "Macaca"))
+mammals4
+```
+
+Pipes `%>%` **Important!! this is something I need to study more**
+
+In order to start combining `select()`, `filter()`, and other functions efficiently, we need pipes
+Pipes feed the output from one function into the input of another function.
+This helps us keep our code sequential and clean.  
+
+In this example, we use a pipe to select only `lakeid` and `scalelength` then filter that output only for lakes "AL". Notice that we only need to call the data one time.  
+```{r}
+select(fish, lakeid, scalelength)
+```
+
+```{r}
+filter(fish, lakeid == "AL")
+```
+
+by using pipe:
+```{r}
+fish %>% #shortcut shift command M, this is the pipe, now you can nest the command
+  select(lakeid, scalelength) %>% #use the output of the selected function, to filter out the observation of interest
+  filter(lakeid == "AL") #this is the observation of interest
+```
+
+Here we select family, genus, and species then filter for gestation greater than 15 months.
+```{r}
+mammals %>% 
+  select(family, genus, species, gestation) %>% 
+  filter(gestation>=15)
+```
+
+example
+we are interested in the fish from the lakes "AL" and "AR" with a radii length between 2 and 4. Extract this information from the `fish` data. Use pipes!  
+```{r}
+names(fish)
+```
+
+```{r}
+fish %>% #work with the fish data
+  select(lakeid, radii_length_mm) %>% #pull out variables of int
+  filter(lakeid == "AL" | lakeid == "AR") %>% #only these lakes
+  filter(between(radii_length_mm,2,4)) %>% #between 2 and 4
+  arrange(desc(radii_length_mm))
+```
+
+The `arrange()` command is a bit like a sort command in excel. Note that the default is ascending order.  
+```{r}
+fish %>% 
+  select(lakeid, scalelength) %>% 
+  arrange(scalelength)
+```
+
+To sort in decreasing order, wrap the variable name in `desc()`.
+```{r}
+fish %>% 
+  select(lakeid, scalelength) %>% 
+  arrange(desc(scalelength))
+```
+
+`arrange()` can be very helpful in combination with the other functions.
+```{r}
+fish %>% 
+  select(lakeid, length, fish_id, scalelength) %>% 
+  filter(lakeid=="AL") %>% 
+  arrange(fish_id)
+```
+
+example
+we are interested in the radii length and scalelength of fish with the id `300`. Extract this information from the `fish` data. Please sort the data by radii length.
+```{r}
+fish %>% 
+  select(fish_id, radii_length_mm, scalelength) %>% 
+  filter(fish_id==300) %>% 
+  arrange(radii_length_mm)
+```
+
+`mutate()`  
+mutate allows us to create a new column from existing columns in a data frame.
+Let's convert the length variable from cm to millimeters and create a new variable called length_mm.  
+```{r}
+fish %>% 
+  mutate(length_mm = length*10) %>% 
+  select(fish_id, length, length_mm)
+```
+
+`mutate_all()`
+This last function is super helpful when cleaning data. With "wild" data, there are often mixed entries (upper and lowercase), blank spaces, odd characters, etc. These all need to be dealt with before analysis.  
+
+Here is an example that changes all entries to lowercase (if present).  
+```{r}
+mammals %>%
+  mutate_all(tolower)
+```
+
+Using the across function we can specify individual columns.
+```{r}
+mammals %>% 
+  mutate(across(c("order", "family"), tolower))
+```
+
+`if_else()`
+We will briefly introduce `if_else()` here because it allows us to use `mutate()` but not have the entire column affected in the same way. In a sense, this can function like find and replace in a spreadsheet program. With `ifelse()`, you first specify a logical statement, afterwards what needs to happen if the statement returns `TRUE`, and lastly what needs to happen if it's  `FALSE`.  
+
+Have a look at the data from mammals below. Notice that the values for newborn include `-999.00`. This is sometimes used as a placeholder for NA (but, is a really bad idea). We can use `if_else()` to replace `-999.00` with `NA`.  
+```{r}
+mammals %>% 
+  select(genus, species, newborn) %>% 
+  arrange(newborn)
+```
+
+```{r}
+mammals %>% 
+  select(genus, species, newborn) %>%
+  mutate(newborn_new = ifelse(newborn == -999.00, NA, newborn))%>% 
+  arrange(newborn)
+```
+
+example
+make two new data frames, one which is restricted to carnivores and another that is restricted to herbivores.
+```{r}
+carn <- filter(homerange, trophic.guild == "carnivore")
+herb <- filter(homerange, trophic.guild == "herbivore")
+```
+
+Do herbivores or carnivores have, on average, a larger `mean.hra.m2`? Remove any NAs from the data.  
+Herbivores has a larger "mean.hra.m2" value compare to carnivores.
+```{r}
+mean(herb$mean.hra.m2, na.rm = T)
+```
+
+```{r}
+mean(carn$mean.hra.m2, na.rm = T)
+```
+
+make a new dataframe `owls` that is limited to the mean mass, log10 mass, family, genus, and species of owls in the database. Which is the smallest owl? What is its common name? Do a little bit of searching online to see what you can learn about this species and provide a link below
+```{r}
+owls <- filter(homerange, order =="strigiformes" )
+owls2 <-select(owls, "order", "mean.mass.g","log10.mass","family","genus","species")
+min(owls2$mean.mass.g)
+filter(owls, mean.mass.g == 61.32)
+```
+
+as measured by the data, which bird species has the largest homerange? Show all of your work, please. Look this species up online and tell me about it!**.  
+Caracara, it is a genus in the family Falconidae and the subfamily Polyborina, it looks like hawk but it is acturally a type of falcon.
+```{r}
+homerange %>% 
+  select(taxon,common.name,mean.hra.m2) %>% 
+  filter(taxon=="birds") %>% 
+  arrange(desc(mean.hra.m2))
+```
+
+**Lab 6**
+more example on pipes
+
+only interested in code, sex, weight, year of birth. Restrict the data to these variables and store the dataframe as a new object.
+```{r}
+new_bison <- bison %>% 
+  select(animal_code, animal_sex, animal_weight,animal_yob)
+```
+
+pull out the animals born between 1980-1990.
+```{r}
+new_bison %>% 
+  filter(animal_yob>=1980 & animal_yob <-1990)
+```
+
+How many male and female bison are represented between 1980-1990?
+```{r}
+males <- new_bison %>% 
+  filter(animal_yob>=1980 & animal_yob<=1990) %>% 
+  filter(animal_sex == "M")
+males
+```
+```{r}
+females <- new_bison %>% 
+  filter(animal_yob>=1980 & animal_yob<=1990) %>% 
+  filter(animal_sex == "F")
+females
+```
+
+more on ifelse function
+`if_else()`
+We will briefly introduce `if_else()` here because it allows us to use `mutate()` but not have the entire column affected in the same way. In a sense, this can function like find and replace in a spreadsheet program. With `ifelse()`, you first specify a logical statement, afterwards what needs to happen if the statement returns `TRUE`, and lastly what needs to happen if it's  `FALSE`.  
+
+Have a look at the data from mammals below. Notice that the values for newborn include `-999.00`. This is sometimes used as a placeholder for NA (but, is a really bad idea). We can use `if_else()` to replace `-999.00` with `NA`.   find observation of intereste and replace it with observation you want
+```{r}
+mammals %>% 
+  select(genus, species, newborn) %>% 
+  arrange(newborn)
+```
+
+```{r}
+mammals %>% 
+  select(genus, species, newborn) %>%
+  mutate(newborn_new = ifelse(newborn == -999.00, NA, newborn))%>% #this create a new variable, look into new born and see-999, puts NA, if not -999, then keep the OG value
+  arrange(newborn)
+```
+
+example
+interested in the family, genus, species and max life variables. Because the max life span for several mammals is unknown, the authors have use -999 in place of NA. Replace all of these values with NA in a new column titled `max_life_new`. Finally, sort the date in descending order by max_life_new. 
+Which mammal has the oldest known life span?
+```{r}
+mammals %>% 
+  select(family, genus, species, max_life) %>%
+  mutate(max_life_new = ifelse(max_life == -999.00, NA, max_life))%>% 
+  arrange(max_life_new)
+```
+
+combined example
+## Load the superhero data
+
+if I know there are NAs, I can take care of them at the beginning. 
+But, we should do this very cautiously. At times it is better to keep the original columns and data intact.  
+```{r}
+superhero_info <- read_csv("data/heroes_information.csv", na = c("", "-99", "-")) #anything in the c() will be convert into NA
+superhero_powers <- read_csv("data/super_hero_powers.csv", na = c("", "-99", "-"))
+```
+
+Some of the names used in the `superhero_info` data are problematic so you should rename them here. Before you do anything, first have a look at the names of the variables. You can use `rename()` or `clean_names()`. 
+```{r}
+superhero_info <- clean_names(superhero_info)
 ```
 
 
-7. Add this as a new column in the data matrix.  
+`tabyl`
+The `janitor` package has many awesome functions that we will explore. Here is its version of `table` which not only produces counts but also percentages. Very handy! Let's use it to explore the proportion of good guys and bad guys in the `superhero_info` data.  
 ```{r}
-real_mean <- cbind(season_matrix, spring_mean)
-real_mean
+tabyl(superhero_info, alignment) #in this case, you can just type alignment in lower case
 ```
 
-8. Show Susan's value for Opal Spring only.
+who are the publishers of the superheros? Show the proportion of superheros from each publisher. Which publisher has the highest number of superheros?  
 ```{r}
-real_mean[2,3]
+tabyl(superhero_info,publisher)
 ```
 
-
-9. Calculate the mean for Jill's column only.  
+notice that we have some neutral superheros! Who are they? List their names below.  
 ```{r}
-jill_mean <- real_mean[,1]
-mean(jill_mean)
-
+superhero_info %>% 
+  select(name, alignment) %>% 
+  filter(alignment =="neutral")
 ```
 
-10. Use the data matrix to perform one calculation or operation of your interest.  (calculate column's total)
+`superhero_info`
+let's say we are only interested in the variables name, alignment, and "race". How would you isolate these variables from `superhero_info`?
 ```{r}
-total_spring <-colSums(season_matrix)
-total_spring
+superhero_info %>% 
+  select(name, alignment, race)
+```
+
+list all of the superheros that are not human.
+```{r}
+superhero_info %>% 
+  filter(race!="Human")
+```
+
+lLet's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".
+```{r}
+bad_guy <- superhero_info %>% 
+  filter(alignment == "bad")
+```
+
+```{r}
+good_guy <- superhero_info %>% 
+  filter(alignment == "good")
+```
+
+for the good guys, use the `tabyl` function to summarize their "race".
+```{r}
+tabyl(good_guy, race)
+```
+
+among the good guys, Who are the Vampires?
+```{r}
+good_guy %>% 
+  filter(race == "Vampire")
+```
+
+among the bad guys, who are the male humans over 200 inches in height?
+```{r}
+bad_guy %>% 
+  filter(height > 200)
+```
+
+are there more good guys or bad guys with green hair? 
+```{r}
+good_guy %>% 
+  filter(hair_color == "Green")
+```
+
+```{r}
+bad_guy %>% 
+  filter(`hair_color`=="Green")
+```
+
+Alternative ways to do this, when it show TRUE, this indicate the corresponding hero has green hair.  Good guys have 7 true and bad guys only 1 true
+```{r}
+tabyl(good_guy$hair_color == "Green")
+```
+
+```{r}
+tabyl(bad_guy$hair_color == "Green")
+```
+
+let's explore who the really small superheros are. In the `superhero_info` data, which have a weight less than 50? Be sure to sort your results by weight lowest to highest.  
+```{r}
+short_hero <- superhero_info %>% 
+  select(name, weight) %>% 
+  filter(weight < 50) %>% 
+  arrange(weight)
+short_hero
+```
+
+let's make a new variable that is the ratio of height to weight. Call this variable `height_weight_ratio`.    
+```{r}
+superhero_info %>% 
+  select(name, height, weight) %>% 
+  mutate(height_weight_ratio = height / weight) %>% 
+  arrange(height_weight_ratio)
+```
+
+who has the highest height to weight ratio?  
+```{r}
+superhero_info %>% 
+  select(name, height, weight) %>% 
+  mutate(height_weight_ratio = height / weight) %>% 
+  arrange(desc(height_weight_ratio)) #highest to lowest
+```
+
+how many superheros have a combination of agility, stealth, super_strength, stamina?
+```{r}
+superhero_powers %>% 
+  select(hero_names, Agility, Stealth, `Super Strength`, Stamina) %>% 
+  filter(Agility == "TRUE" & Stealth == "TRUE", `Super Strength`=="TRUE", Stamina =="TRUE")
+```
+
+**Lab 7**
+
