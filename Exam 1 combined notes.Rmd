@@ -934,4 +934,276 @@ superhero_powers %>%
 ```
 
 **Lab 7**
+dplyr practice
+Let's do a bit more practice to make sure that we understand `select()`, `filter()`, and `mutate()`. Start by building a new data frame `msleep24` from the `msleep` data that: contains the `name` and `vore` variables along with a new column called `sleep_total_24` which is the amount of time a species sleeps expressed as a proportion of a 24-hour day. Restrict the `sleep_total_24` values to less than or equal to 0.3. Arrange the output in descending order.  
+```{r}
+msleep24 <- msleep %>% 
+  mutate(sleep_total_24= sleep_total/24) %>% 
+  select(name, vore, sleep_total_24) %>% 
+  filter(sleep_total_24 <= 0.3) %>% 
+  arrange(desc(sleep_total_24))
+```
 
+Try out the new function `skim()` as part of the `skimr` package.
+```{r}
+skim(msleep24)
+```
+
+Histograms are also a quick way to check the output.
+```{r}
+hist(msleep24$sleep_total_24)
+```
+
+`summarize()`
+`summarize()` will produce summary statistics for a given variable in a data frame. 
+For example, if you are asked to calculate the mean of `sleep_total` for large and small mammals you could do this using a combination of commands, but it isn't very efficient or clean. We can do better!  
+```{r}
+head(msleep)
+```
+
+For example, if we define "large" as having a `bodywt` greater than 200 then we get the following:
+```{r}
+large <- msleep %>% 
+  select(name, genus, bodywt, sleep_total) %>% 
+  filter(bodywt > 200) %>% 
+  arrange(desc(bodywt))
+large
+```
+
+```{r}
+mean(large$sleep_total)
+```
+
+We can accomplish the same task using the `summarize()` function to make things cleaner.
+```{r}
+msleep %>% 
+  filter(bodywt>200) %>% 
+  summarize(mean_sleep_large = mean(sleep_total))
+```
+
+You can also combine functions to make useful summaries for multiple variables.
+```{r}
+small <- msleep %>% 
+  select(name, genus, bodywt, sleep_total) %>% 
+  filter(bodywt < 10) %>% 
+  arrange(desc(bodywt))
+small
+```
+
+```{r}
+msleep %>% 
+  filter(bodywt>200) %>% 
+  summarize(mean_sleep_large=mean(sleep_total),
+              min_sleep_large=min(sleep_total),
+              max_sleep_large=max(sleep_total),
+              sd_sleep_large=sd(sleep_total),
+              totall=n())
+```
+
+```{r}
+msleep %>% 
+  filter(bodywt<10) %>% 
+  summarize(mean_sleep_small = mean(sleep_total))
+```
+
+example
+what is the mean, min, and max `bodywt` for the taxonomic order Primates? Provide the total number of observations.
+```{r}
+msleep %>% 
+  filter(order=="Primates") %>% 
+  summarize(mean_wt=mean(bodywt),
+            min_wt=min(bodywt),
+            max_wt=max(bodywt),
+            total=n())
+        
+```
+
+`n_distinct()` is a very handy way of cleanly presenting the number of distinct observations. 
+Here we show the number of distinct genera over 100 in body weight.  
+
+Notice that there are multiple genera with over 100 in body weight.
+```{r}
+msleep %>% 
+  filter(bodywt > 100)
+```
+
+n_distinct() is a very handy way of cleanly presenting the number of distinct observations. 
+Here we show the number of distinct genera over 100 in body weight. 
+```{r}
+msleep %>% 
+  summarize(m_genera = n_distinct(genus)) #this is going to count the number of genera in msleep
+```
+
+what are the min, max, and mean `sleep_total` for all of the mammals? Be sure to include the total n.
+```{r}
+msleep %>% 
+  summarize(min_sl = min(sleep_total),
+            max_sl = max(sleep_total),
+            mean_sl = mean(sleep_total),
+            total = n())
+```
+
+`group_by()`
+The `summarize()` function is most useful when used in conjunction with `group_by()`. Although producing a summary of body weight for all of the mammals in the data set is helpful, what if we were interested in body weight by feeding ecology?
+```{r}
+msleep %>%
+  group_by(vore) %>% #we are grouping by feeding ecology, a categorical variable
+  summarize(min_bodywt = min(bodywt),
+            max_bodywt = max(bodywt),
+            mean_bodywt = mean(bodywt),
+            total=n())
+```
+
+example
+calculate mean brain weight by taxonomic order in the msleep data.
+```{r}
+msleep %>% 
+  group_by(order) %>% 
+  summarize(mean_bw = mean(brainwt))
+```
+
+what does `NA` mean? How are NA's being treated by the summarize function?
+```{r}
+msleep %>% 
+  filter(order == "Carnivora") %>% 
+  select(order, genus, brainwt)
+```
+
+try running the code again, but this time add `na.rm=TRUE`. What is the problem with Cetacea? Compare this to Carnivora. 
+```{r}
+msleep %>% 
+  group_by(order) %>% 
+  summarize(mean_bw = mean(brainwt,na.rm=TRUE))
+```
+
+```{r}
+msleep %>% 
+  filter(order == "Cetacea") %>% 
+  select(order, genus, brainwt)
+```
+
+As biologists, a good question that we may ask is how do the measured variables differ by island (on average)?
+```{r}
+levels(penguins$island)
+```
+
+Why do we have NA here? Do all of these penguins lack data?  midterm questions
+```{r}
+penguins %>% 
+  group_by(island) %>% 
+  summarize(mean_bw_mass = mean(body_mass_g),
+            n=n())
+```
+
+Well, that won't work so let's remove the NAs and recalculate.
+
+```{r}
+penguins %>% 
+  filter(!is.na(body_mass_g)) %>% #take out all na observation, pull out all obervations with a number
+  group_by(island) %>% 
+  summarize(mean_bw_mass = mean(body_mass_g),
+            n=n()) #n=n is the number of observation
+```
+
+What if we are interested in the number of observations (penguins) by species and island?
+```{r}
+penguins %>% 
+  group_by(species, island) %>% 
+  summarize(n=n(), .groups= 'keep')#the .groups argument here just prevents a warning message
+```
+
+counts
+Although these summary functions are super helpful, oftentimes we are mostly interested in counts. The [janitor package](https://garthtarr.github.io/meatR/janitor.html) does a lot with counts, but there are also functions that are part of dplyr that are useful.  
+
+`count()` is an easy way of determining how many observations you have within a column. It acts like a combination of `group_by()` and `n()`.
+```{r}
+penguins %>% 
+  count(island, sort = T) #sort=T sorts the column in descending order
+```
+
+Compare this with `summarize()` and `group_by()`.
+```{r}
+penguins %>% 
+  group_by(island) %>% 
+  summarize(n=n())
+```
+
+You can also use `count()` across multiple variables.
+```{r}
+penguins %>% 
+  count(island, species, sort = T) # sort=T will arrange in descending order
+```
+
+For counts, I also like `tabyl()`. Lots of options are supported in [tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html)
+```{r}
+penguins %>% 
+  tabyl(island,species)
+```
+
+example
+1. How does the mean of `bill_length_mm` compare between penguin species?
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarize(mean_bill = mean(bill_length_mm, na.rm = T))
+```
+
+2. For some penguins, their sex is listed as NA. Where do these penguins occur? USING COUNT
+```{r}
+penguins %>% 
+  count(sex, island)
+```
+
+`across()`
+What about using `filter()` and `select()` across multiple variables? There is a function in dplyr called `across()` which is designed to work across multiple variables. Have a look at Rebecca Barter's awesome blog [here](http://www.rebeccabarter.com/blog/2020-07-09-across/).    
+
+What if we wanted to apply `summarize()` in order to produce distinct counts over multiple variables; i.e. species, island, and sex? Although this isn't a lot of coding you can image that with a lot of variables it would be cumbersome.
+```{r}
+penguins %>%
+  summarize(distinct_species = n_distinct(species),
+            distinct_island = n_distinct(island),
+            distinct_sex = n_distinct(sex))
+```
+
+By using `across()` we can reduce the clutter and make things cleaner. 
+```{r}
+penguins %>%
+  summarize(across(c(species, island, sex), n_distinct))
+```
+
+This is very helpful for continuous variables.
+```{r}
+penguins %>%
+  summarize(across(contains("mm"), mean, na.rm=T))
+```
+
+```{r}
+penguins %>%
+  summarize(across(contains("mm"), \(x) mean(x, na.rm = TRUE))) #use this to correct the error
+```
+
+`group_by` also works.
+```{r}
+penguins %>%
+  group_by(sex) %>% 
+  summarize(across(contains("mm"), mean, na.rm=T))
+```
+
+Here we summarize across all variables.
+```{r}
+penguins %>%
+  summarise_all(mean, na.rm=T)
+```
+
+Operators can also work, here I am summarizing across all variables except `species`, `island`, `sex`, and `year`.
+```{r}
+penguins %>%
+  summarise(across(!c(species, island, sex, year), 
+                   mean, na.rm=T))
+```
+
+All variables that include "bill"...all of the other dplyr operators also work.
+```{r}
+penguins %>%
+  summarise(across(starts_with("bill"), mean, na.rm=T))
+```
