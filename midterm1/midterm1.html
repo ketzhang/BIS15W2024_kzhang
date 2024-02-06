@@ -450,8 +450,8 @@ data and get an idea of its structure.</p>
 <p>Problem 3. (3 points) Which parks/ reserves are represented in the
 data? Don’t just use the abstract, pull this information from the
 data.</p>
-<p><strong>DENA, GNTP, VNP, YNP, YUCH are the park that were represented
-in the data.</strong></p>
+<p><strong>DENA, GNTP, VNP, YNP, YUCH are the parks that were
+represented in the data.</strong></p>
 <pre class="r"><code>tabyl(wolves$park)</code></pre>
 <pre><code>##  wolves$park   n    percent
 ##         DENA 340 0.39351852
@@ -1014,17 +1014,7 @@ ynp</code></pre>
 <p>Problem 7. (3 points) Among the Yellowstone wolf packs, the <a href="https://www.pbs.org/wnet/nature/in-the-valley-of-the-wolves-the-druid-wolf-pack-story/209/">Druid
 Peak Pack</a> is one of most famous. What was the average pack size of
 this pack for the years represented in the data?</p>
-<p><strong>The average pack size of this pack is</strong> year / average
-pack size 1996 5<br />
-1997 5<br />
-1998 8<br />
-1999 9<br />
-2000 27<br />
-2001 37<br />
-2002 16<br />
-2003 18<br />
-2004 13<br />
-2005 5</p>
+<p><strong>The average pack size of this pack is as follow</strong></p>
 <pre class="r"><code>ynp %&gt;% 
   filter(pack == &quot;druid&quot;) %&gt;% 
   group_by(biolyr) %&gt;% 

@@ -109,7 +109,7 @@ str(wolves)
 
 Problem 3. (3 points) Which parks/ reserves are represented in the data? Don't just use the abstract, pull this information from the data.  
 
-**DENA, GNTP, VNP, YNP, YUCH are the park that were represented in the data.**
+**DENA, GNTP, VNP, YNP, YUCH are the parks that were represented in the data.**
 
 ```r
 tabyl(wolves$park)
@@ -711,18 +711,7 @@ ynp
 
 Problem 7. (3 points) Among the Yellowstone wolf packs, the [Druid Peak Pack](https://www.pbs.org/wnet/nature/in-the-valley-of-the-wolves-the-druid-wolf-pack-story/209/) is one of most famous. What was the average pack size of this pack for the years represented in the data?
 
-**The average pack size of this pack is**
-year / average pack size
-1996	5			
-1997	5			
-1998	8			
-1999	9			
-2000	27			
-2001	37			
-2002	16			
-2003	18			
-2004	13			
-2005	5
+**The average pack size of this pack is as follow**
 
 ```r
 ynp %>% 
