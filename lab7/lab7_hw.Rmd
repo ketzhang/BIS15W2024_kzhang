@@ -89,11 +89,13 @@ fisheries_tidy$catch <- as.numeric(fisheries_tidy$catch)
 ```
 
 3. How many countries are represented in the data? Provide a count and list their names.
+A total of 203 countries and 
 ```{r}
-fisheries_tidy %>% 
-  count(country, sort=T) %>% #this give the number and the name of the countries
-  summarize(countries = n_distinct(country)) #this give the number of countries
+n_distinct(fisheries_tidy$country) #this give the number of countries
+```
 
+```{r}
+levels(fisheries_tidy$country) 
 ```
 
 4. Refocus the data only to include country, isscaap_taxonomic_group, asfis_species_name, asfis_species_number, year, catch.
@@ -103,6 +105,7 @@ new_fish <- fisheries_tidy %>%
 ```
 
 5. Based on the asfis_species_number, how many distinct fish species were caught as part of these data?
+1551 distinct fish species 
 ```{r}
 new_fish %>% 
   summarize(catches = n_distinct(asfis_species_number))
@@ -129,10 +132,11 @@ new_fish %>%
 ```
 
 8. Which five countries caught the most cephalopods between 2008-2012?
+India, China, Spain, Algeria, France
 ```{r}
 new_fish %>% 
+  filter(year>=2008 & year<=2012) %>% 
   group_by(country) %>% 
-  filter(between(year, 2008, 2012)) %>% 
   filter(asfis_species_name == "Cephalopoda") %>% 
   summarize(topfive = sum(catch, na.rm=T)) %>% 
   arrange(desc(topfive))
@@ -153,7 +157,6 @@ new_fish %>%
   group_by(asfis_species_name) %>% 
   filter(year == 2008) %>% 
   summarize(mean_ca = mean(catch, na.rm = T))
-  
 ```
 
 ## Push your final code to GitHub!

@@ -602,15 +602,113 @@ the hashtag</p>
 fisheries_tidy$catch &lt;- as.numeric(fisheries_tidy$catch)</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>How many countries are represented in the data? Provide a count and
-list their names.</li>
+list their names. A total of 203 countries and</li>
 </ol>
-<pre class="r"><code>fisheries_tidy %&gt;% 
-  count(country, sort=T) %&gt;% #this give the number and the name of the countries
-  summarize(countries = n_distinct(country)) #this give the number of countries</code></pre>
-<pre><code>## # A tibble: 1 × 1
-##   countries
-##       &lt;int&gt;
-## 1       203</code></pre>
+<pre class="r"><code>n_distinct(fisheries_tidy$country) #this give the number of countries</code></pre>
+<pre><code>## [1] 203</code></pre>
+<pre class="r"><code>levels(fisheries_tidy$country) </code></pre>
+<pre><code>##   [1] &quot;Albania&quot;                   &quot;Algeria&quot;                  
+##   [3] &quot;American Samoa&quot;            &quot;Angola&quot;                   
+##   [5] &quot;Anguilla&quot;                  &quot;Antigua and Barbuda&quot;      
+##   [7] &quot;Argentina&quot;                 &quot;Aruba&quot;                    
+##   [9] &quot;Australia&quot;                 &quot;Bahamas&quot;                  
+##  [11] &quot;Bahrain&quot;                   &quot;Bangladesh&quot;               
+##  [13] &quot;Barbados&quot;                  &quot;Belgium&quot;                  
+##  [15] &quot;Belize&quot;                    &quot;Benin&quot;                    
+##  [17] &quot;Bermuda&quot;                   &quot;Bonaire/S.Eustatius/Saba&quot; 
+##  [19] &quot;Bosnia and Herzegovina&quot;    &quot;Brazil&quot;                   
+##  [21] &quot;British Indian Ocean Ter&quot;  &quot;British Virgin Islands&quot;   
+##  [23] &quot;Brunei Darussalam&quot;         &quot;Bulgaria&quot;                 
+##  [25] &quot;Cabo Verde&quot;                &quot;Cambodia&quot;                 
+##  [27] &quot;Cameroon&quot;                  &quot;Canada&quot;                   
+##  [29] &quot;Cayman Islands&quot;            &quot;Channel Islands&quot;          
+##  [31] &quot;Chile&quot;                     &quot;China&quot;                    
+##  [33] &quot;China, Hong Kong SAR&quot;      &quot;China, Macao SAR&quot;         
+##  [35] &quot;Colombia&quot;                  &quot;Comoros&quot;                  
+##  [37] &quot;Congo, Dem. Rep. of the&quot;   &quot;Congo, Republic of&quot;       
+##  [39] &quot;Cook Islands&quot;              &quot;Costa Rica&quot;               
+##  [41] &quot;Croatia&quot;                   &quot;Cuba&quot;                     
+##  [43] &quot;Cura\xe7ao&quot;                &quot;Cyprus&quot;                   
+##  [45] &quot;C\xf4te d&#39;Ivoire&quot;          &quot;Denmark&quot;                  
+##  [47] &quot;Djibouti&quot;                  &quot;Dominica&quot;                 
+##  [49] &quot;Dominican Republic&quot;        &quot;Ecuador&quot;                  
+##  [51] &quot;Egypt&quot;                     &quot;El Salvador&quot;              
+##  [53] &quot;Equatorial Guinea&quot;         &quot;Eritrea&quot;                  
+##  [55] &quot;Estonia&quot;                   &quot;Ethiopia&quot;                 
+##  [57] &quot;Falkland Is.(Malvinas)&quot;    &quot;Faroe Islands&quot;            
+##  [59] &quot;Fiji, Republic of&quot;         &quot;Finland&quot;                  
+##  [61] &quot;France&quot;                    &quot;French Guiana&quot;            
+##  [63] &quot;French Polynesia&quot;          &quot;French Southern Terr&quot;     
+##  [65] &quot;Gabon&quot;                     &quot;Gambia&quot;                   
+##  [67] &quot;Georgia&quot;                   &quot;Germany&quot;                  
+##  [69] &quot;Ghana&quot;                     &quot;Gibraltar&quot;                
+##  [71] &quot;Greece&quot;                    &quot;Greenland&quot;                
+##  [73] &quot;Grenada&quot;                   &quot;Guadeloupe&quot;               
+##  [75] &quot;Guam&quot;                      &quot;Guatemala&quot;                
+##  [77] &quot;Guinea&quot;                    &quot;GuineaBissau&quot;             
+##  [79] &quot;Guyana&quot;                    &quot;Haiti&quot;                    
+##  [81] &quot;Honduras&quot;                  &quot;Iceland&quot;                  
+##  [83] &quot;India&quot;                     &quot;Indonesia&quot;                
+##  [85] &quot;Iran (Islamic Rep. of)&quot;    &quot;Iraq&quot;                     
+##  [87] &quot;Ireland&quot;                   &quot;Isle of Man&quot;              
+##  [89] &quot;Israel&quot;                    &quot;Italy&quot;                    
+##  [91] &quot;Jamaica&quot;                   &quot;Japan&quot;                    
+##  [93] &quot;Jordan&quot;                    &quot;Kenya&quot;                    
+##  [95] &quot;Kiribati&quot;                  &quot;Korea, Dem. People&#39;s Rep&quot; 
+##  [97] &quot;Korea, Republic of&quot;        &quot;Kuwait&quot;                   
+##  [99] &quot;Latvia&quot;                    &quot;Lebanon&quot;                  
+## [101] &quot;Liberia&quot;                   &quot;Libya&quot;                    
+## [103] &quot;Lithuania&quot;                 &quot;Madagascar&quot;               
+## [105] &quot;Malaysia&quot;                  &quot;Maldives&quot;                 
+## [107] &quot;Malta&quot;                     &quot;Marshall Islands&quot;         
+## [109] &quot;Martinique&quot;                &quot;Mauritania&quot;               
+## [111] &quot;Mauritius&quot;                 &quot;Mayotte&quot;                  
+## [113] &quot;Mexico&quot;                    &quot;Micronesia, Fed.States of&quot;
+## [115] &quot;Monaco&quot;                    &quot;Montenegro&quot;               
+## [117] &quot;Montserrat&quot;                &quot;Morocco&quot;                  
+## [119] &quot;Mozambique&quot;                &quot;Myanmar&quot;                  
+## [121] &quot;Namibia&quot;                   &quot;Nauru&quot;                    
+## [123] &quot;Netherlands&quot;               &quot;Netherlands Antilles&quot;     
+## [125] &quot;New Caledonia&quot;             &quot;New Zealand&quot;              
+## [127] &quot;Nicaragua&quot;                 &quot;Nigeria&quot;                  
+## [129] &quot;Niue&quot;                      &quot;Norfolk Island&quot;           
+## [131] &quot;Northern Mariana Is.&quot;      &quot;Norway&quot;                   
+## [133] &quot;Oman&quot;                      &quot;Other nei&quot;                
+## [135] &quot;Pakistan&quot;                  &quot;Palau&quot;                    
+## [137] &quot;Palestine, Occupied Tr.&quot;   &quot;Panama&quot;                   
+## [139] &quot;Papua New Guinea&quot;          &quot;Peru&quot;                     
+## [141] &quot;Philippines&quot;               &quot;Pitcairn Islands&quot;         
+## [143] &quot;Poland&quot;                    &quot;Portugal&quot;                 
+## [145] &quot;Puerto Rico&quot;               &quot;Qatar&quot;                    
+## [147] &quot;Romania&quot;                   &quot;Russian Federation&quot;       
+## [149] &quot;R\xe9union&quot;                &quot;Saint Barth\xe9lemy&quot;      
+## [151] &quot;Saint Helena&quot;              &quot;Saint Kitts and Nevis&quot;    
+## [153] &quot;Saint Lucia&quot;               &quot;Saint Vincent/Grenadines&quot; 
+## [155] &quot;SaintMartin&quot;               &quot;Samoa&quot;                    
+## [157] &quot;Sao Tome and Principe&quot;     &quot;Saudi Arabia&quot;             
+## [159] &quot;Senegal&quot;                   &quot;Serbia and Montenegro&quot;    
+## [161] &quot;Seychelles&quot;                &quot;Sierra Leone&quot;             
+## [163] &quot;Singapore&quot;                 &quot;Sint Maarten&quot;             
+## [165] &quot;Slovenia&quot;                  &quot;Solomon Islands&quot;          
+## [167] &quot;Somalia&quot;                   &quot;South Africa&quot;             
+## [169] &quot;Spain&quot;                     &quot;Sri Lanka&quot;                
+## [171] &quot;St. Pierre and Miquelon&quot;   &quot;Sudan&quot;                    
+## [173] &quot;Sudan (former)&quot;            &quot;Suriname&quot;                 
+## [175] &quot;Svalbard and Jan Mayen&quot;    &quot;Sweden&quot;                   
+## [177] &quot;Syrian Arab Republic&quot;      &quot;Taiwan Province of China&quot; 
+## [179] &quot;Tanzania, United Rep. of&quot;  &quot;Thailand&quot;                 
+## [181] &quot;TimorLeste&quot;                &quot;Togo&quot;                     
+## [183] &quot;Tokelau&quot;                   &quot;Tonga&quot;                    
+## [185] &quot;Trinidad and Tobago&quot;       &quot;Tunisia&quot;                  
+## [187] &quot;Turkey&quot;                    &quot;Turks and Caicos Is.&quot;     
+## [189] &quot;Tuvalu&quot;                    &quot;Ukraine&quot;                  
+## [191] &quot;Un. Sov. Soc. Rep.&quot;        &quot;United Arab Emirates&quot;     
+## [193] &quot;United Kingdom&quot;            &quot;United States of America&quot; 
+## [195] &quot;Uruguay&quot;                   &quot;US Virgin Islands&quot;        
+## [197] &quot;Vanuatu&quot;                   &quot;Venezuela, Boliv Rep of&quot;  
+## [199] &quot;Viet Nam&quot;                  &quot;Wallis and Futuna Is.&quot;    
+## [201] &quot;Western Sahara&quot;            &quot;Yemen&quot;                    
+## [203] &quot;Yugoslavia SFR&quot;            &quot;Zanzibar&quot;</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Refocus the data only to include country, isscaap_taxonomic_group,
 asfis_species_name, asfis_species_number, year, catch.</li>
@@ -619,7 +717,7 @@ asfis_species_name, asfis_species_number, year, catch.</li>
   select(country,isscaap_taxonomic_group,asfis_species_name,asfis_species_number,year,catch)</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Based on the asfis_species_number, how many distinct fish species
-were caught as part of these data?</li>
+were caught as part of these data? 1551 distinct fish species</li>
 </ol>
 <pre class="r"><code>new_fish %&gt;% 
   summarize(catches = n_distinct(asfis_species_number))</code></pre>
@@ -675,12 +773,12 @@ between the years 1990-2000? Morocco</li>
 ## 10 Denmark                  477
 ## # ℹ 27 more rows</code></pre>
 <ol start="8" style="list-style-type: decimal">
-<li>Which five countries caught the most cephalopods between
-2008-2012?</li>
+<li>Which five countries caught the most cephalopods between 2008-2012?
+India, China, Spain, Algeria, France</li>
 </ol>
 <pre class="r"><code>new_fish %&gt;% 
+  filter(year&gt;=2008 &amp; year&lt;=2012) %&gt;% 
   group_by(country) %&gt;% 
-  filter(between(year, 2008, 2012)) %&gt;% 
   filter(asfis_species_name == &quot;Cephalopoda&quot;) %&gt;% 
   summarize(topfive = sum(catch, na.rm=T)) %&gt;% 
   arrange(desc(topfive))</code></pre>

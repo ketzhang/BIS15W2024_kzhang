@@ -273,18 +273,124 @@ fisheries_tidy$catch <- as.numeric(fisheries_tidy$catch)
 ```
 
 3. How many countries are represented in the data? Provide a count and list their names.
+A total of 203 countries and 
 
 ```r
-fisheries_tidy %>% 
-  count(country, sort=T) %>% #this give the number and the name of the countries
-  summarize(countries = n_distinct(country)) #this give the number of countries
+n_distinct(fisheries_tidy$country) #this give the number of countries
 ```
 
 ```
-## # A tibble: 1 × 1
-##   countries
-##       <int>
-## 1       203
+## [1] 203
+```
+
+
+```r
+levels(fisheries_tidy$country) 
+```
+
+```
+##   [1] "Albania"                   "Algeria"                  
+##   [3] "American Samoa"            "Angola"                   
+##   [5] "Anguilla"                  "Antigua and Barbuda"      
+##   [7] "Argentina"                 "Aruba"                    
+##   [9] "Australia"                 "Bahamas"                  
+##  [11] "Bahrain"                   "Bangladesh"               
+##  [13] "Barbados"                  "Belgium"                  
+##  [15] "Belize"                    "Benin"                    
+##  [17] "Bermuda"                   "Bonaire/S.Eustatius/Saba" 
+##  [19] "Bosnia and Herzegovina"    "Brazil"                   
+##  [21] "British Indian Ocean Ter"  "British Virgin Islands"   
+##  [23] "Brunei Darussalam"         "Bulgaria"                 
+##  [25] "Cabo Verde"                "Cambodia"                 
+##  [27] "Cameroon"                  "Canada"                   
+##  [29] "Cayman Islands"            "Channel Islands"          
+##  [31] "Chile"                     "China"                    
+##  [33] "China, Hong Kong SAR"      "China, Macao SAR"         
+##  [35] "Colombia"                  "Comoros"                  
+##  [37] "Congo, Dem. Rep. of the"   "Congo, Republic of"       
+##  [39] "Cook Islands"              "Costa Rica"               
+##  [41] "Croatia"                   "Cuba"                     
+##  [43] "Cura\xe7ao"                "Cyprus"                   
+##  [45] "C\xf4te d'Ivoire"          "Denmark"                  
+##  [47] "Djibouti"                  "Dominica"                 
+##  [49] "Dominican Republic"        "Ecuador"                  
+##  [51] "Egypt"                     "El Salvador"              
+##  [53] "Equatorial Guinea"         "Eritrea"                  
+##  [55] "Estonia"                   "Ethiopia"                 
+##  [57] "Falkland Is.(Malvinas)"    "Faroe Islands"            
+##  [59] "Fiji, Republic of"         "Finland"                  
+##  [61] "France"                    "French Guiana"            
+##  [63] "French Polynesia"          "French Southern Terr"     
+##  [65] "Gabon"                     "Gambia"                   
+##  [67] "Georgia"                   "Germany"                  
+##  [69] "Ghana"                     "Gibraltar"                
+##  [71] "Greece"                    "Greenland"                
+##  [73] "Grenada"                   "Guadeloupe"               
+##  [75] "Guam"                      "Guatemala"                
+##  [77] "Guinea"                    "GuineaBissau"             
+##  [79] "Guyana"                    "Haiti"                    
+##  [81] "Honduras"                  "Iceland"                  
+##  [83] "India"                     "Indonesia"                
+##  [85] "Iran (Islamic Rep. of)"    "Iraq"                     
+##  [87] "Ireland"                   "Isle of Man"              
+##  [89] "Israel"                    "Italy"                    
+##  [91] "Jamaica"                   "Japan"                    
+##  [93] "Jordan"                    "Kenya"                    
+##  [95] "Kiribati"                  "Korea, Dem. People's Rep" 
+##  [97] "Korea, Republic of"        "Kuwait"                   
+##  [99] "Latvia"                    "Lebanon"                  
+## [101] "Liberia"                   "Libya"                    
+## [103] "Lithuania"                 "Madagascar"               
+## [105] "Malaysia"                  "Maldives"                 
+## [107] "Malta"                     "Marshall Islands"         
+## [109] "Martinique"                "Mauritania"               
+## [111] "Mauritius"                 "Mayotte"                  
+## [113] "Mexico"                    "Micronesia, Fed.States of"
+## [115] "Monaco"                    "Montenegro"               
+## [117] "Montserrat"                "Morocco"                  
+## [119] "Mozambique"                "Myanmar"                  
+## [121] "Namibia"                   "Nauru"                    
+## [123] "Netherlands"               "Netherlands Antilles"     
+## [125] "New Caledonia"             "New Zealand"              
+## [127] "Nicaragua"                 "Nigeria"                  
+## [129] "Niue"                      "Norfolk Island"           
+## [131] "Northern Mariana Is."      "Norway"                   
+## [133] "Oman"                      "Other nei"                
+## [135] "Pakistan"                  "Palau"                    
+## [137] "Palestine, Occupied Tr."   "Panama"                   
+## [139] "Papua New Guinea"          "Peru"                     
+## [141] "Philippines"               "Pitcairn Islands"         
+## [143] "Poland"                    "Portugal"                 
+## [145] "Puerto Rico"               "Qatar"                    
+## [147] "Romania"                   "Russian Federation"       
+## [149] "R\xe9union"                "Saint Barth\xe9lemy"      
+## [151] "Saint Helena"              "Saint Kitts and Nevis"    
+## [153] "Saint Lucia"               "Saint Vincent/Grenadines" 
+## [155] "SaintMartin"               "Samoa"                    
+## [157] "Sao Tome and Principe"     "Saudi Arabia"             
+## [159] "Senegal"                   "Serbia and Montenegro"    
+## [161] "Seychelles"                "Sierra Leone"             
+## [163] "Singapore"                 "Sint Maarten"             
+## [165] "Slovenia"                  "Solomon Islands"          
+## [167] "Somalia"                   "South Africa"             
+## [169] "Spain"                     "Sri Lanka"                
+## [171] "St. Pierre and Miquelon"   "Sudan"                    
+## [173] "Sudan (former)"            "Suriname"                 
+## [175] "Svalbard and Jan Mayen"    "Sweden"                   
+## [177] "Syrian Arab Republic"      "Taiwan Province of China" 
+## [179] "Tanzania, United Rep. of"  "Thailand"                 
+## [181] "TimorLeste"                "Togo"                     
+## [183] "Tokelau"                   "Tonga"                    
+## [185] "Trinidad and Tobago"       "Tunisia"                  
+## [187] "Turkey"                    "Turks and Caicos Is."     
+## [189] "Tuvalu"                    "Ukraine"                  
+## [191] "Un. Sov. Soc. Rep."        "United Arab Emirates"     
+## [193] "United Kingdom"            "United States of America" 
+## [195] "Uruguay"                   "US Virgin Islands"        
+## [197] "Vanuatu"                   "Venezuela, Boliv Rep of"  
+## [199] "Viet Nam"                  "Wallis and Futuna Is."    
+## [201] "Western Sahara"            "Yemen"                    
+## [203] "Yugoslavia SFR"            "Zanzibar"
 ```
 
 4. Refocus the data only to include country, isscaap_taxonomic_group, asfis_species_name, asfis_species_number, year, catch.
@@ -295,6 +401,7 @@ new_fish <- fisheries_tidy %>%
 ```
 
 5. Based on the asfis_species_number, how many distinct fish species were caught as part of these data?
+1551 distinct fish species 
 
 ```r
 new_fish %>% 
@@ -365,11 +472,12 @@ new_fish %>%
 ```
 
 8. Which five countries caught the most cephalopods between 2008-2012?
+India, China, Spain, Algeria, France
 
 ```r
 new_fish %>% 
+  filter(year>=2008 & year<=2012) %>% 
   group_by(country) %>% 
-  filter(between(year, 2008, 2012)) %>% 
   filter(asfis_species_name == "Cephalopoda") %>% 
   summarize(topfive = sum(catch, na.rm=T)) %>% 
   arrange(desc(topfive))
