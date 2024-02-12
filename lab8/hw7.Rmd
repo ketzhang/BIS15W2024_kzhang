@@ -116,7 +116,12 @@ amphibio %>%
 
 **10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?**
 ```{r}
-
+newest_amn <- 
+  readr::read_csv(file = "data/amniota.csv", 
+                  na = c("NA", " ", ".", "-999"))
+```
+```{r}
+str(newest_amn)
 ```
 
 ## Push your final code to GitHub!
