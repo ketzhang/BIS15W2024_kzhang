@@ -157,6 +157,7 @@ beachbugs_wide
 ```
 
 3. Now, use `pivot_longer` to transform them back to long!
+make it to data that you can analysis
 ```{r}
 beachbugs_wide %>% 
   pivot_longer(-year,
