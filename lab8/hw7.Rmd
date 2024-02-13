@@ -72,14 +72,14 @@ amniota %>%
 ```{r}
 new_amn <- amniota %>% 
   readr::read_csv(file = "data/amniota.csv", 
-                  na = c("NA", " ", ".", "-999"))
+                  na = c("NA", " ", ".", "-999", "0"))
 ```
 
 
 ```{r}
 new_amp <- amphibio %>% 
   readr::read_csv(file = "data/amphibio.csv", 
-                  na = c("NA", " ", ".", "-999"))
+                  na = c("NA", " ", ".", "-999","0"))
 ```
 
 **6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.**  
@@ -97,8 +97,8 @@ miss_var_summary(amphibio)
 
 ```{r}
 egg_mass <- amniota %>% 
-  select(class,egg_mass_g) %>% 
   group_by(class) %>% 
+  select(class,egg_mass_g) %>% 
   summarize_all(~(sum(is.na(.))))
 egg_mass
 ```

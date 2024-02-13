@@ -1,11 +1,11 @@
 ---
 title: "Homework 7"
 author: "Your Name Here"
-date: "2024-02-12"
+date: "2024-02-13"
 output:
   html_document: 
     theme: spacelab
-    keep_md: yes
+    keep_md: true
 ---
 
 
@@ -269,7 +269,7 @@ amniota %>%
 ```r
 new_amn <- amniota %>% 
   readr::read_csv(file = "data/amniota.csv", 
-                  na = c("NA", " ", ".", "-999"))
+                  na = c("NA", " ", ".", "-999", "0"))
 ```
 
 ```
@@ -287,7 +287,7 @@ new_amn <- amniota %>%
 ```r
 new_amp <- amphibio %>% 
   readr::read_csv(file = "data/amphibio.csv", 
-                  na = c("NA", " ", ".", "-999"))
+                  na = c("NA", " ", ".", "-999","0"))
 ```
 
 ```
@@ -352,8 +352,8 @@ miss_var_summary(amphibio)
 
 ```r
 egg_mass <- amniota %>% 
-  select(class,egg_mass_g) %>% 
   group_by(class) %>% 
+  select(class,egg_mass_g) %>% 
   summarize_all(~(sum(is.na(.))))
 egg_mass
 ```
