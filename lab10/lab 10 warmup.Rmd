@@ -1,0 +1,34 @@
+---
+title: "warmup"
+output: html_document
+date: "2024-02-15"
+---
+
+1. in the data folder there is an epidemiology data set on an outbreak malaria
+2. rdt refers to rapid diagnostic test and they are identified here by age group
+2. make the data tidy and store them as a new object
+```{r}
+library("tidyverse")
+library("janitor")
+```
+
+```{r}
+malaria <- read.csv("data/malaria.csv") %>% clean_names()
+```
+
+```{r}
+malaria_long <- malaria %>% 
+  pivot_longer(cols = starts_with("malaria_rdt"),
+               names_to = "age_class",
+               values_to = "cases") %>% 
+  select(data_date,submitted_date,location_name,district,age_class, cases)
+```
+
+4. which district had the highest total number of cases on july 30, 2020
+```{r}
+malaria_long %>% 
+  filter(data_date =="2020-07-30") %>% 
+  group_by(district) %>% 
+  summarize(tot_cases = sum(cases, na.rm=T))
+```
+
