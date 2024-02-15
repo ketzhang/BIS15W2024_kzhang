@@ -3,9 +3,9 @@ title: "Homework 8"
 author: "Ketong Zhang"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +26,7 @@ library(janitor)
 ## Install `here`
 The package `here` is a nice option for keeping directories clear when loading files. I will demonstrate below and let you decide if it is something you want to use.  
 ```{r}
-install.packages("here")
+#install.packages("here")
 ```
 
 ## Data
@@ -48,9 +48,17 @@ The quotes show the folder structure from the root directory.
 ```{r}
 sydneybeaches <-read_csv(here("homework", "data", "sydneybeaches.csv")) %>% clean_names()
 ```
+```{r}
+str(sydneybeaches)
+```
+
+```{r}
+summary(sydneybeaches)
+```
 
 2. Are these data "tidy" per the definitions of the tidyverse? How do you know? Are they in wide or long format?
-I think they are in long format
+
+I think they are in long format and tidy.
 
 3. We are only interested in the variables site, date, and enterococci_cfu_100ml. Make a new object focused on these variables only. Name the object `sydneybeaches_long`
 ```{r}
@@ -116,7 +124,6 @@ syndneybeaches_long %>%
   summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %>% 
   filter(year =="2013") %>% 
   arrange(desc(new_enter))
-```
 ```
 
 

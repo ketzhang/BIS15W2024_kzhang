@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Please Add Your Name Here" />
+<meta name="author" content="Ketong Zhang" />
 
-<meta name="date" content="2024-02-11" />
+<meta name="date" content="2024-02-15" />
 
 <title>Homework 8</title>
 
@@ -375,8 +375,8 @@ display: none;
 
 
 <h1 class="title toc-ignore">Homework 8</h1>
-<h4 class="author">Please Add Your Name Here</h4>
-<h4 class="date">2024-02-11</h4>
+<h4 class="author">Ketong Zhang</h4>
+<h4 class="date">2024-02-15</h4>
 
 </div>
 
@@ -420,35 +420,219 @@ check it out!</p>
 <li>Start by loading the data <code>sydneybeaches</code>. Do some
 exploratory analysis to get an idea of the data structure.</li>
 </ol>
+<pre class="r"><code>sydneybeaches &lt;- read_csv(&quot;data/sydneybeaches.csv&quot;)</code></pre>
+<pre><code>## Rows: 3690 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (4): Region, Council, Site, Date
+## dbl (4): BeachId, Longitude, Latitude, Enterococci (cfu/100ml)
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>If you want to try <code>here</code>, first notice the output when
 you load the <code>here</code> library. It gives you information on the
 current working directory. You can then use it to easily and intuitively
 load files.</p>
-<pre class="r"><code>#library(here)</code></pre>
+<pre class="r"><code>library(&quot;here&quot;)</code></pre>
+<pre><code>## here() starts at /Users/zhangketong/Desktop/BIS15W2024_kzhang</code></pre>
 <p>The quotes show the folder structure from the root directory.</p>
-<pre class="r"><code>#sydneybeaches &lt;-read_csv(here(&quot;homework&quot;, &quot;data&quot;, &quot;sydneybeaches.csv&quot;)) %&gt;% clean_names()</code></pre>
+<pre class="r"><code>sydneybeaches &lt;-read_csv(here(&quot;homework&quot;, &quot;data&quot;, &quot;sydneybeaches.csv&quot;)) %&gt;% clean_names()</code></pre>
+<pre><code>## Rows: 3690 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (4): Region, Council, Site, Date
+## dbl (4): BeachId, Longitude, Latitude, Enterococci (cfu/100ml)
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>str(sydneybeaches)</code></pre>
+<pre><code>## spc_tbl_ [3,690 × 8] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ beach_id             : num [1:3690] 25 25 25 25 25 25 25 25 25 25 ...
+##  $ region               : chr [1:3690] &quot;Sydney City Ocean Beaches&quot; &quot;Sydney City Ocean Beaches&quot; &quot;Sydney City Ocean Beaches&quot; &quot;Sydney City Ocean Beaches&quot; ...
+##  $ council              : chr [1:3690] &quot;Randwick Council&quot; &quot;Randwick Council&quot; &quot;Randwick Council&quot; &quot;Randwick Council&quot; ...
+##  $ site                 : chr [1:3690] &quot;Clovelly Beach&quot; &quot;Clovelly Beach&quot; &quot;Clovelly Beach&quot; &quot;Clovelly Beach&quot; ...
+##  $ longitude            : num [1:3690] 151 151 151 151 151 ...
+##  $ latitude             : num [1:3690] -33.9 -33.9 -33.9 -33.9 -33.9 ...
+##  $ date                 : chr [1:3690] &quot;02/01/2013&quot; &quot;06/01/2013&quot; &quot;12/01/2013&quot; &quot;18/01/2013&quot; ...
+##  $ enterococci_cfu_100ml: num [1:3690] 19 3 2 13 8 7 11 97 3 0 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   BeachId = col_double(),
+##   ..   Region = col_character(),
+##   ..   Council = col_character(),
+##   ..   Site = col_character(),
+##   ..   Longitude = col_double(),
+##   ..   Latitude = col_double(),
+##   ..   Date = col_character(),
+##   ..   `Enterococci (cfu/100ml)` = col_double()
+##   .. )
+##  - attr(*, &quot;problems&quot;)=&lt;externalptr&gt;</code></pre>
+<pre class="r"><code>summary(sydneybeaches)</code></pre>
+<pre><code>##     beach_id        region            council              site          
+##  Min.   :22.00   Length:3690        Length:3690        Length:3690       
+##  1st Qu.:24.00   Class :character   Class :character   Class :character  
+##  Median :26.00   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :25.87                                                           
+##  3rd Qu.:27.40                                                           
+##  Max.   :29.00                                                           
+##                                                                          
+##    longitude        latitude          date           enterococci_cfu_100ml
+##  Min.   :151.3   Min.   :-33.98   Length:3690        Min.   :   0.00      
+##  1st Qu.:151.3   1st Qu.:-33.95   Class :character   1st Qu.:   1.00      
+##  Median :151.3   Median :-33.92   Mode  :character   Median :   5.00      
+##  Mean   :151.3   Mean   :-33.93                      Mean   :  33.92      
+##  3rd Qu.:151.3   3rd Qu.:-33.90                      3rd Qu.:  17.00      
+##  Max.   :151.3   Max.   :-33.89                      Max.   :4900.00      
+##                                                      NA&#39;s   :29</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Are these data “tidy” per the definitions of the tidyverse? How
-do you know? Are they in wide or long format?</p></li>
-<li><p>We are only interested in the variables site, date, and
+<li>Are these data “tidy” per the definitions of the tidyverse? How do
+you know? Are they in wide or long format?</li>
+</ol>
+<p>I think they are in long format and tidy.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>We are only interested in the variables site, date, and
 enterococci_cfu_100ml. Make a new object focused on these variables
-only. Name the object <code>sydneybeaches_long</code></p></li>
-<li><p>Pivot the data such that the dates are column names and each
-beach only appears once (wide format). Name the object
-<code>sydneybeaches_wide</code></p></li>
-<li><p>Pivot the data back so that the dates are data and not column
-names.</p></li>
-<li><p>We haven’t dealt much with dates yet, but separate the date into
+only. Name the object <code>sydneybeaches_long</code></li>
+</ol>
+<pre class="r"><code>syndneybeaches_long &lt;- sydneybeaches %&gt;% 
+  select(site, date, enterococci_cfu_100ml)</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Pivot the data such that the dates are column names and each beach
+only appears once (wide format). Name the object
+<code>sydneybeaches_wide</code></li>
+</ol>
+<pre class="r"><code>syndneybeaches_wide &lt;- sydneybeaches %&gt;% 
+  select(site, date, enterococci_cfu_100ml) %&gt;% 
+  pivot_wider(names_from = &quot;date&quot;,
+               values_from = &quot;enterococci_cfu_100ml&quot;)</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Pivot the data back so that the dates are data and not column
+names.</li>
+</ol>
+<pre class="r"><code>syndneybeaches_wide %&gt;% 
+  pivot_longer(-site,
+               names_to = &quot;date&quot;,
+               values_to = &quot;enterococci_cfu_100ml&quot;)</code></pre>
+<pre><code>## # A tibble: 3,784 × 3
+##    site           date       enterococci_cfu_100ml
+##    &lt;chr&gt;          &lt;chr&gt;                      &lt;dbl&gt;
+##  1 Clovelly Beach 02/01/2013                    19
+##  2 Clovelly Beach 06/01/2013                     3
+##  3 Clovelly Beach 12/01/2013                     2
+##  4 Clovelly Beach 18/01/2013                    13
+##  5 Clovelly Beach 30/01/2013                     8
+##  6 Clovelly Beach 05/02/2013                     7
+##  7 Clovelly Beach 11/02/2013                    11
+##  8 Clovelly Beach 23/02/2013                    97
+##  9 Clovelly Beach 07/03/2013                     3
+## 10 Clovelly Beach 25/03/2013                     0
+## # ℹ 3,774 more rows</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>We haven’t dealt much with dates yet, but separate the date into
 columns day, month, and year. Do this on the
-<code>sydneybeaches_long</code> data.</p></li>
-<li><p>What is the average <code>enterococci_cfu_100ml</code> by year
-for each beach. Think about which data you will use- long or
-wide.</p></li>
-<li><p>Make the output from question 7 easier to read by pivoting it to
-wide format.</p></li>
-<li><p>What was the most polluted beach in 2013?</p></li>
-<li><p>Please complete the class project survey at: <a href="https://forms.gle/H2j69Z3ZtbLH3efW6">BIS 15L Group
-Project</a></p></li>
+<code>sydneybeaches_long</code> data.</li>
+</ol>
+<pre class="r"><code>syndneybeaches_long %&gt;% 
+  separate(date, into = c(&quot;day&quot;, &quot;month&quot;,&quot;year&quot;), sep = &quot;/&quot;)</code></pre>
+<pre><code>## # A tibble: 3,690 × 5
+##    site           day   month year  enterococci_cfu_100ml
+##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                 &lt;dbl&gt;
+##  1 Clovelly Beach 02    01    2013                     19
+##  2 Clovelly Beach 06    01    2013                      3
+##  3 Clovelly Beach 12    01    2013                      2
+##  4 Clovelly Beach 18    01    2013                     13
+##  5 Clovelly Beach 30    01    2013                      8
+##  6 Clovelly Beach 05    02    2013                      7
+##  7 Clovelly Beach 11    02    2013                     11
+##  8 Clovelly Beach 23    02    2013                     97
+##  9 Clovelly Beach 07    03    2013                      3
+## 10 Clovelly Beach 25    03    2013                      0
+## # ℹ 3,680 more rows</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>What is the average <code>enterococci_cfu_100ml</code> by year for
+each beach. Think about which data you will use- long or wide. Using
+long data</li>
+</ol>
+<pre class="r"><code>syndneybeaches_long %&gt;% 
+  separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
+  select(site,year,enterococci_cfu_100ml) %&gt;% 
+  group_by(site,year) %&gt;% 
+  summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %&gt;% 
+  arrange(desc(new_enter))</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;site&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 66 × 3
+## # Groups:   site [11]
+##    site                    year  new_enter
+##    &lt;chr&gt;                   &lt;chr&gt;     &lt;dbl&gt;
+##  1 Little Bay Beach        2013      122. 
+##  2 South Maroubra Rockpool 2018      112. 
+##  3 Malabar Beach           2013      101. 
+##  4 South Maroubra Rockpool 2013       96.4
+##  5 Malabar Beach           2016       91.0
+##  6 Malabar Beach           2015       66.9
+##  7 Bronte Beach            2016       61.3
+##  8 Coogee Beach            2016       59.5
+##  9 South Maroubra Rockpool 2016       59.3
+## 10 Little Bay Beach        2018       59.1
+## # ℹ 56 more rows</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Make the output from question 7 easier to read by pivoting it to
+wide format.</li>
+</ol>
+<pre class="r"><code>syndneybeaches_long %&gt;% 
+  separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
+  select(site,year,enterococci_cfu_100ml) %&gt;% 
+  group_by(site,year) %&gt;% 
+  summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %&gt;% 
+  pivot_wider(names_from = &quot;site&quot;,
+              values_from = &quot;new_enter&quot;)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;site&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 6 × 12
+##   year  `Bondi Beach` `Bronte Beach` `Clovelly Beach` `Coogee Beach`
+##   &lt;chr&gt;         &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+## 1 2013           32.2           26.8             9.28           39.7
+## 2 2014           11.1           17.5            13.8            52.6
+## 3 2015           14.3           23.6             8.82           40.3
+## 4 2016           19.4           61.3            11.3            59.5
+## 5 2017           13.2           16.8             7.93           20.7
+## 6 2018           22.9           43.4            10.6            21.6
+## # ℹ 7 more variables: `Gordons Bay (East)` &lt;dbl&gt;, `Little Bay Beach` &lt;dbl&gt;,
+## #   `Malabar Beach` &lt;dbl&gt;, `Maroubra Beach` &lt;dbl&gt;,
+## #   `South Maroubra Beach` &lt;dbl&gt;, `South Maroubra Rockpool` &lt;dbl&gt;,
+## #   `Tamarama Beach` &lt;dbl&gt;</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>What was the most polluted beach in 2013? Little Bay Beach is the
+most pulluted beach in 2013.</li>
+</ol>
+<pre class="r"><code>syndneybeaches_long %&gt;% 
+  separate(date, into = c(&quot;day&quot;, &quot;month&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
+  select(site,year,enterococci_cfu_100ml) %&gt;% 
+  group_by(site,year) %&gt;% 
+  summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %&gt;% 
+  filter(year ==&quot;2013&quot;) %&gt;% 
+  arrange(desc(new_enter))</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;site&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 11 × 3
+## # Groups:   site [11]
+##    site                    year  new_enter
+##    &lt;chr&gt;                   &lt;chr&gt;     &lt;dbl&gt;
+##  1 Little Bay Beach        2013     122.  
+##  2 Malabar Beach           2013     101.  
+##  3 South Maroubra Rockpool 2013      96.4 
+##  4 Maroubra Beach          2013      47.1 
+##  5 Coogee Beach            2013      39.7 
+##  6 South Maroubra Beach    2013      39.3 
+##  7 Bondi Beach             2013      32.2 
+##  8 Tamarama Beach          2013      29.7 
+##  9 Bronte Beach            2013      26.8 
+## 10 Gordons Bay (East)      2013      24.8 
+## 11 Clovelly Beach          2013       9.28</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>Please complete the class project survey at: <a href="https://forms.gle/H2j69Z3ZtbLH3efW6">BIS 15L Group Project</a>
+Group: Ketong Zhang, Jasmine Hsiao, Amanda Duong</li>
 </ol>
 </div>
 <div id="push-your-final-code-to-github" class="section level2">
