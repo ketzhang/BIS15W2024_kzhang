@@ -80,33 +80,48 @@ syndneybeaches_wide %>%
 
 ```{r}
 syndneybeaches_long %>% 
-  pivot_longer(
-    date,
-    names_to = c("day", "month","year"),
-    names_sep = "/",
-    values_to = "enterococci_cfu_100ml")
-    
+  separate(date, into = c("day", "month","year"), sep = "/")
 ```
 
 7. What is the average `enterococci_cfu_100ml` by year for each beach. Think about which data you will use- long or wide.
-
+Using long data
 ```{r}
-
+syndneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site,year,enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %>% 
+  arrange(desc(new_enter))
 ```
 
 8. Make the output from question 7 easier to read by pivoting it to wide format.
 
 ```{r}
-
+syndneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site,year,enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %>% 
+  pivot_wider(names_from = "site",
+              values_from = "new_enter")
 ```
 
 9. What was the most polluted beach in 2013?
-
+Little Bay Beach is the most pulluted beach in 2013.
 ```{r}
-
+syndneybeaches_long %>% 
+  separate(date, into = c("day", "month", "year"), sep = "/") %>% 
+  select(site,year,enterococci_cfu_100ml) %>% 
+  group_by(site,year) %>% 
+  summarize(new_enter= mean(enterococci_cfu_100ml, na.rm =TRUE)) %>% 
+  filter(year =="2013") %>% 
+  arrange(desc(new_enter))
+```
 ```
 
+
 10. Please complete the class project survey at: [BIS 15L Group Project](https://forms.gle/H2j69Z3ZtbLH3efW6)
+Group: Ketong Zhang, Jasmine Hsiao, Amanda Duong
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences.   
