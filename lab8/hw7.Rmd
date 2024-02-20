@@ -108,6 +108,7 @@ egg_mass
 amphibio <- read.csv("data/amphibio.csv") %>% clean_names()
 colnames(amphibio)
 ```
+
 ```{r}
 amphibio %>% 
   select(fos,aqu,arb,ter) %>% 
@@ -120,6 +121,7 @@ newest_amn <-
   readr::read_csv(file = "data/amniota.csv", 
                   na = c("NA", " ", ".", "-999"))
 ```
+
 ```{r}
 str(newest_amn)
 ```

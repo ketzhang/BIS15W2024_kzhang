@@ -1,7 +1,7 @@
 ---
 title: "Homework 7"
 author: "Your Name Here"
-date: "2024-02-13"
+date: "2024-02-20"
 output:
   html_document: 
     theme: spacelab
@@ -396,6 +396,7 @@ colnames(amphibio)
 ## [37] "viv"                     "obs"
 ```
 
+
 ```r
 amphibio %>% 
   select(fos,aqu,arb,ter) %>% 
@@ -433,6 +434,7 @@ newest_amn <-
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
+
 
 ```r
 str(newest_amn)
