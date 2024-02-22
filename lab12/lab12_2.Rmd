@@ -63,23 +63,27 @@ p + theme_linedraw()+
 
 ## Practice
 1. Build a scatterplot that compares `log10.mass` and `log10.preymass`. Color the points by `taxon`. Store this plot as object `q`.
+fill wont work in scatter, must use color = xyz
 ```{r}
-
+q <- homerange %>% 
+  ggplot(aes(x=log10.mass, y=log10.preymass, color=taxon))+
+  geom_point(na.rm=T)
+q
 ```
 
 2. Use plot `q` but add the classic theme.
 ```{r}
-
+q+theme_classic()
 ```
 
 ## Legends
 There are lots of options to manipulate legends. Have a look [here](http://www.sthda.com/english/wiki/ggplot2-legend-easy-steps-to-change-the-position-and-the-appearance-of-a-graph-legend-in-r-software).
 ```{r}
 p+theme_linedraw()+
-  theme(legend.position = "bottom",
+  theme(legend.position = "bottom", #you can change it to top, left, right
         axis.text.x = element_text(angle = 60, hjust=1))+
   labs(title = "Observations by Taxon in Homerange Data",
-       x = NULL,
+       x = NULL, #null will remove name of the x axis
        y= "n",
        fill= "Trophic Guild")
 ```
@@ -87,18 +91,18 @@ p+theme_linedraw()+
 ## Not enough? Try using `ggthemes`
 There are many packages that include additional themes, one of which is [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/). Some of these are nice because they are designed to mimic the look of popular publications.
 ```{r}
-#install.packages("ggthemes")
+install.packages("ggthemes")
 library(ggthemes)
 ```
 
 Here is a list of the `ggthemes`
 ```{r}
-#ls("package:ggthemes")[grepl("theme_", ls("package:ggthemes"))]
+ls("package:ggthemes")[grepl("theme_", ls("package:ggthemes"))]
 ```
 
 ```{r}
 p + 
-  theme_fivethirtyeight()+
+  theme_economist()+
   theme(legend.position = "bottom",
         axis.text.x = element_text(angle = 60, hjust=1))+
   labs(title = "Observations by Taxon in Homerange Data",
@@ -110,7 +114,14 @@ p +
 ## Practice
 1. Use plot `q` and try the `theme_economist()` theme.
 ```{r}
-
+p + 
+  theme_economist()+
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 60, hjust=1))+
+  labs(title = "Observations by Taxon in Homerange Data",
+       x = NULL,
+       y= "n",
+       fill= "Trophic Guild")
 ```
 
 ## RColorBrewer
@@ -145,7 +156,7 @@ p+scale_fill_brewer(palette = "Paired")+
 ## Practice
 1. Keep using the `same `q` plot, but test out one of R Color Brewer palettes.
 ```{r}
-
+q+scale_colour_brewer(palette = "PuBuGn")
 ```
 
 ## Manually Setting Colors
@@ -156,11 +167,11 @@ colors <- paletteer::palettes_d_names
 
 Now we can display the palettes. Assign the palette to `my_palette` and then build this base R bar plot. There are a lot of options; `paleteer` is a collection of popular palettes. I really like the [`ggsci` package] (https://cran.r-project.org/web/packages/ggsci/vignettes/ggsci.html)
 ```{r}
-my_palette <- paletteer_d("ggsci::nrc_npg")
+my_palette <- paletteer_d("ggsci::nrc_npg") #store your palette
 ```
 
 ```{r}
-barplot(rep(1,6), axes=FALSE, col=my_palette)
+barplot(rep(1,6), axes=FALSE, col=my_palette) #show your palette
 ```
 
 Now we just identify `my_palette` as part of `scale_fill_manual()`
@@ -177,7 +188,7 @@ p+scale_fill_manual(values=my_palette)+
 ## Practice
 1. Keep using the `same `q` plot, but test out one of `paleteer` themes.
 ```{r}
-
+q+theme_classic()+scale_colour_manual(values=my_palette)
 ```
 
 ## Faceting
@@ -191,17 +202,29 @@ homerange %>%
 
 There are other categorical variables that might be interesting to overlay. `facet_wrap()` makes a ribbon of panels by a specified categorical variable and allows you to control how you want them arranged.  
 ```{r}
-
+homerange %>% 
+  ggplot(aes(x=taxon, y=log10.mass))+
+  geom_boxplot()+
+  facet_wrap(-trophic.guild)+
+  theme(axis.text.x = element_text(angle = 60, hjust=1))
 ```
 
 `facet_grid()` allows control over the faceted variable; it can be arranged in rows or columns. rows~columns. 
 ```{r}
-
+homerange %>% 
+  ggplot(aes(x=taxon, y=log10.mass))+
+  geom_boxplot()+
+  facet_grid(trophic.guild~.)+
+  theme(axis.text.x = element_text(angle = 60, hjust=1))
 ```
 
 `facet_grid()` will also allow the comparison of two categorical variables, just remember a~b where a is rows and b is columns.  
 ```{r}
-
+homerange %>% 
+  ggplot(aes(x=taxon, y=log10.mass))+
+  geom_boxplot()+
+  facet_grid(trophic.guild~thermoregulation)+
+  theme(axis.text.x = element_text(angle = 60, hjust=1))
 ```
 
 ## Practice
