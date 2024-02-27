@@ -233,7 +233,7 @@ cites <- read_csv("data/cites.csv") %>% clean_names()
 
 2. Use `naniar` to summarize the NA's in each variable.
 ```{r}
-miss_var_summary(cites) #use this instead of summary
+miss_var_summary(cites) #use this instead 
 ```
 
 3. Try using `group_by()` with `naniar`. Look specifically at `class` and `exporter_reported_quantity`. For which taxonomic classes do we have the highest number of missing export data? / aka which class has the most na
@@ -1520,3 +1520,21 @@ homerange %>%
   facet_grid(trophic.guild~thermoregulation)+
   theme(axis.text.x = element_text(angle = 60, hjust=1))
 ```
+
+
+asking for distribution
+geom_density
+
+how something change over the course of year
+geom_line 
+use group not group by in the ggplot
+
+asking for relation
+state correlation
+geom_point
+geom_smooth
+
+growth of something
+geom_line
+
+wrap/grid apply to box, scatter, and line
