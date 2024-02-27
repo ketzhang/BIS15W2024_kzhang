@@ -146,11 +146,6 @@ For the following, we will use life history data for mammals. The [data](http://
 life_history <- read_csv("data/mammal_lifehistories_v3.csv") %>% clean_names()
 ```
 
-## Are there any NA's?
-Sometimes using one or more of the summary functions can give us clues to how the authors have represented missing data. This doesn't always work, but it is a good place to start.
-```{r}
-summary(life_history)
-```
 
 This will give you a quick summary of the number of NA's in each variable. Notice that, at least for now, it doesn't look like there are any NA's. But, given the size of the data this is unlikely.
 ```{r}
@@ -212,7 +207,7 @@ miss_var_summary()
 You can also use naniar to replace a specific value (like -999) with NA across the entire data set.  
 ```{r}
 life_history %>% #going back to the original data
-  replace_with_na_all(condition = ~.x == -999)%>% 
+  replace_with_na_all(condition = ~.x == -999)%>% #any 999 will be na
 miss_var_summary()
 ```
 
@@ -231,12 +226,6 @@ life_history %>% #going back to the original data
   mutate(newborn=na_if(newborn, "not measured"))
 ```
 
-## Practice
-Let's practice evaluating NA's in a large data set. The data are compiled from [CITES](https://cites.org/eng). This is the international organization that tracks trade in endangered wildlife. You can find information about the data [here](https://www.kaggle.com/cites/cites-wildlife-trade-database).  
-
-Some key information:  
-[country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)  
-
 1. Import the data and do a little exploration. Be sure to clean the names if necessary.
 ```{r}
 cites <- read_csv("data/cites.csv") %>% clean_names()
@@ -244,16 +233,16 @@ cites <- read_csv("data/cites.csv") %>% clean_names()
 
 2. Use `naniar` to summarize the NA's in each variable.
 ```{r}
-miss_var_summary(cites)
+miss_var_summary(cites) #use this instead of summary
 ```
 
-3. Try using `group_by()` with `naniar`. Look specifically at `class` and `exporter_reported_quantity`. For which taxonomic classes do we have the highest number of missing export data?
+3. Try using `group_by()` with `naniar`. Look specifically at `class` and `exporter_reported_quantity`. For which taxonomic classes do we have the highest number of missing export data? / aka which class has the most na
 ```{r}
 cites %>%
   select(class, exporter_reported_quantity) %>% 
   group_by(class) %>%
   miss_var_summary() %>% 
-  arrange(desc(n_miss))
+  arrange(desc(n_miss)) #n miss is basically the n
 ```
 
 ## Dealing with NA's in advance- nuclear option
@@ -320,7 +309,7 @@ relig_income
 3. Use `pivot_longer()` to make the data tidy.  
 ```{r}
 relig_income %>% 
-  pivot_longer(-religion,
+  pivot_longer(-religion, #dont change religion
                names_to = "income",
                values_to = "total"
   )
@@ -373,11 +362,6 @@ billboard %>%
 ```{r}
 plant_data <- read_csv("data/plant_data.csv")
 plant_data
-```
-
-2. Why are these data not tidy?  
-```{r}
-
 ```
 
 3. Use `pivot_longer()` to make the data tidy. Focus the data only on genotype, water_sched_prog, and greenhouse.  
@@ -438,7 +422,7 @@ expenditures %>%
   pivot_longer(-expenditure,
                names_to = "year",
                values_to = "bn_dollars") %>% 
-  filter(expenditure=="Private Education")
+  filter(expenditure=="Private Education") #filter go after pivot
 ```
 
 ## `separate()`
@@ -451,7 +435,7 @@ heartrate2
 We need to start by separating the patient names from their sexes. `separate()` needs to know which column you want to split, the names of the new columns, and what to look for in terms of breaks in the data.
 ```{r}
 heartrate2 %>% 
-  separate(patient, into= c("patient", "sex"), sep = "_")
+  separate(patient, into= c("patient", "sex"), sep = "_") #combine 2 column into 1
 ```
 
 ## Practice
@@ -559,15 +543,6 @@ In short, **plot= data + geom_ + aesthetics**.
 
 We start by calling the ggplot function, identifying the data, and specifying the axes. We then add the `geom` type to describe how we want our data represented. Each `geom_` works with specific types of data and R is capable of building plots of single variables, multiple variables, and even maps. Lastly, we add aesthetics.
 
-## Example
-To make things easy, let's start with some built in data.
-```{r}
-names(iris)
-```
-
-```{r}
-glimpse(iris)
-```
 
 To make a plot, we need to first specify the data and map the aesthetics. The aesthetics include how each variable in our data set will be used. In the example below, I am using the aes() function to identify the x and y variables in the plot.
 ```{r}
@@ -593,7 +568,7 @@ names(iris)
 ```{r}
 ggplot(data=iris, 
        mapping=aes(x=Sepal.Width, y=Sepal.Length)) +
-  geom_point()
+  geom_point() #scatterplot
 ```
 
 ## Scatterplots and barplots
@@ -606,13 +581,6 @@ Data: http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1
 ```{r}
 homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
 ```
-
-## Practice
-1. What is the structure of the `homerange` data? Does it have any NA's? Is it tidy? Do a quick exploratory analysis of your choice below.
-```{r}
-glimpse(homerange)
-```
-
 ### 1. Scatter Plots
 Scatter plots are good at revealing relationships that are not readily visible in the raw data. For now, we will not add regression aka. "best of fit" lines or calculate any r^2^ values.  
 
@@ -639,9 +607,6 @@ ggplot(data=homerange, mapping=aes(x=log10.mass, y=log10.hra))+
   geom_point()+
   geom_smooth(method=lm, se=T) #add a regression line
 ```
-```{r}
-names(homerange)
-```
 
 ### Practice
 1. What is the relationship between log10.hra and log10.preymass? What do you notice about how ggplot treats NA's?
@@ -654,10 +619,6 @@ ggplot(data=homerange,
 
 ### Bar Plot: `geom_bar()`
 The simplest type of bar plot counts the number of observations in a categorical variable. In this case, we want to know how many observations are present in the variable `trophic.guild`. Notice that we do not specify a y-axis because it is count by default.  
-
-```{r}
-names(homerange)
-```
 
 ```{r}
 homerange %>% 
@@ -718,14 +679,14 @@ homerange %>%
   filter(class=="mammalia") %>% 
   count(trophic.guild) %>% 
   ggplot(aes(x=trophic.guild, y=n))+
-  geom_col()
+  geom_col() #produce the same result
 ```
 
 3. Make a bar plot that shows the masses of the top 10 smallest mammals.
 ```{r}
 homerange %>% 
   filter(class=="mammalia") %>% 
-  top_n(-10, log10.mass) %>% 
+  top_n(-10, log10.mass) %>% #the last 10 number
   ggplot(aes(x=common.name, y=log10.mass))+
   geom_col()+
   coord_flip()
@@ -742,16 +703,6 @@ library(palmerpenguins)
 ## Review
 Now that you have been introduced to `ggplot`, let's practice a few more plot types. Remember that plots are built in layers: **plot= data + geom_ + aesthetics**. We have to specify each of these in order for a plot to be produced. If you get stuck, it is often helpful to stop and make a quick sketch of what you want or expect to see on a piece of scratch paper.  
 
-Let's review using the `penguins` data. First, get an idea of the structure: Are the data tidy? Are there NA's? Are the variables discrete, categorical, or continuous?
-```{r}
-penguins
-```
-
-In a previous lab, we asked how many penguins were measured on each island.
-```{r}
-penguins %>% 
-  count(island)
-```
 
 Make this output more visual by adding a plot...
 ```{r}
@@ -792,11 +743,8 @@ penguins %>%
 
 
 
-## Box Plots
+## Box Plots for visualization of range of values
 For the next series of examples, we will use the `homerange` data.  **Database of vertebrate home range sizes.**   
-
-Reference: Tamburello N, Cote IM, Dulvy NK (2015) Energy and the scaling of animal space use. The American Naturalist 186(2):196-211. http://dx.doi.org/10.1086/682070.  
-Data: http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1  
 
 ```{r message=FALSE, warning=FALSE}
 homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
@@ -815,7 +763,7 @@ homerange %>%
 
 ```{r}
 homerange %>% 
-  ggplot(aes(x = class, y = log10.mass)) +
+  ggplot(aes(x = class, y = log10.mass)) + # x is category and y is number
   geom_boxplot()
 ```
 
@@ -846,7 +794,7 @@ homerange %>%
 ```
 
 
-2. Have a closer look at carnivorous mammals. Summarize the range of log10.mass by family.
+2. Have a closer look at carnivorous mammals. Summarize the range of log10.mass by family. use boxplot because it is asking for range
 ```{r}
 homerange %>% 
   filter(trophic.guild=="carnivore" & class=="mammalia") %>% 
@@ -855,18 +803,6 @@ homerange %>%
   geom_boxplot()+
   coord_flip()
 ```
-
-
-3. Now use a boxplot to visualize the range of log10.mass by family of mammalian carnivore.
-```{r}
-homerange %>% 
-  filter(trophic.guild=="carnivore" & class=="mammalia") %>% 
-  select(family, trophic.guild, log10.mass) %>% 
-  ggplot(aes(x=family, y=log10.mass))+
-  geom_boxplot()+
-  coord_flip()
-```
-
 
 
 LAB 11
@@ -894,7 +830,7 @@ names(life_history)
 life_history %>% 
   count(order, sort=T) %>%   #this is the same as arrange
   ggplot(aes(x=order, y=n))+
-  geom_col()+
+  geom_col()+ #geo col is also bar graph
   coord_flip()
 ```
 
@@ -964,7 +900,6 @@ life_history %>%
 ## Aesthetics: Labels
 Now that we have practiced scatter plots, bar plots, and box plots we need to learn how to adjust their appearance to suit our needs. Let's start with labeling x and y axes.  
 
-For this exercise, let's use the `ElephantsMF` data. These data are from Phyllis Lee, Stirling University, and are related to Lee, P., et al. (2013), "Enduring consequences of early experiences: 40-year effects on survival and success among African elephants (Loxodonta africana)," Biology Letters, 9: 20130011. [kaggle](https://www.kaggle.com/mostafaelseidy/elephantsmf).
 ```{r}
 elephants <- read_csv("data/elephantsMF.csv") %>% clean_names()
 ```
@@ -1004,7 +939,7 @@ elephants %>%
 There are lots of options for aesthetics. An aesthetic can be assigned to either numeric or categorical data. `fill` is a common grouping option; notice that an appropriate key is displayed when you use one of these options.
 ```{r}
 elephants %>% 
-  ggplot(aes(x=sex, fill=sex))+ #fill is a grouping option
+  ggplot(aes(x=sex, fill=sex))+ #fill is a grouping option and give color to each column
   geom_bar()
 ```
 
@@ -1040,7 +975,7 @@ homerange <-
 There are many options to create nice plots in ggplot. One useful trick is to store the plot as a new object and then experiment with geom's and aesthetics. Let's setup a plot that compares `log10.mass` and `log10.hra.` Notice that we are not specifying a geom.
 ```{r}
 p <- homerange %>% 
-  ggplot(aes(x= log10.mass, y= log10.hra))
+  ggplot(aes(x= log10.mass, y= log10.hra)) #make the plot into a new variable so later if you want to edit it you just use the new variable instead of typing everything again 
 ```
 
 Play with point size by adjusting the `size` argument.
@@ -1139,7 +1074,7 @@ penguins %>%
 2. Make another bar plot that shows the number of individuals by sex on each island?
 ```{r}
 penguins %>% 
-  #filter(sex!="NA") %>% # this removes the NA's
+  filter(sex!="NA") %>% # this removes the NA's
   ggplot(aes(x=island, fill=sex))+
   geom_bar(position="dodge")+
   labs(title="Counts of Individuals by Island",
@@ -1176,9 +1111,9 @@ LAB 12
 ## Install `RColorBrewer`, `paletteer`, and `ggthemes`
 `RColorBrewer` and `paletteer` are helpful in selecting palettes of color that work with your data. Please install these now, we will work with them in part 2 of today's lab.
 ```{r, eval=FALSE, echo=TRUE}
-#install.packages("RColorBrewer")
-#install.packages("paletteer")
-#install.packages("ggthemes")
+install.packages("RColorBrewer")
+install.packages("paletteer")
+install.packages("ggthemes")
 ```
 
 ## Load the libraries
@@ -1193,15 +1128,10 @@ library(janitor)
 options(scipen=999) #cancels the use of scientific notation for the session
 ```
 
-## Data
-For this tutorial, we will use two data sets.  
-
-[Desert ecology](http://esapubs.org/archive/ecol/E090/118/). The data are from: S. K. Morgan Ernest, Thomas J. Valone, and James H. Brown. 2009. Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology 90:1708.  
 ```{r message=FALSE, warning=FALSE}
 deserts <- read_csv("data/surveys_complete.csv")
 ```
 
-[Homerange](http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1). The data are from: Tamburello N, Cote IM, Dulvy NK (2015) Energy and the scaling of animal space use. The American Naturalist 186(2):196-211. http://dx.doi.org/10.1086/682070.  
 ```{r message=FALSE, warning=FALSE}
 homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv", na = c("", "NA", "\\"))
 ```
@@ -1296,7 +1226,7 @@ homerange %>%
   labs(title = "Distribution of Body Mass")
 ```
 
-I like to see both the histogram and the density curve so I often plot them together. Note that I assign the density plot a different color.
+I like to see both the histogram and the density curve so I often plot them together. Note that I assign the density plot a different color
 ```{r message=FALSE}
 homerange %>% 
   ggplot(aes(x=log10.mass)) +
@@ -1333,19 +1263,6 @@ homerange %>%
 
 ## Create Categories with mutate and case_when()
 `case_when()` is a very handy function from `dplyr` which allows us to calculate a new variable from other variables. We use `case_when()` within `mutate()` to do this.`case_when()` allows us to specify multiple conditions. Let's reclassify the body mass variable into a new factor variable with small, medium, and large animals. In this case, we are making a continuous variable into a categorical variable.  
-```{r}
-glimpse(homerange)
-```
-
-```{r}
-homerange %>% 
-  select(log10.mass) %>% 
-  summarize(min=min(log10.mass),
-            max=max(log10.mass))
-```
-```{r}
-summary(homerange$log10.mass)
-```
 
 ```{r}
 homerange %>% 
@@ -1367,17 +1284,14 @@ homerange %>%
 
 ## Practice
 1. Use case_when() to make a new column `range_category` that breaks down `log10.hra` into very small, small, medium, and large classes based on quartile.
-```{r}
-summary(homerange$log10.hra)
-```
 
 ```{r}
 library(gtools)
-#install.packages("gtools")
+install.packages("gtools")
 ```
 
 ```{r}
-quartiles <- quantcut(homerange$log10.hra)
+quartiles <- quantcut(homerange$log10.hra) #finding the quartiles
 table(quartiles)
 ```
 
@@ -1427,15 +1341,6 @@ library(janitor)
 options(scipen=999) #cancels the use of scientific notation for the session
 ```
 
-## Data
-For this tutorial, we will use:  
-[Homerange](http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1). The data are from: Tamburello N, Cote IM, Dulvy NK (2015) Energy and the scaling of animal space use. The American Naturalist 186(2):196-211. http://dx.doi.org/10.1086/682070.  
-```{r message=FALSE, warning=FALSE}
-homerange <- read_csv("data/Tamburelloetal_HomeRangeDatabase.csv", na = c("", "NA", "\\"))
-```
-
-## ggplot themes
-There are many options to change the theme of your plots within ggplot. Have a look [here]https://ggplot2.tidyverse.org/reference/ggtheme.html) for a list of the themes.  
 
 Let's start by building a simple barplot.  
 ```{r}
@@ -1467,8 +1372,6 @@ q <- homerange %>%
 q+theme_minimal()
 ```
 
-## Legends
-There are lots of options to manipulate legends. Have a look [here](http://www.sthda.com/english/wiki/ggplot2-legend-easy-steps-to-change-the-position-and-the-appearance-of-a-graph-legend-in-r-software).
 ```{r}
 p+theme_linedraw()+
   theme(legend.position = "left",
@@ -1482,7 +1385,7 @@ p+theme_linedraw()+
 ## Not enough? Try using `ggthemes`
 There are many packages that include additional themes, one of which is [ggthemes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/). Some of these are nice because they are designed to mimic the look of popular publications.
 ```{r}
-#install.packages("ggthemes")
+install.packages("ggthemes")
 library(ggthemes)
 ```
 
