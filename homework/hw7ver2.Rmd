@@ -1,0 +1,120 @@
+---
+title: "hw7ver2"
+author: "Ketong Zhang"
+date: "2024-02-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load the libraries
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(naniar)
+``` 
+
+## Data
+**1. For this homework, we will use two different data sets. Please load `amniota` and `amphibio`.**  
+
+`amniota` data:  
+Myhrvold N, Baldridge E, Chan B, Sivam D, Freeman DL, Ernest SKM (2015). “An amniote life-history
+database to perform comparative analyses with birds, mammals, and reptiles.” _Ecology_, *96*, 3109.
+doi: 10.1890/15-0846.1 (URL: https://doi.org/10.1890/15-0846.1).
+```{r}
+amniota <- read.csv("data/amniota.csv")
+```
+
+`amphibio` data:  
+Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017). “AmphiBIO, a global database
+for amphibian ecological traits.” _Scientific Data_, *4*, 170123. doi: 10.1038/sdata.2017.123 (URL:
+https://doi.org/10.1038/sdata.2017.123).
+```{r}
+amphibio <- read.csv("data/amphibio.csv")
+```
+
+## Questions  
+**2. Do some exploratory analysis of the `amniota` data set. Use the function(s) of your choice. Try to get an idea of how NA's are represented in the data.**  
+```{r}
+summary(amniota)
+```
+
+
+**3. Do some exploratory analysis of the `amphibio` data set. Use the function(s) of your choice. Try to get an idea of how NA's are represented in the data.**  
+```{r}
+summary(amphibio)
+```
+
+**4. How many total NA's are in each data set? Do these values make sense? Are NA's represented by values?**
+Amphibio data has 6649 NA's
+```{r}
+amphibio %>% 
+  map_df(~sum(is.na(.)))
+```
+Amniota data has 0 NA's
+```{r}
+amniota %>% 
+  map_df(~sum(is.na(.)))
+```
+
+**5. Make any necessary replacements in the data such that all NA's appear as "NA".**   
+```{r}
+no_am <- amphibio %>%
+  read_csv(file = "data/amphibio.csv", 
+           na=c("NA", " ", ".", "-999"))
+```
+
+
+```{r}
+no_ap <- amniota %>%
+  read_csv(file = "data/amniota.csv", 
+           na=c("NA", " ", ".", "-999"))
+```
+
+**6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.**  
+```{r}
+miss_var_summary(amniota)
+```
+
+**7. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amphibio` data.**
+```{r}
+miss_var_summary(amphibio)
+```
+
+**8. For the `amniota` data, calculate the number of NAs in the `egg_mass_g` column sorted by taxonomic class; i.e. how many NA's are present in the `egg_mass_g` column in birds, mammals, and reptiles? Does this results make sense biologically? How do these results affect your interpretation of NA's?**  
+
+
+```{r}
+amniota %>% 
+  select(egg_mass_g, class) %>% 
+  group_by(class) %>% 
+  mutate(egg_mass_g = na_if(egg_mass_g, -999)) %>% 
+  miss_var_summary()
+  
+```
+
+**9. The `amphibio` data have variables that classify species as fossorial (burrowing), terrestrial, aquatic, or arboreal.Calculate the number of NA's in each of these variables. Do you think that the authors intend us to think that there are NA's in these columns or could they represent something else? Explain.**
+```{r}
+amphibio %>% 
+  select(fos, ter, aqu, arb) %>% 
+  summarise_all(~sum(is.na(.)))
+```
+
+```{r}
+
+```
+
+**10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?**
+```{r}
+
+```
+
+```{r}
+
+```
+
+## Push your final code to GitHub!
+Please be sure that you check the `keep md` file in the knit preferences.  
