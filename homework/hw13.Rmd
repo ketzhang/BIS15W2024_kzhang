@@ -33,7 +33,7 @@ UC_admit <- read_csv("data/UC_admit.csv")
 
 **1. Use the function(s) of your choice to get an idea of the overall structure of the data frame, including its dimensions, column names, variable classes, etc. As part of this, determine if there are NA's and how they are treated.**  
 ```{r}
-
+summary(UC_admit)
 ```
 
 
@@ -42,7 +42,13 @@ UC_admit <- read_csv("data/UC_admit.csv")
 ```{r}
 library(shiny)
 
-ui <- fluidPage(
+ui <- dashboardPage(
+  
+  dashboardHeader(title = "Admissions by ethinicity"),
+  
+  dashboardSidebar(disable=T),
+  
+  dashboardBody()
   
 )
 
