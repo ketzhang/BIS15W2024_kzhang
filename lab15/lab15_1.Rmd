@@ -78,7 +78,7 @@ netflix <- read_csv("data/netflix_titles.csv") %>% clean_names()
 ## Lets Practice:
 Explore the elements in your data: include a comment within your code chunk to prompt Copilot to use the function of your choice
 ```{r}
-
+head(netflix)
 
 ```
 *Did copilot use your preferred method to get the summary of the data? If not, how could you improve the prompt to get the desired output?*
@@ -86,27 +86,26 @@ Explore the elements in your data: include a comment within your code chunk to p
 
 Sort out the movies from the netflix into an new object called netflix_movies
 ```{r} 
-
+netflix_movies <- netflix %>% 
+  select(title, director)
 ```
 
 
 Which director has the most movies on netflix?
 ```{r}
-
-
+count(netflix_movies, director, sort=TRUE)
 ```
 *Do you see anything wrong with the table above, look at row 1. Write a prompt below to fix this.*
 
 [insert your prompt here]
 ```{r}
-
+#fix the issue where 2 directors were put on the same line
 ```
 
 
 
 Which director had the most movies by release year and remove the NA's?
 ```{r}
-
 
 ```
 *See anything else interesting about this table, look at the first director on the table. Could this be a problem and how can we edit the dataset to fix this? Try writing a prompt.*
