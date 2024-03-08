@@ -1,6 +1,6 @@
 ---
 title: "Extra Credit W24"
-author: "Your Name Here"
+author: "Ketong Zhang"
 date: "`r Sys.Date()`"
 output:
   html_document: default
@@ -36,12 +36,43 @@ global_sharks <- read_csv("data/global-shark-attack.csv") %>% clean_names()
 
 ## Questions
 1. (2 points) Start by doing some data exploration using your preferred function(s). What is the structure of the data? Where are the missing values and how are they represented?  
+```{r}
+str(global_sharks)
+```
+
+```{r}
+miss_var_summary(global_sharks)
+```
 
 
 2. (3 points) Are there any "hotspots" for shark incidents? Make a plot that shows the total number of incidents for the top 10 countries? Which country has the highest number of incidents?
 
+```{r}
+global_sharks %>% 
+  count(country) %>% 
+  arrange(desc(n))
+```
+```{r}
+global_sharks %>% 
+  count(country) %>% 
+  arrange(desc(n))%>% 
+  top_n(10, n) %>% 
+  ggplot(aes(x=country, y=n, fill = country))+
+  geom_col()+
+  coord_flip()+
+  theme_light()+
+  labs(title = "Hotspots of shark incidents",
+       x = "Country", 
+       y = "Number of incidents",
+       fill = "Country")
+```
+
 
 3. (3 points) Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?
+```{r}
+new_global_sharks <- global_sharks %>% 
+  separate(date, into= c("year", "month", "day"), sep = "_")
+```
 
 
 4. (3 points) Which activity is associated with the highest number of incidents? Make a plot that compares the top 5 riskiest activities. "NA" should not be classified as an activity.

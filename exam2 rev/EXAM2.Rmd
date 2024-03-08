@@ -43,7 +43,8 @@ penguins %>%
   summarize(n_penguins=n(), .groups = 'keep') #same result if there is no .groups = 'keep'
 ```
 
-Recall that that `count()` works like a combination of `group_by()` and `summarize()` but just shows the number of observations.
+Recall that that `
+()` works like a combination of `group_by()` and `summarize()` but just shows the number of observations.
 ```{r}
 penguins %>% 
   count(island, species)
