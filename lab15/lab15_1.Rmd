@@ -1,0 +1,159 @@
+---
+title: "BIS15L_AI_class"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+Today, we're exploring how AI can aid in writing, comprehending and troubleshooting our R code. AI is a very valuable tool, but it's important not to rely on it entirely. Building a strong R foundation is still important. These AI tools are not perfect and can be inaccurate solutions. In addition these tools can't read our minds, so understanding R helps us generate better prompts to get better responses. In short, AI should be used as a tool, not a crutch. Additionally, do not forget about other useful resources like Stack Overflow/Exchange, online tutorials, and GitHub issues pages for learning and troubleshooting. Let's combine AI with traditional methods to master R effectively.
+
+This overview isn't exhaustive of all possible AI tools for R coding, but I believe it is a good start and covers everything you need.
+
+
+**Make sure to enable Github Copilot in RStudio.**
+Go to Tools -> Global Options -> Copilot -> Enable Git
+
+## Learning Goals: 
+*At the end of this exercise, you will be able to:*  
+1. Explain what AI is and what AI tools can be used for R.
+2. Enable Github Copilot in RStudio.
+3. Use Copilot/ChatGPT to write code in RStudio.
+4. Use Copilot/ChatGPT for troubleshooting code in RStudio.
+
+
+## Exploration Questions:
+Lets get some get a feel for what copilot (or ChatGPT) does, use Github Copilot to autocomplete the questions below. You can alternatively paste the questions in ChatGPT or Microsoft Copilot.
+1. What is AI?
+AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines, enabling them to perform tasks that typically require human intelligence. This includes tasks such as understanding natural language, recognizing patterns, learning from experience, reasoning, and problem-solving.
+
+AI systems are designed to perceive their environment and take actions that maximize their chances of successfully achieving their goals. These systems can range from simple rule-based algorithms to complex neural networks that mimic the workings of the human brain.
+
+There are various subfields within AI, including machine learning, natural language processing, computer vision, robotics, and more. AI has applications in numerous domains, including healthcare, finance, transportation, education, entertainment, and beyond.
+
+
+2. What is ChatGPT?
+ChatGPT is a conversational AI model developed by OpenAI, based on the GPT (Generative Pre-trained Transformer) architecture. It is designed to generate human-like text responses given a prompt or input. ChatGPT is trained on a vast amount of text data sourced from the internet, allowing it to understand and generate responses in a wide range of topics and styles.
+
+Users can interact with ChatGPT through various interfaces such as text-based chatbots, voice assistants, or integrated into applications and services. It is capable of engaging in natural language conversations, providing information, answering questions, generating creative content, and more.
+
+ChatGPT and similar models represent significant advancements in natural language processing and AI, enabling more sophisticated and human-like interactions between machines and humans.
+
+
+
+3. What is Github Copilot?
+As of my last update in January 2022, GitHub Copilot is an AI-powered code completion tool developed by GitHub in collaboration with OpenAI. It is built on OpenAI's Codex model, which is based on the GPT (Generative Pre-trained Transformer) architecture.
+
+GitHub Copilot integrates directly into code editors such as Visual Studio Code and provides suggestions for completing code as developers type. It can generate entire lines or blocks of code based on the context provided by the developer's code and comments. GitHub Copilot aims to help developers write code faster, reduce repetitive tasks, and learn from examples.
+
+By analyzing the codebase and leveraging the vast amount of code available on GitHub, Copilot can offer contextually relevant suggestions and even help with tasks like writing function definitions, generating tests, and providing documentation comments.
+
+GitHub Copilot has generated significant interest and discussion within the developer community due to its potential to enhance developer productivity and streamline the coding process. However, it also raises questions about code quality, intellectual property concerns, and the impact on developer skills and learning.
+
+4. [Try it yourself: Insert your own question here]
+
+## Load the libraries  
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(janitor)
+library(dplyr)
+library(shiny)
+library(shinydashboard)
+```
+
+## Load the Data: 
+```{r}
+#load the Netflix Data in your Data folder, save it under the object name netflix
+netflix <- read_csv("data/netflix_titles.csv") %>% clean_names()
+
+```
+
+*Did copilot help you write the code above? Could anything about the prompt be improved to help Copilot understand what you want to do more accurately?*
+
+
+## Lets Practice:
+Explore the elements in your data: include a comment within your code chunk to prompt Copilot to use the function of your choice
+```{r}
+head(netflix)
+
+```
+*Did copilot use your preferred method to get the summary of the data? If not, how could you improve the prompt to get the desired output?*
+
+
+Sort out the movies from the netflix into an new object called netflix_movies
+```{r} 
+netflix_movies <- netflix %>% 
+  select(title, director)
+```
+
+
+Which director has the most movies on netflix?
+```{r}
+count(netflix_movies, director, sort=TRUE)
+```
+*Do you see anything wrong with the table above, look at row 1. Write a prompt below to fix this.*
+
+[insert your prompt here]
+```{r}
+#fix the issue where 2 directors were put on the same line
+```
+
+
+
+Which director had the most movies by release year and remove the NA's?
+```{r}
+
+```
+*See anything else interesting about this table, look at the first director on the table. Could this be a problem and how can we edit the dataset to fix this? Try writing a prompt.*
+
+
+[Insert your prompt here]
+```{r}
+
+```
+
+
+
+Make a bar plot of the top directors with the most movies on netflix
+```{r}
+
+
+```
+*Do you see any issues with this plot? How could we improve the prompt to get a better boxplot? Try writing a prompt.*
+
+[Insert your prompt here]
+```{r}
+
+```
+
+*How about for just 2020*
+
+
+
+[Insert your prompt here]
+```{r}
+
+```
+
+
+*Take a few minutes to make your own plot(s) using prompts, edit prompts until you get a plot that you like.*
+
+
+
+
+
+
+## Lets make the top 10 directors barplot into a Shiny App: use copilot or Chatgpt
+
+
+*Now use ChatGPT, Copilot or previous notes to fix the code*
+
+
+
+
+
+## That's it! Let's take a break and then move on to working on group projects.
